@@ -13,3 +13,27 @@
 /backend/.env
 
 # ----------------------
+
+
+
+# -----  IMAGE  ---------
+
+/backend/images/posts/*.jpg
+/backend/images/posts/*.jpeg
+/backend/images/posts/*.png
+/backend/images/posts/*.gif
+
+/backend/images/users/*.jpg
+/backend/images/users/*.jpeg
+/backend/images/users/*.png
+/backend/images/users/*.gif
+
+# ----------------------
+
+
+
+# ---- WORK  SPACE  ----
+
+/GroupomaniaP7.code-workspace
+
+# ----------------------

@@ -6,8 +6,33 @@
 # ----------------------
 
 
+
 # -----  .ENV  ---------
 
 .env
+
+# ----------------------
+
+
+
+# -----  IMAGE  ---------
+
+images/posts/*.jpg
+images/posts/*.jpeg
+images/posts/*.png
+images/posts/*.gif
+
+images/users/*.jpg
+images/users/*.jpeg
+images/users/*.png
+images/users/*.gif
+
+# ----------------------
+
+
+
+# ---- WORK  SPACE  ----
+
+../GroupomaniaP7.code-workspace
 
 # ----------------------
