@@ -2,12 +2,13 @@
   "name": "backend_p7",
   "version": "1.0.0",
   "description": "API sécurisé pour la société 'groupomania'",
-  "main": "index.js",
+  "main": "server.js",
   "author": "FALVO Anthony",
   "license": "ISC",
 
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
 
   "dependencies": {
