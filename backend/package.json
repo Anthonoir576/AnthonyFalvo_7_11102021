@@ -1,13 +1,15 @@
 {
   "name": "backend_p7",
   "version": "1.0.0",
-  "description": "Api sécurisé pour groupomania",
+  "description": "API sécurisé pour la société 'groupomania'",
   "main": "index.js",
+  "author": "FALVO Anthony",
+  "license": "ISC",
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
