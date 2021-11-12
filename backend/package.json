@@ -1,7 +1,7 @@
 {
   "name": "backend_p7",
   "version": "1.0.0",
-  "description": "API sécurisé pour la société 'groupomania'",
+  "description": "API sécurisé pour la société 'groupomania' ",
   "main": "server.js",
   "author": "FALVO Anthony",
   "license": "ISC",
