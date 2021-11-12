@@ -22,8 +22,9 @@
 const http          = require('http');               // - 01 -
 const app           = require('./app');              // - 02 -
 
-const environnement = require('dotenv');             // - 03 - 
-environnement.config();
+require('dotenv')
+    .config({ path: './config/.env' });              // - 03 - 
+
 /* ################################################ */
 
 
