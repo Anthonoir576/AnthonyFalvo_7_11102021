@@ -10,7 +10,7 @@
 
 # -----  .ENV  ---------
 
-/backend/.env
+/backend/config/.env
 
 # ----------------------
 

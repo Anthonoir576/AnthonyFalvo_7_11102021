@@ -1,7 +1,7 @@
 
 # ---- NODE MODULES ----
 
-./node_modules
+/node_modules
 
 # ----------------------
 
@@ -9,7 +9,7 @@
 
 # -----  .ENV  ---------
 
-.env
+config/.env
 
 # ----------------------
 
@@ -17,15 +17,15 @@
 
 # -----  IMAGE  ---------
 
-images/posts/*.jpg
-images/posts/*.jpeg
-images/posts/*.png
-images/posts/*.gif
+/images/posts/*.jpg
+/images/posts/*.jpeg
+/images/posts/*.png
+/images/posts/*.gif
 
-images/users/*.jpg
-images/users/*.jpeg
-images/users/*.png
-images/users/*.gif
+/images/users/*.jpg
+/images/users/*.jpeg
+/images/users/*.png
+/images/users/*.gif
 
 # ----------------------
 
