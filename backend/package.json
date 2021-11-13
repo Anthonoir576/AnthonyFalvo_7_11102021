@@ -10,11 +10,14 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.3",
     "mysql": "^2.18.1",
+    "mysql2": "^2.3.3-rc.0",
     "nodemon": "^2.0.15",
     "sequelize": "^6.9.0"
   }
