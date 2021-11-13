@@ -51,17 +51,45 @@ exports.signup = (request, response, next) => {     // - 06 -
             });
 
         } else {
-            return response.status(400).json({ 'error': 'Utilisateur déjà existant' })
+            return response.status(400).json({ 'error': 'Utilisateur déjà existant' });
         };
     })
-    .catch((error) => { response.status(500).json({ 'error': 'erreur serveur' })})
+    .catch((error) => { response.status(500).json({ 'error': 'erreur serveur' })});
 
     
 };
 
 exports.login  = (request, response, next) => {     // - 07 -
 
+    let email    = request.body.email;
+    let password = request.body.password;
 
+    if (email == null || password == null) {
+        return response.status(400).json({ 'error': 'Paramètre manquant' });
+    };
+
+    models.User.findOne({
+        where: { email: email }
+    })
+    .then((userFound) => {
+        if(userFound) {
+            bcrypt.compare(password, userFound.password, (errorBcrypt, responseBcrypt) => {
+                if (responseBcrypt){
+                    return response.status(200).json({
+                        // a verif sur userId si correspond
+                        'userId': request.body.id,
+                        'token': 'tokenTemporaire'
+                    });
+                } else {
+                    return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
+                }
+            });
+
+        } else {
+            return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
+        };
+    })
+    .catch((error) => { response.status(500).json({ 'error': 'erreur serveur' })});
 
 };
 /* ################################################ */
