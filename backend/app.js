@@ -40,8 +40,10 @@ const express       = require('express');             // - 01 -
 const app           = express();                      // - 02 -
 const helmet        = require('helmet');              // - 03 -
 const path          = require('path');                // - 07 -
-const environnement = require('dotenv');              // - 08 -
-environnement.config();
+
+
+require('dotenv')
+    .config({ path: './config/.env' }); 
 /* ################################################ */
 
 
