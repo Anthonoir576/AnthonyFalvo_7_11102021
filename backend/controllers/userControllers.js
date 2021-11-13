@@ -11,7 +11,57 @@
 const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const crypto = require('crypto-js');
+const models = require('../models');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
+/* ################################################ */
+
+
+
+
+/* ############   CONTROLLERS   ################### */
+exports.signup = (request, response, next) => {     // - 06 -
+
+    let email    = request.body.email;
+    let username = request.body.username;
+    let password = request.body.password;
+    let bio      = request.body.bio;
+
+
+    if (email == null || username == null || password == null) {
+        return response.status(400).json({ 'error': 'Paramètre manquant' });
+    };
+
+    models.User.findOne({
+        attributes: ['email'],
+        where: { email: email }
+    })
+    .then((userFound) => {
+        if(!userFound) {
+            bcrypt.hash(password, 10, (err, hash) => {
+                let newUser = models.User.create({
+                    email: email,
+                    username: username,
+                    password: hash,
+                    bio: bio,
+                    isAdmin: 0
+                }).then((newUser) => { return response.status(201).json({ 'userId': newUser.id });
+                }).catch((error)  => { return response.status(500).json({ 'error': 'Impossible de s\'enregistrer ' }) });
+            });
+
+        } else {
+            return response.status(400).json({ 'error': 'Utilisateur déjà existant' })
+        };
+    })
+    .catch((error) => { response.status(500).json({ 'error': 'erreur serveur' })})
+
+    
+};
+
+exports.login  = (request, response, next) => {     // - 07 -
+
+
+
+};
 /* ################################################ */
