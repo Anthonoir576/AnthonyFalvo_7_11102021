@@ -11,6 +11,7 @@
 # -----  .ENV  ---------
 
 /backend/config/.env
+/backend/config/config.json
 
 # ----------------------
 
