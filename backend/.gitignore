@@ -10,6 +10,7 @@
 # -----  .ENV  ---------
 
 config/.env
+config/config.json
 
 # ----------------------
 
@@ -36,3 +37,4 @@ config/.env
 ../GroupomaniaP7.code-workspace
 
 # ----------------------
+
