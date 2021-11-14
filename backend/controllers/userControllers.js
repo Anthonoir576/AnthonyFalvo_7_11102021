@@ -99,10 +99,17 @@ exports.login  = (request, response, next) => {     // - 07 -
 
 exports.getUserProfile = (request, response, next) => {
 
-    models.User.findOne({ 
+    models.User.findOne({
+        attributes: ['id', 'email', 'username', 'bio', 'createdAt'], 
         where: {id: request.params.id} 
     })
-    .then(user => response.status(200).json({user}))
+    .then(user => {
+        if (user) {
+            response.status(200).json({user});
+        } else {
+            response.status(404).json({'error': 'Utilisateur introuvable '});
+        }
+    })  
     .catch(error => response.status(404).json({ error: error }));
 
 };

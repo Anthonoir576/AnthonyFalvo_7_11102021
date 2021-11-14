@@ -38,7 +38,7 @@ module.exports = (request, response, next) => {     // - 04 -
 
     } catch (error) {
              
-        response.status(401).json({ error: error || 'ERREUR : ECHEC Authentification '})
+        response.status(401).json({ error: 'ERREUR : ECHEC Authentification '})
 
     };
 
