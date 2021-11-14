@@ -86,6 +86,7 @@ express.static(path.join(__dirname, 'images')));      // - 13 -
 
 // app.use('/api/post', postRoutes);                     // - 14 - 
 app.use('/api/auth', userRoutes);                     // - 15 -
+app.use('/api/posts', postRoutes);                     // - 15 -
 /* ################################################ */
 
 
