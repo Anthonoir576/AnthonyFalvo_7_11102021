@@ -23,10 +23,10 @@ require('dotenv')
 /* ############   CONTROLLERS   ################### */
 exports.signup = (request, response, next) => {     // - 06 -
 
-    let email    = request.body.email;
-    let username = request.body.username;
-    let password = request.body.password;
-    let bio      = request.body.bio;
+    let email    = request.body.email.trim();
+    let username = request.body.username.trim();
+    let password = request.body.password.trim();
+    let bio      = request.body.bio.trim();
 
 
     if (email == null || username == null || password == null) {
@@ -77,8 +77,13 @@ exports.login  = (request, response, next) => {     // - 07 -
                 if (responseBcrypt){
                     return response.status(200).json({
                         // a verif sur userId si correspond
-                        'userId': request.body.id,
-                        'token': 'tokenTemporaire'
+                        userId: userFound.id,
+                        token: jwt.sign(
+                            { userId: userFound.id,
+                              isAdmin: userFound.isAdmin},
+                            `${process.env.TOKEN_KEY}`,
+                            { expiresIn: '12h'}
+                        )
                     });
                 } else {
                     return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
