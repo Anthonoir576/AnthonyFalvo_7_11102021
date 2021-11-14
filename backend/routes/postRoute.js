@@ -1,0 +1,28 @@
+
+/** ---- JS DOCUMENTATION POSTROUTE.JS ----
+ * 
+ */
+
+
+
+/* ##########   MES DECLARATIONS   ################ */
+const express   = require('express');                         // - 01 -
+const router    = express.Router();                           // - 02 -
+const postCtrl = require('../controllers/postControllers');   // - 03 -
+const auth      = require('../middleware/auth');              // - 04 -
+const multer    = require('../middleware/multer-config');     // - 05 -
+/* ################################################ */
+
+
+
+/* ##############   MES ROUTES   ################## */
+                                                              // - 06 -
+router.post('/post/new/', postCtrl.createPost);
+router.get('/post/new/', postCtrl.getAllPosts);
+/* ################################################ */
+
+
+
+/* ##############    EXPORT     ################### */
+module.exports = router;                                      // - 07 -
+/* ################################################ */

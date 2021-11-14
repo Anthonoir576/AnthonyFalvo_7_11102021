@@ -106,7 +106,7 @@ exports.getUserProfile = (request, response, next) => {
     })
     .then(user => {
         if (user) {
-            response.status(200).json({user});
+            response.status(200).json(user);
         } else {
             response.status(404).json({'error': 'Utilisateur introuvable '});
         }
