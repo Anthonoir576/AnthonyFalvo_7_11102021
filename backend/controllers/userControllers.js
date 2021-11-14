@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const crypto = require('crypto-js');
 const models = require('../models');
+const user = require('../models/user');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -46,14 +47,14 @@ exports.signup = (request, response, next) => {     // - 06 -
                     bio: bio,
                     isAdmin: 0
                 }).then((newUser) => { return response.status(201).json({ 'userId': newUser.id });
-                }).catch((error)  => { return response.status(500).json({ 'error': 'Impossible de s\'enregistrer ' }) });
+                }).catch(()  => { return response.status(500).json({ 'error': 'Impossible de s\'enregistrer ' }) });
             });
 
         } else {
             return response.status(400).json({ 'error': 'Utilisateur déjà existant' });
         };
     })
-    .catch((error) => { response.status(500).json({ 'error': 'erreur serveur' })});
+    .catch(() => { response.status(500).json({ 'error': 'erreur serveur' })});
 
     
 };
@@ -93,7 +94,7 @@ exports.login  = (request, response, next) => {     // - 07 -
             return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
         };
     })
-    .catch((error) => { response.status(500).json({ 'error': 'erreur serveur' })});
+    .catch(() => { response.status(500).json({ 'error': 'erreur serveur' })});
 
 };
 
@@ -101,7 +102,7 @@ exports.getUserProfile = (request, response, next) => {
 
     models.User.findOne({
         attributes: ['id', 'email', 'username', 'bio', 'createdAt'], 
-        where: {id: request.params.id} 
+        where: { id: request.params.id } 
     })
     .then(user => {
         if (user) {
@@ -110,7 +111,29 @@ exports.getUserProfile = (request, response, next) => {
             response.status(404).json({'error': 'Utilisateur introuvable '});
         }
     })  
-    .catch(error => response.status(404).json({ error: error }));
+    .catch(() => response.status(500).json({ 'error' : 'Erreur serveur' }));
+
+};
+
+exports.updateUserProfile = (request, response, next) => {
+
+    const bioModifier = request.body.bio;
+
+    models.User.findOne({
+        attributes: ['id', 'bio'],
+        where: { id: request.params.id }
+    }).then(user => {
+
+        if (user) {
+            user.update({
+                bio: (bioModifier ? bioModifier : user.bio)
+            }).then(user=> response.status(201).json( user ))
+              .catch(error => response.status(500).json({ error: error }));
+        } else {
+            response.status(404).json({ 'error': 'Utilisateur introuvable' });
+        };
+
+    }).catch(() => response.status(500).json({ 'error' : 'Erreur serveur' }));
 
 };
 /* ################################################ */

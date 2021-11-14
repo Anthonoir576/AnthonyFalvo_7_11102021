@@ -22,7 +22,7 @@ const userCtrl = require('../controllers/userControllers'); // - 05 -
 router.post('/signup', regex, userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/user/:id', userCtrl.getUserProfile);
-//router.put('/user/:id', userCtrl.getUserProfile);  ptet voir modif profile
+router.put('/user/:id', userCtrl.updateUserProfile);
 /* ################################################ */
                                                             
                                                             
