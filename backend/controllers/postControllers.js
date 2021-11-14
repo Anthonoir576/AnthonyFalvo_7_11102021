@@ -61,15 +61,16 @@ exports.createPost = (request, response, next) => {
 
 exports.getAllPosts = (request, response, next) => {
 
-    let list   = request.query.fields;
-    let limit  = parseInt(request.query.limit);
-    let offset = parseInt(request.query.offset);
-    let order  = request.query.order;
+    let list      = request.query.fields;
+    let limit     = parseInt(request.query.limit);
+    let offset    = parseInt(request.query.offset);
+    let order     = request.query.order;
+
 
     models.Post.findAll({
 
         order: [(order != null) ? order.split(':') : ['title', 'ASC']],
-        attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
+        attributes: (list !== '*' && list != null) ? list.split(',') : null,
         limit: (!isNaN(limit)) ? limit : null,
         offset: (!isNaN(offset)) ? offset : null
 
