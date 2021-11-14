@@ -28,7 +28,6 @@ exports.signup = (request, response, next) => {     // - 06 -
     let password = request.body.password.trim();
     let bio      = request.body.bio.trim();
 
-
     if (email == null || username == null || password == null) {
         return response.status(400).json({ 'error': 'Paramètre manquant' });
     };
@@ -95,6 +94,16 @@ exports.login  = (request, response, next) => {     // - 07 -
         };
     })
     .catch((error) => { response.status(500).json({ 'error': 'erreur serveur' })});
+
+};
+
+exports.getUserProfile = (request, response, next) => {
+
+    models.User.findOne({ 
+        where: {id: request.params.id} 
+    })
+    .then(user => response.status(200).json({user}))
+    .catch(error => response.status(404).json({ error: error }));
 
 };
 /* ################################################ */
