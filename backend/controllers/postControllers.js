@@ -20,17 +20,11 @@ exports.createPost = (request, response, next) => {
 
     let title   = request.body.title;
     let content = request.body.content;
-
     const token = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId = decodedToken.userId;
 
-    // ###  TEST  ###
-    console.log(token);
-    console.log(decodedToken);
-    console.log(userId);
-    // ##############
-
+    
     if (title == null || content == null) {
         return response.status(400).json({ 'error': 'Paramètre manquant' });
     } else if (title.length <= 5 || content.length <= 5){
@@ -72,12 +66,18 @@ exports.getAllPosts = (request, response, next) => {
         order: [(order != null) ? order.split(':') : ['title', 'ASC']],
         attributes: (list !== '*' && list != null) ? list.split(',') : null,
         limit: (!isNaN(limit)) ? limit : null,
-        offset: (!isNaN(offset)) ? offset : null
+        offset: (!isNaN(offset)) ? offset : null,
+        include: [{
+            model: models.User,
+            attributes: [ 'username' ]
+        }]
 
     }).then((posts) => {
-        
-        
-
+        if (posts) {
+            response.status(200).json(posts);
+        } else {
+            response.status(404).json({ 'error' : 'Aucun post n\'est présent dans la base de données' });
+        };
     }).catch(error => response.status(500).json({ error: error }));
 
 

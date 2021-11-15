@@ -17,7 +17,7 @@ const multer    = require('../middleware/multer');     // - 05 -
 
 /* ##############   MES ROUTES   ################## */
                                                               // - 06 -
-router.post('/post/new/', postCtrl.createPost);
+router.post('/post/new', postCtrl.createPost);
 router.get('/', postCtrl.getAllPosts);
 /* ################################################ */
 
