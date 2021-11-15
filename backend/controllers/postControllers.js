@@ -24,7 +24,7 @@ exports.createPost = (request, response, next) => {
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId = decodedToken.userId;
 
-    
+
     if (title == null || content == null) {
         return response.status(400).json({ 'error': 'Paramètre manquant' });
     } else if (title.length <= 5 || content.length <= 5){
@@ -50,6 +50,18 @@ exports.createPost = (request, response, next) => {
 
     })
       .catch(error => response.status(500).json({ error : error }));
+
+};
+
+exports.updatePost = (request, response, next) => {
+
+
+
+};
+
+exports.deletePost = (request, response, next) => {
+
+    
 
 };
 

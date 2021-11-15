@@ -12,13 +12,12 @@ const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const crypto = require('crypto-js');
 const models = require('../models');
-const user = require('../models/user');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
 /* ################################################ */
 
-
+// mettre en place crypto une fois que la visiblité des mails serra plus utile.
 
 
 /* ############   CONTROLLERS   ################### */
@@ -118,22 +117,31 @@ exports.getUserProfile = (request, response, next) => {
 exports.updateUserProfile = (request, response, next) => {
 
     const bioModifier = request.body.bio;
+    const token = request.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId = decodedToken.userId;
 
-    models.User.findOne({
-        attributes: ['id', 'bio'],
-        where: { id: request.params.id }
-    }).then(user => {
+    if (request.body.id == userId) {
 
-        if (user) {
-            user.update({
-                bio: (bioModifier ? bioModifier : user.bio)
-            }).then(user=> response.status(201).json( user ))
-              .catch(error => response.status(500).json({ error: error }));
-        } else {
-            response.status(404).json({ 'error': 'Utilisateur introuvable' });
-        };
+        models.User.findOne({
+            attributes: ['id', 'bio'],
+            where: { id: userId }
+        }).then(user => {
+    
+            if (user) {
+                user.update({
+                    bio: (bioModifier ? bioModifier : user.bio)
+                }).then(user=> response.status(201).json( user ))
+                  .catch(error => response.status(500).json({ error: error }));
+            } else {
+                response.status(404).json({ 'error': 'Utilisateur inexistant' });
+            };
 
-    }).catch(() => response.status(500).json({ 'error' : 'Erreur serveur' }));
+        }).catch(() => response.status(500).json({ 'error' : 'Erreur serveur' }));
+
+    } else {
+        response.status(403).json({ 'error': 'Vous n\'êtes pas l\'utilisateur de ce profil' });
+    };
 
 };
 /* ################################################ */

@@ -21,8 +21,8 @@ const userCtrl = require('../controllers/userControllers'); // - 05 -
                                                             // - 06 -
 router.post('/signup', regex, userCtrl.signup);
 router.post('/login', userCtrl.login);
-router.get('/user/:id', userCtrl.getUserProfile);
-router.put('/user/:id', userCtrl.updateUserProfile);
+router.get('/user/:id', auth, userCtrl.getUserProfile);
+router.put('/user/:id', auth, userCtrl.updateUserProfile);
 /* ################################################ */
                                                             
                                                             
