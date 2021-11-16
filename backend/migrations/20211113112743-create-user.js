@@ -24,6 +24,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      attachment: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       isAdmin: {
         allowNull: false,
         type: Sequelize.BOOLEAN

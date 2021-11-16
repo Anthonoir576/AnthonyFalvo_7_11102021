@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Like extends Model {
+  class Comment extends Model {
 
     static associate(models) {
 
@@ -19,19 +19,19 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'userId',
       });
   
-      models.Like.belongsTo(models.User, {
+      models.Comment.belongsTo(models.User, {
         foreignKey: 'userId',
         as: 'user',
       });
   
-      models.Like.belongsTo(models.Post, {
+      models.Comment.belongsTo(models.Post, {
         foreignKey: 'postId',
         as: 'post',
       });
-      
+
     }
   };
-  Like.init({
+  Comment.init({
     postId: {
       type: DataTypes.INTEGER,
       references: {
@@ -46,11 +46,11 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    like: DataTypes.INTEGER,
-    dislike: DataTypes.INTEGER
+    content: DataTypes.STRING,
+    attachment: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Like',
+    modelName: 'Comment',
   });
-  return Like;
+  return Comment;
 };

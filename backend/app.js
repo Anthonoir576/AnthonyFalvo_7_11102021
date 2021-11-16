@@ -43,7 +43,7 @@ const path          = require('path');                // - 07 -
 const userRoutes    = require('./routes/userRoute');
 const postRoutes    = require('./routes/postRoute');
 const likeRoutes    = require('./routes/likeRoute');
- 
+const commentRoutes = require('./routes/commentRoute'); 
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -88,7 +88,8 @@ express.static(path.join(__dirname, 'images')));      // - 13 -
 
 app.use('/api/auth', userRoutes);                     // - 15 -
 app.use('/api/posts', postRoutes);                     // - 15 -
-app.use('/api/post', likeRoutes);
+app.use('/api/post/:postId', likeRoutes);
+app.use('/api/post/:postId/comments', commentRoutes);
 /* ################################################ */
 
 

@@ -40,7 +40,8 @@ exports.createPost = (request, response, next) => {
                 UserId: user.id,
                 title: title,
                 content: content,
-                likes: 0
+                likes: 0,
+                dislikes: 0
             }).then( (newPost) => {
                 response.status(201).json(newPost);
             }).catch(error => response.status(400).json({ error: error }));
