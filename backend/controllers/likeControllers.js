@@ -14,8 +14,7 @@ const jwt    = require('jsonwebtoken');
 
 
 
-// On pourrait mettre une condition ou l'on supprime le tableau associé a l'user qui a supprimer sont like/dislike
-// Et que le like dislike == 0
+
 
 /* ############   CONTROLLERS   ################### */
 exports.likePost = (request, response, next) => {
@@ -52,11 +51,9 @@ exports.likePost = (request, response, next) => {
                     })
                     .catch(() => response.status(400).json({ 'message': 'Le like ne fonctionne pas [code:01]'})); 
                     
-                // ICI pour mettre la condition de destroy du tab vu qu'il retire le like et que par definition aucun dislike ne peut etre present     
+                    
                 } else if (tableauLike && tableauLike.like == 1) {
-                    tableauLike.update({
-                        like: 0
-                    }).then(() => {
+                    tableauLike.destroy().then(() => {
                         post.update({
                             likes: post.likes - 1
                         }).then(() => response.status(200).json({ 'message': 'Le like est retiré de la publication [code:02]' }))
@@ -137,11 +134,9 @@ exports.dislikePost = (request, response, next) => {
                     })
                     .catch(() => response.status(400).json({ 'message': 'Le dislike ne fonctionne pas [code:01]'})); 
                     
-                // ICI pour mettre la condition de destroy du tab vu qu'il retire le dislike et que par definition aucun like ne peut etre present    
+
                 } else if (tableauLike && tableauLike.dislike == 1) {
-                    tableauLike.update({
-                        dislike: 0
-                    }).then(() => {
+                    tableauLike.destroy().then(() => {
                         post.update({
                             dislikes: post.dislikes - 1
                         }).then(() => response.status(200).json({ 'message': 'Le dislike est retiré de la publication [code:02]' }))
@@ -187,5 +182,4 @@ exports.dislikePost = (request, response, next) => {
     }).catch(() => response.status(500).json({ 'error': 'Erreur serveur ! [code:07]' }));
 
 };
-
 /* ################################################ */
