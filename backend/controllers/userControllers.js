@@ -116,10 +116,10 @@ exports.getUserProfile = (request, response, next) => {
 
 exports.updateUserProfile = (request, response, next) => {
 
-    const bioModifier = request.body.bio;
-    const token = request.headers.authorization.split(' ')[1];
+    const bioModifier  = request.body.bio;
+    const token        = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
-    const userId = decodedToken.userId;
+    const userId       = decodedToken.userId;
 
     if (request.body.id == userId) {
 
