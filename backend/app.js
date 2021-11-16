@@ -42,6 +42,7 @@ const helmet        = require('helmet');              // - 03 -
 const path          = require('path');                // - 07 -
 const userRoutes    = require('./routes/userRoute');
 const postRoutes    = require('./routes/postRoute');
+const likeRoutes    = require('./routes/likeRoute');
  
 
 require('dotenv')
@@ -84,9 +85,10 @@ app.use(express.json());                              // - 12 -
 app.use('/images',
 express.static(path.join(__dirname, 'images')));      // - 13 -
 
-// app.use('/api/post', postRoutes);                     // - 14 - 
+
 app.use('/api/auth', userRoutes);                     // - 15 -
 app.use('/api/posts', postRoutes);                     // - 15 -
+app.use('/api/post', likeRoutes);
 /* ################################################ */
 
 
