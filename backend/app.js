@@ -88,8 +88,8 @@ express.static(path.join(__dirname, 'images')));      // - 13 -
 
 app.use('/api/auth', userRoutes);                     // - 15 -
 app.use('/api/posts', postRoutes);                     // - 15 -
-app.use('/api/post/:postId', likeRoutes);
-app.use('/api/post/:postId/comments', commentRoutes);
+app.use('/api/post/vote', likeRoutes);
+app.use('/api/post/comments', commentRoutes);
 /* ################################################ */
 
 

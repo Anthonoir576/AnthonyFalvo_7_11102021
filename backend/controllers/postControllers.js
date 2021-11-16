@@ -16,6 +16,8 @@ const jwt     = require('jsonwebtoken');          // - 03 -
 // a test avec token 
 
 /* ############   CONTROLLERS   ################### */
+
+// AUTH uniquement sur la route
 exports.createPost = (request, response, next) => {
 
     let title          = request.body.title;
@@ -120,6 +122,7 @@ exports.deletePost = (request, response, next) => {
 
 };
 
+// AUTH uniquement sur la route
 exports.getAllPosts = (request, response, next) => {
 
     let list      = request.query.fields;

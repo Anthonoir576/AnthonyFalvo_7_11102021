@@ -16,7 +16,7 @@ const multer      = require('../middleware/multer');            // - 05 -
 
 
 /* ##############   MES ROUTES   ################## */
-//router.post('/comment',commentCtrl.createComment);
+//router.post('/comment/:postId',commentCtrl.createComment);
 //router.put('/comment/:id', commentCtrl.updateComment);
 //router.delete('/comment/:id', commentCtrl.deleteComment);
 //router.get('/', commentCtrl.getAllComment);
