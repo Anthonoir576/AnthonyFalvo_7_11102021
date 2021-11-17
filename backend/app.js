@@ -78,7 +78,7 @@ app.use(helmet());                                    // - 11 -
 
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */                  
 app.use(express.json());     
-app.use(express.urlencoded({ extended: true }));                         // - 12 -   
+app.use(express.urlencoded({ extended: true }));    
 /* ################################################ */
 
 
