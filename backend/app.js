@@ -59,7 +59,9 @@ app.use((request, response, next) => {                // - 10 -
     // autorisation de certain en tête dans les requêtes :
     response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     // autorisation de certaine methodes ou verbe attribué aux différentes requêtes :
-    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE', 'PATCH', 'OPTIONS');
+
+    response.setHeader("Access-Control-Allow-Credentials", "true");
 
     next();
 
@@ -75,7 +77,8 @@ app.use(helmet());                                    // - 11 -
 
 
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */                  
-app.use(express.json());                              // - 12 -   
+app.use(express.json());     
+app.use(express.urlencoded({ extended: true }));                         // - 12 -   
 /* ################################################ */
 
 
