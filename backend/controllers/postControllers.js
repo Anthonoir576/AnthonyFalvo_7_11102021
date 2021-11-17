@@ -11,6 +11,8 @@ const models  = require('../models');             // - 01 -
 const fs      = require('fs');                    // - 02 -
 const jwt     = require('jsonwebtoken');          // - 03 -
 
+require('dotenv')
+    .config({ path: './config/.env' }); 
 /* ################################################ */
 
 // a test avec token 
