@@ -63,7 +63,7 @@ exports.likePost = (request, response, next) => {
                     })
                     .catch(() => response.status(400).json({ 'message': 'Le retrait du like ne fonctionne pas [code:02]'})); 
                     
-
+                // On peut plus etre a zero vu que ta destroy si 0 sur les deux    
                 } else if (tableauLike && tableauLike.dislike == 0 && tableauLike.like == 0) {
                     tableauLike.update({
                         like: 1
@@ -146,7 +146,7 @@ exports.dislikePost = (request, response, next) => {
                     })
                     .catch(() => response.status(400).json({ 'message': 'Le retrait du dislike ne fonctionne pas [code:02]'})); 
                     
-
+                // On peut plus etre a zero vu que ta destroy si 0 sur les deux      
                 } else if (tableauLike && tableauLike.dislike == 0 && tableauLike.like == 0) {
                     tableauLike.update({
                         dislike: 1
