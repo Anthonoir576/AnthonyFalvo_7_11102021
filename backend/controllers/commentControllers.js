@@ -17,8 +17,8 @@ require('dotenv')
 //router.post('/comment/:postId',  commentCtrl.createComment);
 //router.put('/comment/:id',       commentCtrl.updateComment);
 //router.delete('/comment/:id',    commentCtrl.deleteComment);
-//router.get('/:postId',           commentCtrl.getAllCommentsByPost);
-//router.get('/',                  commentCtrl.getAllComments);
+//router.get('/:postId',  commentCtrl.getAllCommentsByPost);
+//router.get('/',          commentCtrl.getAllComments);
 
 //app.use('/api/post/comments', commentRoutes);
 
@@ -112,9 +112,48 @@ exports.updateComment        = (request, response, next) => {
 
 
 };
-// exports.deleteComment        = (request, response, next) => {
+// AUTH + CONTROLE SECURITE A REFAIRE EN PLUS APRES LE FRONT !!!!
+exports.deleteComment        = (request, response, next) => {
 
-// };
+    const token        = request.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId       = decodedToken.userId;
+    const commentId       = parseInt(request.params.id);
+
+    console.log('----------');
+    console.log(commentId);
+    console.log('----------');
+
+    models.Comment.findOne({
+        where: { id: commentId }
+    }).then((comment) => {
+
+        console.log('----------');
+        console.log(comment);
+        console.log('----------');
+
+        if (userId == comment.userId) {
+
+            if (comment) {
+
+                console.log('----------');
+                console.log(comment == true);
+                console.log('----------');
+
+                comment.destroy()
+                .then(() => response.status(200).json({'message': 'Commentaire supprimé !'}))
+                .catch(() => response.status(400).json({'message' : 'Une erreur c\'est produite lors de la tentative de suppression du commentaire ...'}));
+            } else {
+                return response.status(404).json({ 'message': 'Ce commentaire est introuvable !'});
+            };
+
+        } else {
+            return response.status(403).json({ 'message': 'Vous n\'êtes pas le propriétaire de ce commentaire'});
+        };
+
+    }).catch(() => { response.status(500).json({ 'message': 'Erreur serveur' })});
+
+};
 // exports.getAllCommentsbyPost = (request, response, next) => {
 
 // };
