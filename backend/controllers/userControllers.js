@@ -23,10 +23,11 @@ require('dotenv')
 /* ############   CONTROLLERS   ################### */
 exports.signup = (request, response, next) => {     // - 06 -
 
-    let email    = request.body.email.trim();
-    let username = request.body.username.trim();
-    let password = request.body.password.trim();
-    let bio      = request.body.bio.trim();
+    let email      = request.body.email.trim();
+    let username   = request.body.username.trim();
+    let password   = request.body.password.trim();
+    let bio        = request.body.bio.trim();
+    let pixDefault = '../'; // A RAJOUTER PLUS TARD
 
     if (email == null || username == null || password == null) {
         return response.status(400).json({ 'error': 'Paramètre manquant' });
@@ -43,6 +44,7 @@ exports.signup = (request, response, next) => {     // - 06 -
                     email: email,
                     username: username,
                     password: hash,
+                    attachment: pixDefault,
                     bio: bio,
                     isAdmin: 0
                 }).then((newUser) => { return response.status(201).json({ 'userId': newUser.id });
