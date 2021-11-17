@@ -14,17 +14,11 @@ require('dotenv')
     .config({ path: './config/.env' }); 
 /* ################################################ */
 
-//router.post('/comment/:postId',  commentCtrl.createComment);
-//router.put('/comment/:id',       commentCtrl.updateComment);
-//router.delete('/comment/:id',    commentCtrl.deleteComment);
-//router.get('/:postId',  commentCtrl.getAllCommentsByPost);
-//router.get('/',          commentCtrl.getAllComments);
 
-//app.use('/api/post/comments', commentRoutes);
 
 /* ############   CONTROLLERS   ################### */
 // AUTH uniquement sur la route
-exports.createComment        = (request, response, next) => {
+exports.createComment         = (request, response, next) => {
 
     let attachment     = request.body.attachment;
     let content        = request.body.content;
@@ -69,7 +63,7 @@ exports.createComment        = (request, response, next) => {
 
 };
 // AUTH + CONTROLE SECURITE A REFAIRE EN PLUS APRES LE FRONT !!!!
-exports.updateComment        = (request, response, next) => {
+exports.updateComment         = (request, response, next) => {
     
     let attachment     = request.body.attachment;
     let content        = request.body.content;
@@ -113,7 +107,7 @@ exports.updateComment        = (request, response, next) => {
 
 };
 // AUTH + CONTROLE SECURITE A REFAIRE EN PLUS APRES LE FRONT !!!!
-exports.deleteComment        = (request, response, next) => {
+exports.deleteComment         = (request, response, next) => {
 
     const token        = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
@@ -155,7 +149,7 @@ exports.deleteComment        = (request, response, next) => {
 
 };
 // AUTH uniquement sur la route
-exports.getAllComments = (request, response, next) => {
+exports.getAllComments        = (request, response, next) => {
 
     models.Comment.findAll()
     .then((comments) =>{
@@ -167,7 +161,19 @@ exports.getAllComments = (request, response, next) => {
     });
 
 };
-// exports.getAllCommentsbyPost       = (request, response, next) => {
+// AUTH uniquement sur la route
+exports.getAllCommentsByPost  = (request, response, next) => {
 
-// };
+    const postId = parseInt(request.params.postId);
+
+    models.Comment.findAll({
+        where: { postId: postId } 
+    })
+    .then((comments) => response.status(200).json(comments))
+    .catch(() => { response.status(404).json({'message': 'Les commentaires dans la base de données n\'ont pas été trouvés !'})
+    });
+    
+
+
+};
 /* ################################################ */
