@@ -52,8 +52,8 @@ exports.createPost = (request, response, next) => {
                 response.status(201).json(newPost);
             }).catch(error => response.status(400).json({ error: error }));
         } else {
-            return response.status(404).json({ 'error': 'Utilisateur introuvable ' })
-        }
+            return response.status(404).json({ 'error': 'Utilisateur introuvable ' });
+        };
 
     })
     .catch(error => response.status(500).json({ error : error }));
