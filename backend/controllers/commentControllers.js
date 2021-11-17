@@ -154,10 +154,20 @@ exports.deleteComment        = (request, response, next) => {
     }).catch(() => { response.status(500).json({ 'message': 'Erreur serveur' })});
 
 };
-// exports.getAllCommentsbyPost = (request, response, next) => {
+// AUTH uniquement sur la route
+exports.getAllComments = (request, response, next) => {
 
-// };
-// exports.getAllComments       = (request, response, next) => {
+    models.Comment.findAll()
+    .then((comments) =>{
+        if (comments) {
+            return response.status(200).json(comments);
+        };
+    }).catch(() => {
+        response.status(404).json({'message': 'Les commentaires dans la base de données n\'ont pas été trouvés !'})
+    });
+
+};
+// exports.getAllCommentsbyPost       = (request, response, next) => {
 
 // };
 /* ################################################ */
