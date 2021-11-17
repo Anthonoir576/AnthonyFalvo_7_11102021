@@ -27,7 +27,7 @@ exports.signup = (request, response, next) => {     // - 06 -
     let username   = request.body.username.trim();
     let password   = request.body.password.trim();
     let bio        = request.body.bio.trim();
-    let pixDefault = '../'; // A RAJOUTER PLUS TARD
+    let pixDefault = './images/users/default.jpg'; // A RAJOUTER PLUS TARD EXEMPLE fictif
 
     if (email == null || username == null || password == null) {
         return response.status(400).json({ 'error': 'Paramètre manquant' });
