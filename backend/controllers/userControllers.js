@@ -116,6 +116,7 @@ exports.getUserProfile = (request, response, next) => {
 
 exports.updateUserProfile = (request, response, next) => {
 
+    const attachment   = request.body.attachment;
     const bioModifier  = request.body.bio;
     const token        = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
@@ -130,7 +131,8 @@ exports.updateUserProfile = (request, response, next) => {
     
             if (user) {
                 user.update({
-                    bio: (bioModifier ? bioModifier : user.bio)
+                    bio: (bioModifier ? bioModifier : user.bio),
+                    attachment: (attachment ? attachment : user.attachment)
                 }).then(user=> response.status(201).json( user ))
                   .catch(error => response.status(500).json({ error: error }));
             } else {
