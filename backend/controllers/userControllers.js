@@ -102,7 +102,7 @@ exports.login  = (request, response, next) => {     // - 07 -
 exports.getUserProfile = (request, response, next) => {
 
     models.User.findOne({
-        attributes: ['id', 'email', 'username', 'bio', 'createdAt'], 
+        attributes: ['id', 'email', 'username', 'bio', 'createdAt', 'updatedAt'], 
         where: { id: request.params.id } 
     })
     .then(user => {
