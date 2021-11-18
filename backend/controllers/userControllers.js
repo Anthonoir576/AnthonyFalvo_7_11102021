@@ -148,4 +148,37 @@ exports.updateUserProfile = (request, response, next) => {
     };
 
 };
+
+exports.deleteUser = (request, response, next) => {
+    
+    const token        = request.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId       = decodedToken.userId;
+    const paramsUserId = request.params.id;
+
+    models.User.findOne({
+        where: { id: userId, isAdmin: (true || 1) }
+    }).then((userAdmin) => {
+
+        if (userAdmin) { 
+
+            models.User.findOne({
+                where: { id : paramsUserId }
+            }).then((userFound) => {
+
+                if (userFound) {
+                    userFound.destroy()
+                             .then(userFound => response.status(200).json('Utilisateur supprimé !' + userFound))
+                             .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
+                }
+            })
+              .catch(() => response.status(404).json({ 'message' : 'Utilisateur inexistant !' }));
+
+        } else {
+            return response.status(403).json({ 'message' : 'Vous n\'êtes pas administrateur ! ' });
+        };
+
+    }).catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
+
+};
 /* ################################################ */
