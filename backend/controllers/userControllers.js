@@ -74,10 +74,20 @@ exports.login  = (request, response, next) => {     // - 07 -
     })
     .then((userFound) => {
         if(userFound) {
+
+            const token = jwt.sign(
+              { userId: userFound.id, isAdmin: userFound.isAdmin },
+              `${process.env.TOKEN_KEY}`,
+              {
+                expiresIn: "12h",
+              }
+            );
+
             bcrypt.compare(password, userFound.password, (errorBcrypt, responseBcrypt) => {
                 if (responseBcrypt){
-                    return response.status(200).json({
-                        // a verif sur userId si correspond
+
+                    response.cookie('jwt', token);
+                    response.status(200).json({
                         userId: userFound.id,
                         token: jwt.sign(
                             { userId: userFound.id,
@@ -96,6 +106,10 @@ exports.login  = (request, response, next) => {     // - 07 -
         };
     })
     .catch(() => { response.status(500).json({ 'error': 'erreur serveur' })});
+
+};
+
+exports.logout = (request, response, next) => {
 
 };
 
