@@ -116,6 +116,31 @@ exports.getUserProfile = (request, response, next) => {
 
 };
 
+exports.getAllUsers = (request, response, next) => {
+
+    const token        = request.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId       = decodedToken.userId;
+
+    if (userId) {
+
+        models.User.findAll({
+            attributes: ['username', 'id', 'attachment', 'createdAt', 'updatedAt']
+        })
+        .then((users) => {
+            if (users) {
+            response.status(200).json(users);
+            } else {
+                return response.status(404).json({ 'message' : 'Aucun utilisateur trouvé !' })
+            };
+        })
+        .catch(() => { response.status(404).json({ 'message' : 'Les utilisateurs ne sont pas disponible ! ' })});
+
+    } else {
+        return response.status(401).json({ 'message': 'Vous n\'êtes actuellement pas connecté ! ' });
+    };
+};
+
 exports.updateUserProfile = (request, response, next) => {
 
     const attachment   = request.body.attachment;
