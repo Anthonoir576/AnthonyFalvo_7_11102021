@@ -10,6 +10,7 @@
 const models  = require('../models');             // - 01 -
 const fs      = require('fs');                    // - 02 -
 const jwt     = require('jsonwebtoken');          // - 03 -
+const { mode } = require('crypto-js');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -141,6 +142,9 @@ exports.getAllPosts = (request, response, next) => {
         offset: (!isNaN(offset)) ? offset : null,
         include: [{
             model: models.Comment
+            
+        },{
+            model: models.Like
         }]
 
     }).then((posts) => {

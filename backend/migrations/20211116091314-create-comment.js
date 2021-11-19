@@ -1,4 +1,7 @@
 'use strict';
+
+const { sequelize } = require("../models");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Comments', {
@@ -23,6 +26,10 @@ module.exports = {
           model: 'Users',
           key: 'id'
         }
+      },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       content: {
         allowNull: false,

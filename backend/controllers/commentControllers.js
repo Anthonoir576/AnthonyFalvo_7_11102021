@@ -46,6 +46,7 @@ exports.createComment         = (request, response, next) => {
                 if (post) {
                     models.Comment.create({
                         userId: user.id,
+                        username: user.username,
                         postId: post.id,
                         content: content,
                         attachment: (attachment ? attachment : null)
