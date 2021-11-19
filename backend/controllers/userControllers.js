@@ -89,7 +89,7 @@ exports.login  = (request, response, next) => {     // - 07 -
                 if (responseBcrypt){
 
                     response.cookie('jwt', token, {httpOnly: true, maxAge: tokenExpires});
-                    
+
                     // retirer le token de la response json apres la fin des test sur postman
                     response.status(200).json({ userId: userFound.id, token: token });
                     
@@ -195,6 +195,7 @@ exports.deleteUser = (request, response, next) => {
     const userId       = decodedToken.userId;
     const paramsUserId = request.params.id;
 
+    // cest pas une condition cest une recherche la !
     models.User.findOne({
         where: { id: userId, isAdmin: (true || 1) }
     }).then((userAdmin) => {

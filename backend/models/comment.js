@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
 
       models.User.belongsToMany(models.Post, {
-        through: models.Like,
+        through: models.Comment,
         foreignKey: 'userId',
         otherKey: 'postId',
       });
   
       models.Post.belongsToMany(models.User, {
-        through: models.Like,
+        through: models.Comment,
         foreignKey: 'postId',
         otherKey: 'userId',
       });
