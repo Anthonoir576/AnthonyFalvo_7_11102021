@@ -76,23 +76,23 @@ exports.login  = (request, response, next) => {     // - 07 -
         if(userFound) {
 
             // si erreur a remettre dans la response et enlever .cookie
+            const tokenExpires = 43200000; //12h
             const token = jwt.sign(
               { userId: userFound.id, isAdmin: userFound.isAdmin },
               `${process.env.TOKEN_KEY}`,
               {
-                expiresIn: "12h",
+                expiresIn: tokenExpires,
               }
             );
 
             bcrypt.compare(password, userFound.password, (errorBcrypt, responseBcrypt) => {
                 if (responseBcrypt){
-                    //console.log(response.cookie('jwt', token, {httpOnly: true}));
-                    response.cookie('jwt', token, {httpOnly: true});
-                    response.status(200).json({
-                        userId: userFound.id,
-                        token: token
-                    });
 
+                    response.cookie('jwt', token, {httpOnly: true, maxAge: tokenExpires});
+                    
+                    // retirer le token de la response json apres la fin des test sur postman
+                    response.status(200).json({ userId: userFound.id, token: token });
+                    
                 } else {
                     return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
                 }
@@ -132,6 +132,9 @@ exports.getAllUsers = (request, response, next) => {
     const token        = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
+
+    //const userAdmin    = decodedToken.isAdmin;
+    //console.log(userAdmin);
 
     if (userId) {
 
