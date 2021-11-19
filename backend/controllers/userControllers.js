@@ -75,6 +75,7 @@ exports.login  = (request, response, next) => {     // - 07 -
     .then((userFound) => {
         if(userFound) {
 
+            // si erreur a remettre dans la response et enlever .cookie
             const token = jwt.sign(
               { userId: userFound.id, isAdmin: userFound.isAdmin },
               `${process.env.TOKEN_KEY}`,
@@ -85,17 +86,13 @@ exports.login  = (request, response, next) => {     // - 07 -
 
             bcrypt.compare(password, userFound.password, (errorBcrypt, responseBcrypt) => {
                 if (responseBcrypt){
-
-                    response.cookie('jwt', token);
+                    //console.log(response.cookie('jwt', token, {httpOnly: true}));
+                    response.cookie('jwt', token, {httpOnly: true});
                     response.status(200).json({
                         userId: userFound.id,
-                        token: jwt.sign(
-                            { userId: userFound.id,
-                              isAdmin: userFound.isAdmin},
-                            `${process.env.TOKEN_KEY}`,
-                            { expiresIn: '12h'}
-                        )
+                        token: token
                     });
+
                 } else {
                     return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
                 }
