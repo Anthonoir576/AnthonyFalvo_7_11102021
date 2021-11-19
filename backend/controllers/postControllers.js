@@ -47,6 +47,7 @@ exports.createPost = (request, response, next) => {
                 UserId: user.id,
                 title: title,
                 content: content,
+                username: user.username,
                 likes: 0,
                 dislikes: 0
             }).then( (newPost) => {

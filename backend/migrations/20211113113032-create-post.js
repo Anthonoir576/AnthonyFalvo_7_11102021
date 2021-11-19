@@ -28,6 +28,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       likes: {
         allowNull: false,
         type: Sequelize.INTEGER
