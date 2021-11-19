@@ -140,8 +140,7 @@ exports.getAllPosts = (request, response, next) => {
         limit: (!isNaN(limit)) ? limit : null,
         offset: (!isNaN(offset)) ? offset : null,
         include: [{
-            model: models.User,
-            attributes: [ 'username' ]
+            model: models.Comment
         }]
 
     }).then((posts) => {
