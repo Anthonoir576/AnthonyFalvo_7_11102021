@@ -129,7 +129,6 @@ exports.getUserProfile = (request, response, next) => {
     const userId = decodedToken.userId;
 
     if (userId) {
-
         models.User.findOne({
             attributes: ['id', 'email', 'username', 'bio', 'createdAt', 'updatedAt'], 
             where: { id: request.params.id } 
@@ -139,10 +138,9 @@ exports.getUserProfile = (request, response, next) => {
                 response.status(200).json(user);
             } else {
                 response.status(404).json({'message': 'Utilisateur introuvable '});
-            }
+            };
         })  
         .catch(() => response.status(500).json({ 'message' : 'Erreur serveur' }));
-
     } else {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
@@ -156,7 +154,6 @@ exports.getAllUsers = (request, response, next) => {
     const userId       = decodedToken.userId;
 
     if (userId) {
-
         models.User.findAll({
             attributes: ['username', 'id', 'attachment', 'createdAt', 'updatedAt']
         })
@@ -168,7 +165,6 @@ exports.getAllUsers = (request, response, next) => {
             };
         })
         .catch(() => { response.status(404).json({ 'message' : 'Les utilisateurs ne sont pas disponible ! ' })});
-
     } else {
         return response.status(401).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
@@ -184,7 +180,6 @@ exports.updateUserProfile = (request, response, next) => {
     const paramsUserId = request.params.id;
 
     if (paramsUserId == userId) {
-
         models.User.findOne({
             attributes: ['id', 'bio'],
             where: { id: userId }
@@ -201,7 +196,6 @@ exports.updateUserProfile = (request, response, next) => {
             };
 
         }).catch(() => response.status(500).json({ 'message' : 'Erreur serveur' }));
-
     } else {
         response.status(403).json({ 'message': 'Vous n\'êtes pas l\'utilisateur de ce profil !' });
     };
