@@ -19,6 +19,7 @@ require('dotenv')
 
 // mettre en place crypto une fois que la visiblité des mails serra plus utile.
 
+// CONTROLE COMPLET AUTH PAR COOKIE ET AUTH PAR ROUTE OK
 
 /* ############   CONTROLLERS   ################### */
 exports.signup = (request, response, next) => {     // - 06 -
@@ -30,7 +31,7 @@ exports.signup = (request, response, next) => {     // - 06 -
     let pixDefault = './images/users/default.jpg'; // A RAJOUTER PLUS TARD EXEMPLE fictif
 
     if (email == null || username == null || password == null) {
-        return response.status(400).json({ 'error': 'Paramètre manquant' });
+        return response.status(400).json({ 'message': 'Paramètre manquant' });
     };
 
     models.User.findOne({
@@ -48,14 +49,14 @@ exports.signup = (request, response, next) => {     // - 06 -
                     bio: bio,
                     isAdmin: 0
                 }).then((newUser) => { return response.status(201).json({ 'userId': newUser.id });
-                }).catch(()  => { return response.status(500).json({ 'error': 'Impossible de s\'enregistrer ' }) });
+                }).catch(()  => { return response.status(500).json({ 'message': 'Impossible de s\'enregistrer ' }) });
             });
 
         } else {
-            return response.status(400).json({ 'error': 'Utilisateur déjà existant' });
+            return response.status(400).json({ 'message': 'Utilisateur déjà existant' });
         };
     })
-    .catch(() => { response.status(500).json({ 'error': 'erreur serveur' })});
+    .catch(() => { response.status(500).json({ 'message': 'erreur serveur' })});
 
     
 };
@@ -66,7 +67,7 @@ exports.login  = (request, response, next) => {     // - 07 -
     let password = request.body.password;
 
     if (email == null || password == null) {
-        return response.status(400).json({ 'error': 'Paramètre manquant' });
+        return response.status(400).json({ 'message': 'Paramètre manquant' });
     };
 
     models.User.findOne({
@@ -92,39 +93,59 @@ exports.login  = (request, response, next) => {     // - 07 -
                     response.status(200).json({ userId: userFound.id });
                     
                 } else {
-                    return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
+                    return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide' });
                 }
             });
 
         } else {
-            return response.status(403).json({ 'error': 'Mot de passe et ou e-mail invalide' });
+            return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide' });
         };
     })
-    .catch(() => { response.status(500).json({ 'error': 'erreur serveur' })});
+    .catch(() => { response.status(500).json({ 'message': 'erreur serveur' })});
 
 };
 
 exports.logout = (request, response, next) => {
 
-    response.cookie('jwt', '', { maxAge: 1 });
-    response.redirect('/');
+    const token = request.cookies.jwt;
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId = decodedToken.userId;
+
+    if (userId) {
+        response.cookie('jwt', '', { maxAge: 1 });
+        response.redirect('/');
+    } else {
+        return response.status(403).json({ 'message': 'Vous n\'êtes pas authentifié !' });
+    };
+
+
 
 };
 
 exports.getUserProfile = (request, response, next) => {
 
-    models.User.findOne({
-        attributes: ['id', 'email', 'username', 'bio', 'createdAt', 'updatedAt'], 
-        where: { id: request.params.id } 
-    })
-    .then(user => {
-        if (user) {
-            response.status(200).json(user);
-        } else {
-            response.status(404).json({'error': 'Utilisateur introuvable '});
-        }
-    })  
-    .catch(() => response.status(500).json({ 'error' : 'Erreur serveur' }));
+    const token = request.cookies.jwt;
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId = decodedToken.userId;
+
+    if (userId) {
+
+        models.User.findOne({
+            attributes: ['id', 'email', 'username', 'bio', 'createdAt', 'updatedAt'], 
+            where: { id: request.params.id } 
+        })
+        .then(user => {
+            if (user) {
+                response.status(200).json(user);
+            } else {
+                response.status(404).json({'message': 'Utilisateur introuvable '});
+            }
+        })  
+        .catch(() => response.status(500).json({ 'message' : 'Erreur serveur' }));
+
+    } else {
+        return response.status(403).json({ 'message': 'Vous n\'êtes pas authentifié !' });
+    };
 
 };
 
@@ -133,9 +154,6 @@ exports.getAllUsers = (request, response, next) => {
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
-
-    //const userAdmin    = decodedToken.isAdmin;
-    //console.log(userAdmin);
 
     if (userId) {
 
@@ -152,7 +170,7 @@ exports.getAllUsers = (request, response, next) => {
         .catch(() => { response.status(404).json({ 'message' : 'Les utilisateurs ne sont pas disponible ! ' })});
 
     } else {
-        return response.status(401).json({ 'message': 'Vous n\'êtes actuellement pas connecté ! ' });
+        return response.status(401).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
 };
 
@@ -163,8 +181,9 @@ exports.updateUserProfile = (request, response, next) => {
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
+    const paramsUserId = request.params.id;
 
-    if (request.body.id == userId) {
+    if (paramsUserId == userId) {
 
         models.User.findOne({
             attributes: ['id', 'bio'],
@@ -178,13 +197,13 @@ exports.updateUserProfile = (request, response, next) => {
                 }).then(user=> response.status(201).json( user ))
                   .catch(error => response.status(500).json({ error: error }));
             } else {
-                response.status(404).json({ 'error': 'Utilisateur inexistant' });
+                response.status(404).json({ 'message': 'Utilisateur inexistant' });
             };
 
-        }).catch(() => response.status(500).json({ 'error' : 'Erreur serveur' }));
+        }).catch(() => response.status(500).json({ 'message' : 'Erreur serveur' }));
 
     } else {
-        response.status(403).json({ 'error': 'Vous n\'êtes pas l\'utilisateur de ce profil' });
+        response.status(403).json({ 'message': 'Vous n\'êtes pas l\'utilisateur de ce profil !' });
     };
 
 };
@@ -196,30 +215,21 @@ exports.deleteUser = (request, response, next) => {
     const userId       = decodedToken.userId;
     const paramsUserId = request.params.id;
 
-    // cest pas une condition cest une recherche la !
-    models.User.findOne({
-        where: { id: userId, isAdmin: (true || 1) }
-    }).then((userAdmin) => {
+    if (userId == paramsUserId) {
+        models.User.findOne({
+            where: { id : paramsUserId }
+        }).then((userFound) => {
 
-        if (userAdmin) { 
-
-            models.User.findOne({
-                where: { id : paramsUserId }
-            }).then((userFound) => {
-
-                if (userFound) {
-                    userFound.destroy()
-                             .then(userFound => response.status(200).json('Utilisateur supprimé !' + userFound))
-                             .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
-                }
-            })
-              .catch(() => response.status(404).json({ 'message' : 'Utilisateur inexistant !' }));
-
-        } else {
-            return response.status(403).json({ 'message' : 'Vous n\'êtes pas administrateur ! ' });
-        };
-
-    }).catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
+            if (userFound) {
+                userFound.destroy()
+                         .then(userFound => response.status(200).json({ 'message': `${userFound.username} à été supprimé de la base de donnée !` }))
+                         .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
+            };
+        })
+          .catch(() => response.status(404).json({ 'message' : 'Utilisateur inexistant !' }));
+    } else {
+        return response.status(403).json({ 'message': 'Vous n\'êtes pas le propriétaire de ce profil ! ' });
+    };
 
 };
 /* ################################################ */
