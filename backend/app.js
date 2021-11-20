@@ -36,10 +36,10 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express       = require('express');             // - 01 -
-const app           = express();                      // - 02 -
-const helmet        = require('helmet');              // - 03 -
-const path          = require('path');                // - 07 -
+const express       = require('express');             
+const app           = express();                      
+const helmet        = require('helmet');              
+const path          = require('path');                
 const userRoutes    = require('./routes/userRoute');
 const postRoutes    = require('./routes/postRoute');
 const likeRoutes    = require('./routes/likeRoute');
@@ -53,7 +53,7 @@ require('dotenv')
 
 
 /* ##############    CORS   ####################### */
-app.use((request, response, next) => {                // - 10 -
+app.use((request, response, next) => {                
 
     // autorisation à '*' donc tout le monde :
     response.setHeader('Access-Control-Allow-Origin', '*');
@@ -72,7 +72,7 @@ app.use((request, response, next) => {                // - 10 -
 
 
 /* ###########   HELMET SECURE   ################## */
-app.use(helmet());                                    // - 11 -
+app.use(helmet());                                    
 /* ################################################ */
 
 
@@ -88,11 +88,11 @@ app.use(cookieParser());
 /* #############   MIDDLEWARE   ################### */
 
 app.use('/images',
-express.static(path.join(__dirname, 'images')));      // - 13 -
+express.static(path.join(__dirname, 'images')));      
 
 
-app.use('/api/auth', userRoutes);                     // - 15 -
-app.use('/api/posts', postRoutes);                    // - 15 -
+app.use('/api/auth', userRoutes);                     
+app.use('/api/posts', postRoutes);                    
 app.use('/api/post/vote', likeRoutes);
 app.use('/api/post/comments', commentRoutes);
 /* ################################################ */
@@ -100,5 +100,5 @@ app.use('/api/post/comments', commentRoutes);
 
 
 /* ##############    EXPORT     ################### */
-module.exports = app;                                 // - 16 -
+module.exports = app;                                 
 /* ################################################ */

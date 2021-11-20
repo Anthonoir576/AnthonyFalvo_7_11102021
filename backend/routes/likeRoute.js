@@ -6,16 +6,16 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express   = require('express');                         // - 01 -
-const router    = express.Router();                           // - 02 -
-const likeCtrl  = require('../controllers/likeControllers');   // - 03 -
-const auth      = require('../middleware/auth');              // - 04 -
+const express   = require('express');                       
+const router    = express.Router();                           
+const likeCtrl  = require('../controllers/likeControllers');   
+const auth      = require('../middleware/auth');             
 /* ################################################ */
 
 
 
 /* ##############   MES ROUTES   ################## */
-                                                              // - 06 -
+                                                              
 router.post('/like/:postId',    auth, likeCtrl.likePost);
 router.post('/dislike/:postId', auth, likeCtrl.dislikePost);
 
@@ -24,5 +24,5 @@ router.post('/dislike/:postId', auth, likeCtrl.dislikePost);
 
 
 /* ##############    EXPORT     ################### */
-module.exports = router;                                      // - 07 -
+module.exports = router;                                     
 /* ################################################ */

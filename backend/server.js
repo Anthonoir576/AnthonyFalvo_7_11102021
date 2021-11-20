@@ -19,21 +19,21 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const http          = require('http');               // - 01 -
-const app           = require('./app');              // - 02 -
+const http          = require('http');               
+const app           = require('./app');              
 
 require('dotenv')
-    .config({ path: './config/.env' });              // - 03 - 
+    .config({ path: './config/.env' });               
 
 /* ################################################ */
 
 
 
 /* ################  SERVEUR  ##################### */
-app.set('port', process.env.PORT || 3000);           // - 04 -
+app.set('port', process.env.PORT || 3000);           
 
-const server = http.createServer(app);               // - 05 -
-server.listen(process.env.PORT || 3000, () => {      // - 06 -
+const server = http.createServer(app);               
+server.listen(process.env.PORT || 3000, () => {      
 
     console.log(`Le serveur fonctionne sur le port ${process.env.PORT}`);
 

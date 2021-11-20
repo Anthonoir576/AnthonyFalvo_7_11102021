@@ -7,7 +7,7 @@
 
 
 /* ##############    EXPORT     ################### */
-module.exports = (request, response, next) => {     // - 02 -
+module.exports = (request, response, next) => {   
 
     let email = new RegExp('^[a-zA-Z0-9._-]+[@]+[a-zA-Z0-9.-_]+[.]+[a-z]{2,5}[ ]{0,2}$', 'g');
     let testEmail = email.test(request.body.email.trim());

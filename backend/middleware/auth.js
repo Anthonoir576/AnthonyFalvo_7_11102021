@@ -8,7 +8,7 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const jwt           = require('jsonwebtoken');      // - 01 -
+const jwt           = require('jsonwebtoken');     
 const models        = require('../models');
 
 require('dotenv')
@@ -18,7 +18,7 @@ require('dotenv')
 
 
 /* ############   MIDDLEWARE    ################### */
-module.exports = (request, response, next) => {     // - 04 -
+module.exports = (request, response, next) => {     
 
     try {
 

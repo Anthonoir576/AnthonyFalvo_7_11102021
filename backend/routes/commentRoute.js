@@ -6,11 +6,11 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express     = require('express');                         // - 01 -
-const router      = express.Router();                           // - 02 -
-const commentCtrl = require('../controllers/commentControllers');   // - 03 -
-const auth        = require('../middleware/auth');              // - 04 -
-const multer      = require('../middleware/multer');            // - 05 -
+const express     = require('express');                        
+const router      = express.Router();                          
+const commentCtrl = require('../controllers/commentControllers');   
+const auth        = require('../middleware/auth');            
+const multer      = require('../middleware/multer');           
 /* ################################################ */
 
 
@@ -26,5 +26,5 @@ router.get('/:postId',           auth, commentCtrl.getAllCommentsByPost);
 
 
 /* ##############    EXPORT     ################### */
-module.exports = router;                                      // - 07 -
+module.exports = router;                                     
 /* ################################################ */

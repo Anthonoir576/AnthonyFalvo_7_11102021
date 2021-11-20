@@ -7,18 +7,18 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express  = require('express');                        // - 01 -
-const router   = express.Router();                          // - 02 -
+const express  = require('express');                        
+const router   = express.Router();                         
 const regex    = require('../middleware/regex');
 const auth     = require('../middleware/auth');
-const userCtrl = require('../controllers/userControllers'); // - 05 -
+const userCtrl = require('../controllers/userControllers'); 
 /* ################################################ */
 
 // Auth FINI/et controle CTRL mise en place +cas crypté mail
 
 
 /* ############   CONTROLLERS   ################### */
-                                                            // - 06 -
+                                                            
 router.post('/signup',    regex, userCtrl.signup);
 router.post('/login',            userCtrl.login);
 router.get ('/logout',     auth, userCtrl.logout);
@@ -31,5 +31,5 @@ router.delete('/user/:id', auth, userCtrl.deleteUser);
                                                             
                                                             
 /* ##############    EXPORT     ################### */
-module.exports = router;                                    // - 07 -
+module.exports = router;                                 
 /* ################################################ */
