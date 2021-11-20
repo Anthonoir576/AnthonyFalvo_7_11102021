@@ -14,7 +14,7 @@ const auth     = require('../middleware/auth');
 const userCtrl = require('../controllers/userControllers'); // - 05 -
 /* ################################################ */
 
-// Auth fonctionne juste enlever pour faire test + vite
+// Auth FINI/et controle CTRL mise en place +cas crypté mail
 
 
 /* ############   CONTROLLERS   ################### */
