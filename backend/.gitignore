@@ -28,6 +28,11 @@ config/config.json
 /images/users/*.png
 /images/users/*.gif
 
+/images/comments/*.jpg
+/images/comments/*.jpeg
+/images/comments/*.png
+/images/comments/*.gif
+
 # ----------------------
 
 
