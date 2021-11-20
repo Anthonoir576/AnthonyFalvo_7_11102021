@@ -17,8 +17,8 @@ const multer    = require('../middleware/multer');            // - 05 -
 
 /* ##############   MES ROUTES   ################## */
                                                               // - 06 -
-router.post('/like/:postId', likeCtrl.likePost);
-router.post('/dislike/:postId', likeCtrl.dislikePost);
+router.post('/like/:postId',    auth, likeCtrl.likePost);
+router.post('/dislike/:postId', auth, likeCtrl.dislikePost);
 
 /* ################################################ */
 

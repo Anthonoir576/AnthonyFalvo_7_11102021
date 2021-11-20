@@ -90,7 +90,6 @@ app.use(cookieParser());
 app.use('/images',
 express.static(path.join(__dirname, 'images')));      // - 13 -
 
-// METTRE AUTH SUR LES ROUTES ICI SI TT LES ROUTES SONT CTRLé
 
 app.use('/api/auth', userRoutes);                     // - 15 -
 app.use('/api/posts', postRoutes);                    // - 15 -
