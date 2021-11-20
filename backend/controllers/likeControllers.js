@@ -27,7 +27,7 @@ exports.likePost = (request, response, next) => {
     const postId       = parseInt(request.params.postId);
 
     if (postId <= 0) {
-        return response.status(400).json({ 'message': 'paramètre invalide' });
+        return response.status(400).json({ 'message': 'paramètre invalide !' });
     };
 
     if (userId) {
@@ -112,7 +112,7 @@ exports.dislikePost = (request, response, next) => {
     const postId       = parseInt(request.params.postId);
 
     if (postId <= 0) {
-        return response.status(400).json({ 'message': 'paramètre invalide' });
+        return response.status(400).json({ 'message': 'paramètre invalide !' });
     };
 
     if (userId) {

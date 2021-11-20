@@ -120,7 +120,7 @@ exports.deletePost = (request, response, next) => {
             return response.status(403).json({ 'message': 'Vous n\'êtes pas authorisé à supprimer cette publication !'});
         };
     })
-    .catch(() => response.status(500).json({ "message" : "Erreur serveur" }));
+    .catch(() => response.status(500).json({ "message" : "Erreur serveur !" }));
 
 };
 exports.getAllPosts = (request, response, next) => {
@@ -149,7 +149,7 @@ exports.getAllPosts = (request, response, next) => {
             if (posts) {
                 response.status(200).json(posts);
             } else {
-                response.status(404).json({ 'message' : 'Aucune publication n\'est présent dans la base de données' });
+                response.status(404).json({ 'message' : 'Aucune publication n\'est présent dans la base de données !' });
             };
         }).catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
     } else {
