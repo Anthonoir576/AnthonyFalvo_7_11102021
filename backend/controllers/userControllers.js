@@ -31,7 +31,7 @@ exports.signup = (request, response, next) => {     // - 06 -
     let pixDefault = './images/users/default.jpg'; // A RAJOUTER PLUS TARD EXEMPLE fictif
 
     if (email == null || username == null || password == null) {
-        return response.status(400).json({ 'message': 'Paramètre manquant' });
+        return response.status(400).json({ 'message': 'Paramètre manquant !' });
     };
 
     models.User.findOne({
@@ -49,14 +49,14 @@ exports.signup = (request, response, next) => {     // - 06 -
                     bio: bio,
                     isAdmin: 0
                 }).then((newUser) => { return response.status(201).json({ 'userId': newUser.id });
-                }).catch(()  => { return response.status(500).json({ 'message': 'Impossible de s\'enregistrer ' }) });
+                }).catch(()  => { return response.status(500).json({ 'message': 'Impossible de s\'enregistrer !' }) });
             });
 
         } else {
-            return response.status(400).json({ 'message': 'Utilisateur déjà existant' });
+            return response.status(400).json({ 'message': 'Utilisateur déjà existant !' });
         };
     })
-    .catch(() => { response.status(500).json({ 'message': 'erreur serveur' })});
+    .catch(() => { response.status(500).json({ 'message': 'erreur serveur !' })});
 
     
 };
@@ -67,7 +67,7 @@ exports.login  = (request, response, next) => {     // - 07 -
     let password = request.body.password;
 
     if (email == null || password == null) {
-        return response.status(400).json({ 'message': 'Paramètre manquant' });
+        return response.status(400).json({ 'message': 'Paramètre manquant !' });
     };
 
     models.User.findOne({
@@ -93,15 +93,15 @@ exports.login  = (request, response, next) => {     // - 07 -
                     response.status(200).json({ userId: userFound.id });
                     
                 } else {
-                    return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide' });
+                    return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide !' });
                 }
             });
 
         } else {
-            return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide' });
+            return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide !' });
         };
     })
-    .catch(() => { response.status(500).json({ 'message': 'erreur serveur' })});
+    .catch(() => { response.status(500).json({ 'message': 'erreur serveur !' })});
 
 };
 
@@ -137,10 +137,10 @@ exports.getUserProfile = (request, response, next) => {
             if (user) {
                 response.status(200).json(user);
             } else {
-                response.status(404).json({'message': 'Utilisateur introuvable '});
+                response.status(404).json({'message': 'Utilisateur introuvable !'});
             };
         })  
-        .catch(() => response.status(500).json({ 'message' : 'Erreur serveur' }));
+        .catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
     } else {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
@@ -164,7 +164,7 @@ exports.getAllUsers = (request, response, next) => {
                 return response.status(404).json({ 'message' : 'Aucun utilisateur trouvé !' })
             };
         })
-        .catch(() => { response.status(404).json({ 'message' : 'Les utilisateurs ne sont pas disponible ! ' })});
+        .catch(() => { response.status(404).json({ 'message' : 'Les utilisateurs ne sont pas disponible !' })});
     } else {
         return response.status(401).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
@@ -192,10 +192,10 @@ exports.updateUserProfile = (request, response, next) => {
                 }).then(user=> response.status(201).json( user ))
                   .catch(error => response.status(500).json({ error: error }));
             } else {
-                response.status(404).json({ 'message': 'Utilisateur inexistant' });
+                response.status(404).json({ 'message': 'Utilisateur inexistant !' });
             };
 
-        }).catch(() => response.status(500).json({ 'message' : 'Erreur serveur' }));
+        }).catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
     } else {
         response.status(403).json({ 'message': 'Vous n\'êtes pas l\'utilisateur de ce profil !' });
     };
