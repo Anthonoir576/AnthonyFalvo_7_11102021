@@ -76,7 +76,6 @@ exports.login  = (request, response, next) => {     // - 07 -
     .then((userFound) => {
         if(userFound) {
 
-            // si erreur a remettre dans la response et enlever .cookie
             const tokenExpires = 43200000; //12h
             const token = jwt.sign(
               { userId: userFound.id, isAdmin: userFound.isAdmin },
@@ -117,9 +116,6 @@ exports.logout = (request, response, next) => {
     } else {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
-
-
-
 };
 
 exports.getUserProfile = (request, response, next) => {
@@ -184,13 +180,12 @@ exports.updateUserProfile = (request, response, next) => {
             attributes: ['id', 'bio'],
             where: { id: userId }
         }).then(user => {
-    
             if (user) {
                 user.update({
                     bio: (bioModifier ? bioModifier : user.bio),
                     attachment: (attachment ? attachment : user.attachment)
-                }).then(user=> response.status(201).json( user ))
-                  .catch(error => response.status(500).json({ error: error }));
+                }).then(user => response.status(201).json( user ))
+                  .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
             } else {
                 response.status(404).json({ 'message': 'Utilisateur inexistant !' });
             };
@@ -199,7 +194,6 @@ exports.updateUserProfile = (request, response, next) => {
     } else {
         response.status(403).json({ 'message': 'Vous n\'êtes pas l\'utilisateur de ce profil !' });
     };
-
 };
 
 exports.deleteUser = (request, response, next) => {
@@ -213,7 +207,6 @@ exports.deleteUser = (request, response, next) => {
         models.User.findOne({
             where: { id : paramsUserId }
         }).then((userFound) => {
-
             if (userFound) {
                 userFound.destroy()
                          .then(userFound => response.status(200).json({ 'message': `${userFound.username} à été supprimé de la base de donnée !` }))
@@ -224,6 +217,5 @@ exports.deleteUser = (request, response, next) => {
     } else {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas le propriétaire de ce profil ! ' });
     };
-
 };
 /* ################################################ */
