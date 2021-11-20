@@ -44,7 +44,7 @@ const userRoutes    = require('./routes/userRoute');
 const postRoutes    = require('./routes/postRoute');
 const likeRoutes    = require('./routes/likeRoute');
 const commentRoutes = require('./routes/commentRoute'); 
-const auth          = require('../middleware/auth');    
+const auth          = require('./middleware/auth');    
 const cookieParser  = require('cookie-parser');
 
 require('dotenv')
