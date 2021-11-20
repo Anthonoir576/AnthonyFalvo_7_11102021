@@ -8,7 +8,7 @@
 /* ##########   MES DECLARATIONS   ################ */
 const express   = require('express');                         // - 01 -
 const router    = express.Router();                           // - 02 -
-const postCtrl = require('../controllers/postControllers');   // - 03 -
+const postCtrl  = require('../controllers/postControllers');   // - 03 -
 const auth      = require('../middleware/auth');              // - 04 -
 const multer    = require('../middleware/multer');     // - 05 -
 /* ################################################ */
