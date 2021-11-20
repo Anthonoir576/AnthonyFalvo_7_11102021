@@ -49,7 +49,7 @@ exports.createPost = (request, response, next) => {
                     dislikes: 0
                 }).then( (newPost) => {
                     response.status(201).json(newPost);
-                }).catch(() => response.status(400).json({ 'message': 'La publication n\'as pas été crée !' }));
+                }).catch(() => response.status(400).json({ 'message': 'La publication n\'as pas été crée ! ' }));
             } else {
                 return response.status(404).json({ 'message': 'Utilisateur introuvable !' });
             };
