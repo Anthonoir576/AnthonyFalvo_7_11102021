@@ -9,6 +9,7 @@
 
 /* ##########   MES DECLARATIONS   ################ */
 const jwt           = require('jsonwebtoken');      // - 01 -
+const models        = require('../models');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -21,25 +22,35 @@ module.exports = (request, response, next) => {     // - 04 -
 
     try {
 
-        const token = request.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
-        const userId = decodedToken.userId;
+        const token = request.cookies.jwt;
 
+        if (token) {
 
-        if (request.body.userId && request.body.userId !== userId) {
+            const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+            const userId = decodedToken.userId;
 
-            throw ' User ID non valable !';
+            if (userId){
+                models.User.findOne({
+                    where: { id : userId }})
+                .then(userFound => { response.locals.user = userFound;})
+                .catch(() => { response.status(404).json({ 'message': 'Utilisateur introuvable' })});
+                next();
 
+            } else if (!userId || userId == null || userId == undefined || userId == false) {
+                
+                response.locals.user = null;
+                response.cookie('jwt', '', { maxAge: 1 });
+                //next();
+                throw 'error';
+            };
         } else {
-
-            next();
-
+            response.locals.user = null;
+            //next();
+            throw 'error';
         };
 
-    } catch (error) {
-             
+    } catch (error) {             
         response.status(401).json({ error: 'ERREUR : ECHEC Authentification '})
-
     };
 
 };

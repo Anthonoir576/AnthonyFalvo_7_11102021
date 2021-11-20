@@ -130,7 +130,7 @@ exports.getUserProfile = (request, response, next) => {
 
 exports.getAllUsers = (request, response, next) => {
 
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
 
@@ -160,7 +160,7 @@ exports.updateUserProfile = (request, response, next) => {
 
     const attachment   = request.body.attachment;
     const bioModifier  = request.body.bio;
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
 
@@ -191,7 +191,7 @@ exports.updateUserProfile = (request, response, next) => {
 
 exports.deleteUser = (request, response, next) => {
     
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const paramsUserId = request.params.id;

@@ -25,7 +25,7 @@ exports.createPost = (request, response, next) => {
 
     let title          = request.body.title;
     let content        = request.body.content;
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
 
@@ -67,7 +67,7 @@ exports.updatePost = (request, response, next) => {
 
     let title          = request.body.title;
     let content        = request.body.content;
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const postId       = parseInt(request.params.id);
@@ -104,7 +104,7 @@ exports.updatePost = (request, response, next) => {
 // AUTH + CONTROLE SECURITE A REFAIRE EN PLUS APRES LE FRONT !!!!
 exports.deletePost = (request, response, next) => {
 
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const postId       = parseInt(request.params.id);

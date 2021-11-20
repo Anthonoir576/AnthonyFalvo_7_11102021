@@ -21,7 +21,7 @@ require('dotenv')
 /* ############   CONTROLLERS   ################### */
 exports.likePost = (request, response, next) => {
 
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const postId       = parseInt(request.params.postId);
@@ -104,7 +104,7 @@ exports.likePost = (request, response, next) => {
 
 exports.dislikePost = (request, response, next) => {
 
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const postId       = parseInt(request.params.postId);

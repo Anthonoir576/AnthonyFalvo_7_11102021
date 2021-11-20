@@ -22,7 +22,7 @@ exports.createComment         = (request, response, next) => {
 
     let attachment     = request.body.attachment;
     let content        = request.body.content;
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const postId       = parseInt(request.params.postId);
@@ -68,7 +68,7 @@ exports.updateComment         = (request, response, next) => {
     
     let attachment     = request.body.attachment;
     let content        = request.body.content;
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const commentId       = parseInt(request.params.id);
@@ -110,7 +110,7 @@ exports.updateComment         = (request, response, next) => {
 // AUTH + CONTROLE SECURITE A REFAIRE EN PLUS APRES LE FRONT !!!!
 exports.deleteComment         = (request, response, next) => {
 
-    const token        = request.headers.authorization.split(' ')[1];
+    const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const commentId       = parseInt(request.params.id);
