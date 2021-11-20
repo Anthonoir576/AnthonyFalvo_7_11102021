@@ -44,6 +44,7 @@ const userRoutes    = require('./routes/userRoute');
 const postRoutes    = require('./routes/postRoute');
 const likeRoutes    = require('./routes/likeRoute');
 const commentRoutes = require('./routes/commentRoute'); 
+const cookieParser  = require('cookie-parser');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -78,7 +79,8 @@ app.use(helmet());                                    // - 11 -
 
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */                  
 app.use(express.json());     
-app.use(express.urlencoded({ extended: true }));    
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());    
 /* ################################################ */
 
 
