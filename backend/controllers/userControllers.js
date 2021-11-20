@@ -19,10 +19,10 @@ require('dotenv')
 
 // mettre en place crypto une fois que la visiblité des mails serra plus utile.
 
-// CONTROLE COMPLET AUTH PAR COOKIE ET AUTH PAR ROUTE OK
+
 
 /* ############   CONTROLLERS   ################### */
-exports.signup = (request, response, next) => {     // - 06 -
+exports.signup = (request, response, next) => {    
 
     let email      = request.body.email.trim();
     let username   = request.body.username.trim();
@@ -60,8 +60,7 @@ exports.signup = (request, response, next) => {     // - 06 -
 
     
 };
-
-exports.login  = (request, response, next) => {     // - 07 -
+exports.login  = (request, response, next) => { 
 
     let email    = request.body.email;
     let password = request.body.password;
@@ -103,7 +102,6 @@ exports.login  = (request, response, next) => {     // - 07 -
     .catch(() => { response.status(500).json({ 'message': 'erreur serveur !' })});
 
 };
-
 exports.logout = (request, response, next) => {
 
     const token = request.cookies.jwt;
@@ -117,7 +115,6 @@ exports.logout = (request, response, next) => {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
 };
-
 exports.getUserProfile = (request, response, next) => {
 
     const token = request.cookies.jwt;
@@ -142,7 +139,6 @@ exports.getUserProfile = (request, response, next) => {
     };
 
 };
-
 exports.getAllUsers = (request, response, next) => {
 
     const token        = request.cookies.jwt;
@@ -165,7 +161,6 @@ exports.getAllUsers = (request, response, next) => {
         return response.status(401).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
 };
-
 exports.updateUserProfile = (request, response, next) => {
 
     const attachment   = request.body.attachment;
@@ -195,7 +190,6 @@ exports.updateUserProfile = (request, response, next) => {
         response.status(403).json({ 'message': 'Vous n\'êtes pas l\'utilisateur de ce profil !' });
     };
 };
-
 exports.deleteUser = (request, response, next) => {
     
     const token        = request.cookies.jwt;
