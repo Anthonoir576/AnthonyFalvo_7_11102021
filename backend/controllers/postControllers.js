@@ -110,7 +110,7 @@ exports.deletePost = (request, response, next) => {
     models.Post.findOne({
         where: { id: postId }
     }).then(post => {
-        if (post && (userId == post.userId || adminId == true)) {
+        if (post && (userId == post.UserId || adminId == true)) {
             post.destroy()
             .then(() => response.status(200).json({ 'message' : `Vous avez supprimé la publication !` }))
             .catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été supprimée ! ' }));
