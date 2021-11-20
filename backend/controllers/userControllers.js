@@ -168,9 +168,10 @@ exports.updateUserProfile = (request, response, next) => {
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
+    const adminId      = decodedToken.isAdmin;
     const paramsUserId = request.params.id;
 
-    if (paramsUserId == userId) {
+    if (paramsUserId == userId || adminId == true) {
         models.User.findOne({
             attributes: ['id', 'bio'],
             where: { id: userId }
@@ -195,9 +196,10 @@ exports.deleteUser = (request, response, next) => {
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
+    const adminId      = decodedToken.isAdmin;
     const paramsUserId = request.params.id;
 
-    if (userId == paramsUserId) {
+    if (userId == paramsUserId || adminId == true) {
         models.User.findOne({
             where: { id : paramsUserId }
         }).then((userFound) => {
