@@ -37,15 +37,12 @@ module.exports = (request, response, next) => {     // - 04 -
                 next();
 
             } else if (!userId || userId == null || userId == undefined || userId == false) {
-                
                 response.locals.user = null;
                 response.cookie('jwt', '', { maxAge: 1 });
-                //next();
                 throw 'error';
             };
         } else {
             response.locals.user = null;
-            //next();
             throw 'error';
         };
 
