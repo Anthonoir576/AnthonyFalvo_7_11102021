@@ -44,6 +44,7 @@ const userRoutes    = require('./routes/userRoute');
 const postRoutes    = require('./routes/postRoute');
 const likeRoutes    = require('./routes/likeRoute');
 const commentRoutes = require('./routes/commentRoute'); 
+const auth          = require('../middleware/auth');    
 const cookieParser  = require('cookie-parser');
 
 require('dotenv')
@@ -91,10 +92,10 @@ app.use('/images',
 express.static(path.join(__dirname, 'images')));      
 
 
-app.use('/api/auth', userRoutes);                     
-app.use('/api/posts', postRoutes);                    
-app.use('/api/post/vote', likeRoutes);
-app.use('/api/post/comments', commentRoutes);
+app.use('/api/auth',                userRoutes);                     
+app.use('/api/posts',         auth, postRoutes);                    
+app.use('/api/post/vote',     auth, likeRoutes);
+app.use('/api/post/comments', auth, commentRoutes);
 /* ################################################ */
 
 
