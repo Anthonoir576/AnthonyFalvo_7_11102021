@@ -70,34 +70,34 @@ exports.updatePost = (request, response, next) => {
     const adminId      = decodedToken.isAdmin;
     const postId       = parseInt(request.params.id);
 
-    if (userId == postId || adminId == true) {
 
-        if (title == null || content == null) {
-            return response.status(400).json({ 'message': 'Paramètre manquant !' });
-        } else if (title.length <= 5 || content.length <= 5){
-            return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !' });
-        } else if (title.length >= 200 || content.length >= 500) {
-            return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
-        };
-    
-        models.Post.findOne({
-            where: { id: postId }
-        }).then(post => {
-            if (post) {
-                post.update({
-                    title: (title ? title : post.title),
-                    content: (content ? content : post.content)
-                }).then( postUpdate => response.status(200).json(postUpdate)
-                ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
-            } else {
-                return response.status(404).json({ 'message': 'Publication introuvable !' });
-            };
-    
-        })
-        .catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
-    } else {
-        return response.status(403).json({ 'message': 'Vous n\'êtes pas le propriétaire de la publication !' });
+
+    if (title == null || content == null) {
+        return response.status(400).json({ 'message': 'Paramètre manquant !' });
+    } else if (title.length <= 5 || content.length <= 5){
+        return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !' });
+    } else if (title.length >= 200 || content.length >= 500) {
+        return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
     };
+
+    models.Post.findOne({
+        where: { id: postId }
+    }).then(post => {
+        if (post && (userId == post.UserId|| adminId == true)) {
+            post.update({
+                title: (title ? title : post.title),
+                content: (content ? content : post.content)
+            }).then( postUpdate => response.status(200).json(postUpdate)
+            ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
+        } else if (!post) {
+            return response.status(404).json({ 'message': 'Publication introuvable !' });
+        } else if (userId !== post.UserId|| adminId !== true) {
+            return response.status(403).json({ 'message': 'Vous n\'êtes pas le propriétaire de la publication !' });
+        };
+
+    })
+    .catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
+
 };
 exports.deletePost = (request, response, next) => {
 
