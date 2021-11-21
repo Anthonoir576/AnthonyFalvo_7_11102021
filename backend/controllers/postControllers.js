@@ -111,17 +111,11 @@ exports.deletePost = (request, response, next) => {
         where: { id: postId }
     }).then(post => {
         if (post && (userId == post.UserId || adminId == true)) {
+
             post.destroy()
-            .then(() => response.status(200).json({ 'message' : `Vous avez supprimé la publication !` }))
-            .catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été supprimée ! ' }));
-            models.Comment.destroy({
-                where: {postId : post.id}
-            }).then(() => response.status(200).json({ 'message' : `Vous avez supprimé les commentaires et la publication !` }))
-              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les commentaires et la publication !` }));
-            models.Like.destroy({
-                where: { postId: post.id }
-            }).then(() => response.status(200).json({ 'message' : `Vous avez supprimé les commentaires et la publication et les likes !` }))
-              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les commentaires et la publication et les likes !` }));
+            .then(() => response.status(200).json({ 'message' : `Vous avez supprimé la publication, ainsi que son contenu ! ` }))
+            .catch((error) => response.status(400).json({ 'message' : 'La publication n\'as pas été supprimée ! ', 'error' : error}));
+            
         } else if (!post) {
             return response.status(404).json({ 'message': 'Publication introuvable !' });
         } else {
