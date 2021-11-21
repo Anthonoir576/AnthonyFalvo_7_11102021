@@ -8,8 +8,7 @@
 /* ##########   MES DECLARATIONS   ################ */
 const express     = require('express');                        
 const router      = express.Router();                          
-const commentCtrl = require('../controllers/commentControllers');           
-const multer      = require('../middleware/multer');           
+const commentCtrl = require('../controllers/commentControllers');                  
 /* ################################################ */
 
 

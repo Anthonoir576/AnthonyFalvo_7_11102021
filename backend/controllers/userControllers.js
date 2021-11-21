@@ -28,7 +28,7 @@ exports.signup = (request, response, next) => {
     let username   = request.body.username.trim();
     let password   = request.body.password.trim();
     let bio        = request.body.bio.trim();
-    let pixDefault = './images/users/default.jpg'; // A RAJOUTER PLUS TARD EXEMPLE fictif
+    let pixDefault = `${request.protocol}://${request.get('host')}/images/users/default.jpg`;
 
     if (email == null || username == null || password == null) {
         return response.status(400).json({ 'message': 'Paramètre manquant !' });
@@ -40,6 +40,7 @@ exports.signup = (request, response, next) => {
     })
     .then((userFound) => {
         if(!userFound) {
+            console.log(pixDefault);
             bcrypt.hash(password, 10, (err, hash) => {
                 let newUser = models.User.create({
                     email: email,
@@ -123,7 +124,7 @@ exports.getUserProfile = (request, response, next) => {
 
     if (userId) {
         models.User.findOne({
-            attributes: ['id', 'email', 'username', 'bio', 'createdAt', 'updatedAt'], 
+            attributes: ['id', 'email', 'username', 'bio', 'attachment', 'createdAt', 'updatedAt'], 
             where: { id: request.params.id } 
         })
         .then(user => {
@@ -163,13 +164,19 @@ exports.getAllUsers = (request, response, next) => {
 };
 exports.updateUserProfile = (request, response, next) => {
 
-    const attachment   = request.body.attachment;
     const bioModifier  = request.body.bio;
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
     const adminId      = decodedToken.isAdmin;
     const paramsUserId = request.params.id;
+    
+    const updateProfileUser = request.file ?
+    {
+        bio : bioModifier,
+        attachment: `${request.protocol}://${request.get('host')}/images/users/${request.file.filename}`
+
+    } : { ...request.body };
 
     if (paramsUserId == userId || adminId == true) {
         models.User.findOne({
@@ -178,8 +185,7 @@ exports.updateUserProfile = (request, response, next) => {
         }).then(user => {
             if (user) {
                 user.update({
-                    bio: (bioModifier ? bioModifier : user.bio),
-                    attachment: (attachment ? attachment : user.attachment)
+                    ...updateProfileUser
                 }).then(user => response.status(201).json( user ))
                   .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
             } else {
