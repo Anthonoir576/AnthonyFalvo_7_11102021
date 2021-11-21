@@ -40,13 +40,28 @@ exports.createPost = (request, response, next) => {
             where: { id: userId }
         }).then(user => {
             if (user) {
-                models.Post.create({
-                    UserId: user.id,
+
+                const createPost = request.file ?
+                {
                     title: title,
                     content: content,
+                    UserId: user.id,
                     username: user.username,
                     likes: 0,
-                    dislikes: 0
+                    dislikes: 0,
+                    attachment: `${request.protocol}://${request.get('host')}/images/posts/${request.file.filename}`
+            
+                } : { 
+                    title: title,
+                    content: content,
+                    UserId: user.id,
+                    username: user.username,
+                    likes: 0,
+                    dislikes: 0,
+                    attachment: ''
+                 };
+                models.Post.create({
+                    ...createPost,
                 }).then( (newPost) => {
                     response.status(201).json(newPost);
                 }).catch(() => response.status(400).json({ 'message': 'La publication n\'as pas été crée ! ' }));
