@@ -113,12 +113,12 @@ exports.deletePost = (request, response, next) => {
         if (post && (userId == post.UserId || adminId == true)) {
             models.Comment.destroy({
                 where: {postId : post.id}
-            }).then(() => response.status(200).json({ 'message' : `Vous avez supprimé les commentaires !` }))
-              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les commentaires et la publication !` }));
+            }).then(() => console.log('Les likes/dislike associé à la publication à été supprimés avec succès !'))
+              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les commentaires !` }));
             models.Like.destroy({
                 where: { postId: post.id }
-            }).then(() => response.status(200).json({ 'message' : `Vous avez supprimé les commentaires et les likes !` }))
-              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les commentaires et la publication et les likes !` }));
+            }).then(() => console.log('Les commentaires associé à la publication à été supprimés avec succès !'))
+              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les likes !` }));
               post.destroy()
               .then(() => response.status(200).json({ 'message' : `Vous avez supprimé la publication ainsi que son contenu !` }))
               .catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été supprimée ! ' }));
