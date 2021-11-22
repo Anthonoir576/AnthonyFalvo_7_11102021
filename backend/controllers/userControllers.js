@@ -213,7 +213,7 @@ exports.updateUserProfile = (request, response, next) => {
         response.status(403).json({ 'message': 'Vous n\'êtes pas l\'utilisateur de ce profil !' });
     };
 };
-exports.deleteFeed = (request, response, next) => {
+exports.deleteUser = (request, response, next) => {
     
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
