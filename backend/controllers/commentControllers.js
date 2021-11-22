@@ -50,6 +50,7 @@ exports.createComment         = (request, response, next) => {
                             userId: user.id,
                             username: user.username,
                             postId: post.id,
+                            associateId: post.UserId,
                             content: content,
                             attachment: (attachment ? attachment : null)
                         }).then((newComment) => { response.status(201).json(newComment) })

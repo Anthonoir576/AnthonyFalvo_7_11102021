@@ -27,6 +27,10 @@ module.exports = {
           key: 'id'
         }
       },
+      associateId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       username: {
         type: Sequelize.STRING,
         allowNull: false,

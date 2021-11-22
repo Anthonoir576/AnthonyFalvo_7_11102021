@@ -26,7 +26,7 @@ router.get ('/logout',     auth,              userCtrl.logout);
 router.get('/user/:id',    auth,              userCtrl.getUserProfile);
 router.get('/users',       auth,              userCtrl.getAllUsers);
 router.put('/user/:id',    auth, multerUsers, userCtrl.updateUserProfile);
-router.delete('/user/:id', auth,              userCtrl.deleteFeed, userCtrl.deleteUser);
+router.delete('/user/:id', auth,              userCtrl.deleteFeed);
 /* ################################################ */
                                                             
                                                             

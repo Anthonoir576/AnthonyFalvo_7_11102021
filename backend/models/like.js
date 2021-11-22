@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER
     },
+    associateId: {
+      type: DataTypes.INTEGER
+    },
     like: DataTypes.INTEGER,
     dislike: DataTypes.INTEGER
   }, {

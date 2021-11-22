@@ -44,6 +44,7 @@ exports.likePost = (request, response, next) => {
                         models.Like.create({
                             userId: userId,
                             postId: postId,
+                            associateId: post.UserId,
                             like: 1,
                             dislike: 0
                         }).then(() => {
@@ -85,6 +86,7 @@ exports.likePost = (request, response, next) => {
                     models.Like.create({
                         userId: userId,
                         postId: postId,
+                        associateId: post.UserId,
                         like: 1,
                         dislike: 0
                     }).then(() => {
@@ -129,6 +131,7 @@ exports.dislikePost = (request, response, next) => {
                         models.Like.create({
                             userId: userId,
                             postId: postId,
+                            associateId: post.UserId,
                             like: 0,
                             dislike: 1
                         }).then(() => {
@@ -170,6 +173,7 @@ exports.dislikePost = (request, response, next) => {
                     models.Like.create({
                         userId: userId,
                         postId: postId,
+                        associateId: post.UserId,
                         like: 0,
                         dislike: 1
                     }).then(() => {

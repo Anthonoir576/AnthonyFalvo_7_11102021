@@ -14,6 +14,7 @@ const crypto = require('crypto-js');
 const models = require('../models');
 const fs     = require('fs');
 const { request } = require('http');
+const post = require('../models/post');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -219,7 +220,63 @@ exports.deleteFeed = (request, response, next) => {
     const userId       = decodedToken.userId;
     const adminId      = decodedToken.isAdmin;
     const paramsUserId = request.params.id;
-     
+    
+    setTimeout(() => {
+        
+        models.Like.destroy({
+            where: { associateId: paramsUserId }
+        }).then(() => console.log('les likes des autre utilisateur associé aux publications ont été supprimé !'))
+          .catch(() => response.status(400).json({ 'message': 'ERREUR 03' }));
+    
+          models.Comment.destroy({
+            where: { associateId: paramsUserId }
+        }).then(() => console.log('les commentaires des autre utilisateur associé aux publications ont été supprimé !'))
+          .catch(() => response.status(400).json({ 'message': 'ERREUR 04' }));
+
+    }, 50);
+    
+    setTimeout(() => {
+        
+        models.Like.destroy({
+            where: { userId: paramsUserId }
+        }).then(() => console.log('les likes de l\'utilisateur ont été supprimé !'))
+          .catch(() => response.status(400).json({ 'message': 'ERREUR 01' }));
+    
+          models.Comment.destroy({
+            where: { userId: paramsUserId }
+        }).then(() => console.log('les commentaires de l\'utilisateur ont été supprimé !'))
+          .catch(() => response.status(400).json({ 'message': 'ERREUR 02' }));
+
+    }, 100);
+
+
+    setTimeout(() => {
+
+        const filename = post.attachment.split('/images/')[1];
+
+        fs.unlink(`images/${filename}`, () => {
+            models.Post.destroy({
+                where: { userId: paramsUserId }
+            }).then(() => console.log('les publications de l\'utilisateur ont été supprimé !'))
+              .catch(() => response.status(400).json({ 'message': 'ERREUR 05' }));
+        });
+
+        
+    }, 200);
+
+    setTimeout(() => {
+        
+        models.User.destroy({ where: {id : paramsUserId} })
+        .then(()=> {return response.status(200).json({ 'message': `L\'utilisateur à été supprimé de la base de donnée, ainsi que tout le contenu associé !` })})
+        .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
+
+    }, 350);
+        
+};
+
+/* ################################################ */
+
+/*
         models.User.findOne({
             where: { id : paramsUserId }
         }).then((userFound) => {
@@ -248,10 +305,8 @@ exports.deleteFeed = (request, response, next) => {
                                 }).then(post => {
 
                                     if (post) {
-                                        const filename = post.attachment.split('/images/')[1];
 
-                                        console.log(i);
-                                        console.log(Object.values(postsUser).length);
+                                        const filename = post.attachment.split('/images/')[1];
 
                                         fs.unlink(`images/${filename}`, () => {
                                             models.Comment.destroy({
@@ -278,7 +333,9 @@ exports.deleteFeed = (request, response, next) => {
                         };
                     };
 
-                }).catch(() => { response.status(400).json({ 'message': 'Erreur poste introuvable !' }) });
+                }).catch(() => { 
+                    return next()
+                    response.status(400).json({ 'message': 'Erreur poste introuvable !' }) });
                     
             } else {
                 return response.status(403).json({ 'message': 'Vous n\'êtes pas le propriétaire de ce profil ! ' });
@@ -286,31 +343,4 @@ exports.deleteFeed = (request, response, next) => {
         })
         .catch(() => response.status(404).json({ 'message' : 'Utilisateur inexistant !' }));
 
-};
-exports.deleteUser = (request, response, next ) => {
-
-    const token        = request.cookies.jwt;
-    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
-    const userId       = decodedToken.userId;
-    const adminId      = decodedToken.isAdmin;
-    const paramsUserId = request.params.id;
-     
-    models.User.findOne({
-        where: { id : paramsUserId }
-    }).then((userFound) => {
-
-        if (userFound && (userId == paramsUserId || adminId == true)) {
-
-            models.User.destroy({ where: {id : paramsUserId} })
-            .then(()=> {return response.status(200).json({ 'message': `L\'utilisateur à été supprimé de la base de donnée !` })})
-            .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
-        
-        } else {
-            return response.status(403).json({ 'message': 'Vous n\'êtes pas le propriétaire de ce profil ! ' });
-        };
-    })
-    .catch(() => response.status(404).json({ 'message' : 'Utilisateur inexistant !' }));
-
-};
-
-/* ################################################ */
+*/
