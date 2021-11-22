@@ -13,7 +13,8 @@ const MIME_TYPES = {
 
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
-    'image/png': 'png'
+    'image/png': 'png',
+    'image/gif': 'gif'
 
 };
 /* ################################################ */
@@ -31,7 +32,7 @@ const storage = multer.diskStorage({
         const name = (Math.floor((Math.random() * 19423798) * Date.now()));
         const extension = MIME_TYPES[file.mimetype];
 
-        callback(null, name + '.' + extension);
+        return callback(null, name + '.' + extension); 
 
     }
 });
