@@ -13,8 +13,7 @@ const jwt    = require('jsonwebtoken');
 const crypto = require('crypto-js');
 const models = require('../models');
 const fs     = require('fs');
-const { request } = require('http');
-const post = require('../models/post');
+
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -174,6 +173,15 @@ exports.updateUserProfile = (request, response, next) => {
     const adminId      = decodedToken.isAdmin;
     const paramsUserId = request.params.id;
     
+    const MIME_TYPES = {                                
+
+        'jpg': 'jpg',
+        'jpeg': 'jpg',
+        'png': 'png',
+        'gif': 'gif'
+    
+    };
+    
     const updateProfileUser = request.file ?
     {
         bio : bioModifier,
@@ -188,19 +196,22 @@ exports.updateUserProfile = (request, response, next) => {
         }).then(user => {
             if (user) {
 
-                const filename = user.attachment.split('/images/users/')[1];
-
                 if (updateProfileUser.attachment == undefined) {
                     user.update({
                         ...updateProfileUser
                     }).then(user => response.status(201).json( user ))
                       .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
-                } else {
+
+                } else if (updateProfileUser.attachment !== undefined) {
+
+                    const filename = user.attachment.split('/images/users/')[1];
+                    //const fileTest = filename.split('.')[1];
+
                     fs.unlink(`images/users/${filename}`, () => {
                         user.update({
                             ...updateProfileUser
                         }).then(user => response.status(201).json( user ))
-                          .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
+                        .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
                     });
                 };
 
