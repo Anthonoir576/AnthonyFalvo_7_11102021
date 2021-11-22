@@ -186,8 +186,6 @@ exports.updatePost = (request, response, next) => {
              };
 
             
-
-
         } else if (!post) {
             return response.status(404).json({ 'message': 'Publication introuvable !' });
         } else if (userId !== post.UserId|| adminId !== true) {
