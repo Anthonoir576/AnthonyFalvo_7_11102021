@@ -29,10 +29,22 @@ exports.createPost = (request, response, next) => {
     if (userId) {
 
         if (title == null || content == null) {
+            const filename = request.file.filename;
+            fs.unlink(`images/${filename}`,() => {
+                console.log('message : le fichier à été supprimé car le titre ou le contenu n\'existait pas !');               
+            });
             return response.status(400).json({ 'message': 'Paramètre manquant !' });
         } else if (title.length <= 5 || content.length <= 5){
+            const filename = request.file.filename;
+            fs.unlink(`images/${filename}`,() => {
+                console.log('message : le fichier à été supprimé car le titre ou le contenu n\'était pas conforme !');               
+            });
             return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !' });
         } else if (title.length >= 200 || content.length >= 500) {
+            const filename = request.file.filename;
+            fs.unlink(`images/${filename}`,() => {
+                console.log('message : le fichier à été supprimé car le titre ou le contenu n\'était pas conforme !');               
+            });
             return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
         };
     
@@ -85,6 +97,7 @@ exports.updatePost = (request, response, next) => {
     const adminId      = decodedToken.isAdmin;
     const postId       = parseInt(request.params.id);
 
+    
 
 
     if (title == null || content == null) {
@@ -95,15 +108,55 @@ exports.updatePost = (request, response, next) => {
         return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
     };
 
+
     models.Post.findOne({
         where: { id: postId }
     }).then(post => {
+
+        if ((title == null || content == null) || (post.title == null || post.content == null)) {
+            return response.status(400).json({ 'message': 'Paramètre manquant !' });
+        } else if ((title.length <= 5 || content.length <= 5) || (post.title == null || post.content == null)){
+            return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !' });
+        } else if (title.length >= 200 || content.length >= 500 || (post.title == null || post.content == null)) {
+            return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
+        };
+
         if (post && (userId == post.UserId|| adminId == true)) {
-            post.update({
-                title: (title ? title : post.title),
-                content: (content ? content : post.content)
-            }).then( postUpdate => response.status(200).json(postUpdate)
-            ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
+
+
+            const filename = post.attachment.split('/images/')[1];
+            const updatePost = request.file ?
+            {   
+                title: title,
+                content: content,
+                attachment: `${request.protocol}://${request.get('host')}/images/posts/${request.file.filename}`       
+            } : { 
+                title: title,
+                content: content
+             };
+
+
+             if (updatePost.attachment == undefined) {
+
+                post.update({
+                    ...updatePost
+                }).then( postUpdate => response.status(200).json(postUpdate)
+                ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
+
+             } else {
+
+                fs.unlink(`images/${filename}`, () => {
+                    post.update({
+                        ...updatePost
+                    }).then( postUpdate => response.status(200).json(postUpdate)
+                    ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
+                });
+
+             };
+
+            
+
+
         } else if (!post) {
             return response.status(404).json({ 'message': 'Publication introuvable !' });
         } else if (userId !== post.UserId|| adminId !== true) {
