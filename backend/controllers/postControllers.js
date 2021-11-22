@@ -28,24 +28,42 @@ exports.createPost = (request, response, next) => {
 
     if (userId) {
 
+        // Contrôle du front
         if (title == null || content == null) {
-            const filename = request.file.filename;
-            fs.unlink(`images/${filename}`,() => {
-                console.log('message : le fichier à été supprimé car le titre ou le contenu n\'existait pas !');               
-            });
-            return response.status(400).json({ 'message': 'Paramètre manquant !' });
+
+            if (request.file !== undefined) {
+                const filename = request.file.filename;
+                fs.unlink(`images/posts/${filename}`,() => {
+                    console.log('Fichier supprimé !');              
+                });
+                return response.status(400).json({ 'message': 'Paramètre manquant, le fichier à été supprimé !' }); 
+            } else {
+                return response.status(400).json({ 'message': 'Paramètre manquant !' });
+            };
+
         } else if (title.length <= 5 || content.length <= 5){
-            const filename = request.file.filename;
-            fs.unlink(`images/${filename}`,() => {
-                console.log('message : le fichier à été supprimé car le titre ou le contenu n\'était pas conforme !');               
-            });
-            return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !' });
+            
+            if (request.file !== undefined) {
+                const filename = request.file.filename;
+                fs.unlink(`images/posts/${filename}`,() => {
+                      console.log('Fichier supprimé !');         
+                });
+                return response.status(400).json({  'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu, le fichier à été supprimé !' });    
+            } else {
+                return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !'});
+            };
+
         } else if (title.length >= 200 || content.length >= 500) {
-            const filename = request.file.filename;
-            fs.unlink(`images/${filename}`,() => {
-                console.log('message : le fichier à été supprimé car le titre ou le contenu n\'était pas conforme !');               
-            });
-            return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
+
+            if (request.file !== undefined) {
+                const filename = request.file.filename;
+                fs.unlink(`images/posts/${filename}`,() => {
+                    console.log('Fichier supprimé !');             
+                });
+                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu, le fichier à été supprimé !' });   
+            } else {
+                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
+            };            
         };
     
         models.User.findOne({
@@ -97,28 +115,41 @@ exports.updatePost = (request, response, next) => {
     const adminId      = decodedToken.isAdmin;
     const postId       = parseInt(request.params.id);
 
-    
-
-
-    if (title == null || content == null) {
-        return response.status(400).json({ 'message': 'Paramètre manquant !' });
-    } else if (title.length <= 5 || content.length <= 5){
-        return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !' });
-    } else if (title.length >= 200 || content.length >= 500) {
-        return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
-    };
-
 
     models.Post.findOne({
         where: { id: postId }
     }).then(post => {
 
         if ((title == null || content == null) || (post.title == null || post.content == null)) {
-            return response.status(400).json({ 'message': 'Paramètre manquant !' });
+            if (request.file !== undefined) {
+                const filename = request.file.filename;
+                fs.unlink(`images/posts/${filename}`,() => {
+                    console.log('Fichier supprimé !');              
+                });
+                return response.status(400).json({ 'message': 'Paramètre manquant, le fichier à été supprimé !' }); 
+            } else {
+                return response.status(400).json({ 'message': 'Paramètre manquant !' });
+            };
         } else if ((title.length <= 5 || content.length <= 5) || (post.title == null || post.content == null)){
-            return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !' });
+            if (request.file !== undefined) {
+                const filename = request.file.filename;
+                fs.unlink(`images/posts/${filename}`,() => {
+                      console.log('Fichier supprimé !');         
+                });
+                return response.status(400).json({  'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu, le fichier à été supprimé !' });    
+            } else {
+                return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !'});
+            };
         } else if (title.length >= 200 || content.length >= 500 || (post.title == null || post.content == null)) {
-            return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
+            if (request.file !== undefined) {
+                const filename = request.file.filename;
+                fs.unlink(`images/posts/${filename}`,() => {
+                    console.log('Fichier supprimé !');             
+                });
+                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu, le fichier à été supprimé !' });   
+            } else {
+                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
+            }; 
         };
 
         if (post && (userId == post.UserId|| adminId == true)) {
@@ -179,17 +210,23 @@ exports.deletePost = (request, response, next) => {
         where: { id: postId }
     }).then(post => {
         if (post && (userId == post.UserId || adminId == true)) {
-            models.Comment.destroy({
-                where: {postId : post.id}
-            }).then(() => console.log('Les likes/dislike associé à la publication à été supprimés avec succès !'))
-              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les commentaires !` }));
-            models.Like.destroy({
-                where: { postId: post.id }
-            }).then(() => console.log('Les commentaires associé à la publication à été supprimés avec succès !'))
-              .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les likes !` }));
-              post.destroy()
-              .then(() => response.status(200).json({ 'message' : `Vous avez supprimé la publication ainsi que son contenu !` }))
-              .catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été supprimée ! ' }));
+
+            const filename = post.attachment.split('/images/')[1];
+
+            fs.unlink(`images/${filename}`, () => {
+                models.Comment.destroy({
+                    where: {postId : post.id}
+                }).then(() => console.log('Les likes/dislike associé à la publication à été supprimés avec succès !'))
+                  .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les commentaires !` }));
+                models.Like.destroy({
+                    where: { postId: post.id }
+                }).then(() => console.log('Les commentaires associé à la publication à été supprimés avec succès !'))
+                  .catch(() => response.status(400).json({ 'message' : `Vous n\'avez pas supprimé les likes !` }));
+                post.destroy()
+                .then(() => response.status(200).json({ 'message' : `Vous avez supprimé la publication ainsi que son contenu !` }))
+                .catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été supprimée ! ' }));
+            });
+
         } else if (!post) {
             return response.status(404).json({ 'message': 'Publication introuvable !' });
         } else {
