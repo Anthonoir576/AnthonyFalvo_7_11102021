@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const crypto = require('crypto-js');
 const models = require('../models');
+const fs     = require('fs');
 
 require('dotenv')
     .config({ path: './config/.env' }); 
@@ -28,7 +29,7 @@ exports.signup = (request, response, next) => {
     let username   = request.body.username.trim();
     let password   = request.body.password.trim();
     let bio        = request.body.bio.trim();
-    let pixDefault = `${request.protocol}://${request.get('host')}/images/users/default.jpg`;
+    let pixDefault = `${request.protocol}://${request.get('host')}/images/defaults/default.png`;
 
     if (email == null || username == null || password == null) {
         return response.status(400).json({ 'message': 'Paramètre manquant !' });
@@ -180,14 +181,27 @@ exports.updateUserProfile = (request, response, next) => {
 
     if (paramsUserId == userId || adminId == true) {
         models.User.findOne({
-            attributes: ['id', 'bio'],
+            attributes: ['id', 'username', 'bio', 'attachment', 'createdAt', 'updatedAt'],
             where: { id: userId }
         }).then(user => {
             if (user) {
-                user.update({
-                    ...updateProfileUser
-                }).then(user => response.status(201).json( user ))
-                  .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
+
+                const filename = user.attachment.split('/images/users/')[1];
+
+                if (updateProfileUser.attachment == undefined) {
+                    user.update({
+                        ...updateProfileUser
+                    }).then(user => response.status(201).json( user ))
+                      .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
+                } else {
+                    fs.unlink(`images/users/${filename}`, () => {
+                        user.update({
+                            ...updateProfileUser
+                        }).then(user => response.status(201).json( user ))
+                          .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
+                    });
+                };
+
             } else {
                 response.status(404).json({ 'message': 'Utilisateur inexistant !' });
             };
