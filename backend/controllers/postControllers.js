@@ -120,50 +120,18 @@ exports.updatePost = (request, response, next) => {
         where: { id: postId }
     }).then(post => {
 
-        if ((title == null || content == null) || (post.title == null || post.content == null)) {
-            if (request.file !== undefined) {
-                const filename = request.file.filename;
-                fs.unlink(`images/posts/${filename}`,() => {
-                    console.log('Fichier supprimé !');              
-                });
-                return response.status(400).json({ 'message': 'Paramètre manquant, le fichier à été supprimé !' }); 
-            } else {
-                return response.status(400).json({ 'message': 'Paramètre manquant !' });
-            };
-        } else if ((title.length <= 5 || content.length <= 5) || (post.title == null || post.content == null)){
-            if (request.file !== undefined) {
-                const filename = request.file.filename;
-                fs.unlink(`images/posts/${filename}`,() => {
-                      console.log('Fichier supprimé !');         
-                });
-                return response.status(400).json({  'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu, le fichier à été supprimé !' });    
-            } else {
-                return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !'});
-            };
-        } else if (title.length >= 200 || content.length >= 500 || (post.title == null || post.content == null)) {
-            if (request.file !== undefined) {
-                const filename = request.file.filename;
-                fs.unlink(`images/posts/${filename}`,() => {
-                    console.log('Fichier supprimé !');             
-                });
-                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu, le fichier à été supprimé !' });   
-            } else {
-                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
-            }; 
-        };
-
         if (post && (userId == post.UserId|| adminId == true)) {
 
 
             const filename = post.attachment.split('/images/')[1];
             const updatePost = request.file ?
             {   
-                title: title,
-                content: content,
+                title: (title ? title : post.title),
+                content: (content ? content : post.content),
                 attachment: `${request.protocol}://${request.get('host')}/images/posts/${request.file.filename}`       
             } : { 
-                title: title,
-                content: content
+                title: (title ? title : post.title),
+                content: (content ? content : post.content)
              };
 
 
