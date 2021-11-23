@@ -17,7 +17,6 @@ require('dotenv')
 
 
 /* ############   CONTROLLERS   ################### */
-
 exports.createComment         = (request, response, next) => {
 
     let attachment     = request.body.attachment;

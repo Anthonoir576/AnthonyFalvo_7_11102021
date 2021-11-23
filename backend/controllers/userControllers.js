@@ -14,7 +14,6 @@ const crypto = require('crypto-js');
 const models = require('../models');
 const fs     = require('fs');
 
-
 require('dotenv')
     .config({ path: './config/.env' }); 
 /* ################################################ */

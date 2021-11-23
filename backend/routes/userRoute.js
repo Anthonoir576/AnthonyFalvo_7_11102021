@@ -15,11 +15,9 @@ const userCtrl      = require('../controllers/userControllers');
 const multerUsers   = require('../middleware/multer-users');
 /* ################################################ */
 
-// Auth FINI/et controle CTRL mise en place +cas crypté mail
-// sur postman pour test multer du front key image value le fichier sur la route put user avc id
 
-/* ############   CONTROLLERS   ################### */
-                                                            
+
+/* ############   CONTROLLERS   ################### */  
 router.post('/signup',    regex,              userCtrl.signup);
 router.post('/login',                         userCtrl.login);
 router.get ('/logout',     auth,              userCtrl.logout);

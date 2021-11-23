@@ -13,11 +13,9 @@ const likeCtrl  = require('../controllers/likeControllers');
 
 
 
-/* ##############   MES ROUTES   ################## */
-                                                              
+/* ##############   MES ROUTES   ################## */                                                  
 router.post('/like/:postId',    likeCtrl.likePost);
 router.post('/dislike/:postId', likeCtrl.dislikePost);
-
 /* ################################################ */
 
 
