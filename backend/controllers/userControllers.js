@@ -247,7 +247,7 @@ exports.deleteUser = (request, response, next) => {
             }).then(() => console.log('les commentaires des autre utilisateur associé aux publications ont été supprimé !'))
             .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 02' }));
 
-        }, 50);
+        }, 1);
         
         // suppression like et commentaire de l'utilisateur supprimé
         setTimeout(() => {
@@ -262,7 +262,7 @@ exports.deleteUser = (request, response, next) => {
             }).then(() => console.log('les commentaires de l\'utilisateur ont été supprimé !'))
             .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 04' }));
 
-        }, 100);
+        }, 5);
 
         // suppression des images des publications de lutilisateur supprimé
         setTimeout(() => {
@@ -299,7 +299,7 @@ exports.deleteUser = (request, response, next) => {
                 };
             }).catch(() => { response.status(500).json({ 'message': 'Aucune publication trouvé dans la base de données !' }) });
             
-        }, 200);
+        }, 10);
 
         // suppression des publications de lutilisateur supprimé
         setTimeout(() => {
@@ -307,7 +307,7 @@ exports.deleteUser = (request, response, next) => {
                 where: { userId: paramsUserId }
             }).then(() => console.log('les publications de l\'utilisateur ont été supprimé !'))
             .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 05' }));
-        }, 400);
+        }, 20);
 
         // suppression de lutilisateur (visé à être supprimé)
         setTimeout(() => {
@@ -316,7 +316,7 @@ exports.deleteUser = (request, response, next) => {
             .then(()=> {return response.status(200).json({ 'message': `L\'utilisateur à été supprimé de la base de donnée, ainsi que tout le contenu associé !` })})
             .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
 
-        }, 500);
+        }, 50);
             
     } else {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas autorisé à supprimer cette utilisateur !' })
