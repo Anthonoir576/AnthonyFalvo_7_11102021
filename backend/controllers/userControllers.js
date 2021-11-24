@@ -30,7 +30,7 @@ exports.authentification = (request, response, next) => {
     const userId = decodedToken.userId;
     const userAdmin = decodedToken.isAdmin;
 
-    if (userId == true) {
+    if (token) {
         response.status(200).json({userId: userId, isAdmin: userAdmin});
     } else {
         response.status(400).json('Token innexistant !');
