@@ -1,8 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
 import { UserIdContext } from '../components/Routes/AppContext';
-
+import Log from '../components/log';
 
 const Profil = () => {
 
@@ -11,9 +10,17 @@ const Profil = () => {
     return (
         <div>
             {userId ? (
-                <h1>Profil</h1>
+                <h1>PROFIL</h1>
             ) : (
-                <Redirect to="/authentification" />
+                  
+            <div>
+                <div className="profil-page">
+                    <div className="log-container">
+                        <Log signIn={true} signUp={false} />
+                    </div>
+                </div>
+            </div>
+                   
             )}
         </div>
     );

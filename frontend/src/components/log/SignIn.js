@@ -4,15 +4,15 @@ import axios from 'axios';
  
 const SignIn = () => {
 
-    const [email, setEmail] = useState('');
+    const [email, setEmail]       = useState('');
     const [password, setPassword] = useState('');
 
-    const formLogin = (e) => {
+    const formLogin = async (e) => {
         e.preventDefault();
 
         const emailOrPasswordError = document.querySelector('.error');
 
-        axios({
+        await axios({
             method: "POST",
             url: `${process.env.REACT_APP_API_URL}api/auth/login`,
             withCredentials: true,
@@ -53,7 +53,7 @@ const SignIn = () => {
                     } 
                     value={password}/>
             <div className="error"></div>        
-            <button type="submit">Ce connecter</button>
+            <button type="submit">Vous connectez</button>
         </form>
     );
 };

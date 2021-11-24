@@ -23,8 +23,8 @@ const Log = ( props ) => {
        <div className="connection-form">
            <div className="form-container">
                <ul>
-                   <li onClick={formFonction} id="register" className={signUp ? "active-btn" : null}>S'inscrire</li>
-                   <li onClick={formFonction} id="login" className={signIn ? "active-btn" : null}>Se Connecter</li>
+                   <li onClick={formFonction} id="register" className={signUp ? "active-btn" : null}>Vous Inscrire</li>
+                   <li onClick={formFonction} id="login" className={signIn ? "active-btn" : null}>Vous Connectez</li>
                </ul>
                {signUp && <SignUp />}
                {signIn && <SignIn />}
