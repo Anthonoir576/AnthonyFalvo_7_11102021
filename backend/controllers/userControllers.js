@@ -23,6 +23,23 @@ require('dotenv')
 
 
 /* ############   CONTROLLERS   ################### */
+exports.authentification = (request, response, next) => {
+    
+    try {
+        const token = request.cookies.jwt;
+        const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+        const userId = decodedToken.userId;
+    
+        if (!userId || userId == undefined || userId == null || !token) {
+            response.status(200).send('Token innexistant !');
+        }  else {
+            response.status(200).send('Utilisateur connecter !');
+        };
+    } catch (error) {
+        response.status(200).send('Token innexistant !');
+    }
+
+};
 exports.signup = (request, response, next) => {    
 
     let email      = request.body.email.trim();
@@ -93,12 +110,12 @@ exports.login  = (request, response, next) => {
                     response.status(200).json({ userId: userFound.id });
                     
                 } else {
-                    return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide !' });
+                    return response.status(403).json({ message: 'Mot de passe et ou e-mail invalide !' });
                 }
             });
 
         } else {
-            return response.status(403).json({ 'message': 'Mot de passe et ou e-mail invalide !' });
+            return response.status(403).json({ message: 'Mot de passe et ou e-mail invalide !' });
         };
     })
     .catch(() => { response.status(500).json({ 'message': 'erreur serveur !' })});

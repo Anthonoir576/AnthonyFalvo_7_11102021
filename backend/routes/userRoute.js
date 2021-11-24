@@ -17,7 +17,8 @@ const multerUsers   = require('../middleware/multer-users');
 
 
 
-/* ############   CONTROLLERS   ################### */  
+/* ############   CONTROLLERS   ################### */
+router.get('/',                               userCtrl.authentification);  
 router.post('/signup',    regex,              userCtrl.signup);
 router.post('/login',                         userCtrl.login);
 router.get ('/logout',     auth,              userCtrl.logout);
