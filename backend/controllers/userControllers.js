@@ -25,19 +25,16 @@ require('dotenv')
 /* ############   CONTROLLERS   ################### */
 exports.authentification = (request, response, next) => {
     
-    try {
-        const token = request.cookies.jwt;
-        const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
-        const userId = decodedToken.userId;
-    
-        if (!userId || userId == undefined || userId == null || !token) {
-            response.status(200).send('Token innexistant !');
-        }  else {
-            response.status(200).send('Utilisateur connecter !');
-        };
-    } catch (error) {
-        response.status(200).send('Token innexistant !');
-    }
+    const token = request.cookies.jwt;
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId = decodedToken.userId;
+    const userAdmin = decodedToken.isAdmin;
+
+    if (userId == true) {
+        response.status(200).json({userId: userId, isAdmin: userAdmin});
+    } else {
+        response.status(400).json('Token innexistant !');
+    };
 
 };
 exports.signup = (request, response, next) => {    
@@ -45,7 +42,7 @@ exports.signup = (request, response, next) => {
     let email      = request.body.email.trim();
     let username   = request.body.username.trim();
     let password   = request.body.password.trim();
-    let bio        = request.body.bio.trim();
+    
     let pixDefault = `${request.protocol}://${request.get('host')}/images/defaults/default.png`;
 
     if (email == null || username == null || password == null) {
@@ -65,7 +62,7 @@ exports.signup = (request, response, next) => {
                     username: username,
                     password: hash,
                     attachment: pixDefault,
-                    bio: bio,
+                    bio: '...',
                     isAdmin: 0
                 }).then((newUser) => { return response.status(201).json({ 'userId': newUser.id });
                 }).catch(()  => { return response.status(500).json({ 'message': 'Impossible de s\'enregistrer !' }) });
@@ -182,7 +179,7 @@ exports.getAllUsers = (request, response, next) => {
 };
 exports.updateUserProfile = (request, response, next) => {
 
-    const bioModifier  = request.body.bio;
+    const bioModifier  = request.body.bio.trim();
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
