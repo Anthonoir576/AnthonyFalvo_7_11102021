@@ -21,13 +21,15 @@ const SignIn = () => {
                 password: password
             }
         }).then((result) => {
-            if (result.data.errors){
-                emailOrPasswordError.innerHTML = (result.data.errors)
+            // console.log(result);
+            // console.log('REPONSE');
+            if (result.data.message) {
+                emailOrPasswordError.innerHTML = ('Mot de passe ou e-mail invalide !');
             } else {
                 window.location = '/';
             }
-        }).catch((errors) => {
-            console.log(errors);
+        }).catch(() => {
+            emailOrPasswordError.innerHTML = ('Mot de passe ou e-mail invalide !');
         })
     };
 
