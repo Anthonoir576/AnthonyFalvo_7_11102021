@@ -30,6 +30,7 @@ const SignIn = () => {
                        (e) => setPassword(e.target.value)
                     } 
                     value={password}/>
+            <div className="error"></div>        
             <button type="submit">Ce connecter</button>
         </form>
     );
