@@ -12,7 +12,7 @@ module.exports = (request, response, next) => {
     let email = new RegExp('^[a-zA-Z0-9._-]+[@]+[a-zA-Z0-9.-_]+[.]+[a-z]{2,5}[ ]{0,2}$', 'g');
     let testEmail = email.test(request.body.email.trim());
 
-    let username = new RegExp("^[a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ,.'-]{5,25}$", 'g');
+    let username = new RegExp("^[a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ ,.'-]{5,25}$", 'g');
     let testUsername = username.test(request.body.username.trim());
 
     let password = new RegExp(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){4,16}$/gm);
