@@ -36,7 +36,7 @@ const SignIn = () => {
     return (
         <form action="" onSubmit={formLogin} id="sign-up-form">
             <label htmlFor="email">E-mail :</label>
-            <input  type="text"
+            <input  type="email"
                     name="email"
                     id="email" 
                     onChange={

@@ -17,8 +17,7 @@ const App = () => {
         url: `${process.env.REACT_APP_API_URL}api/auth/`,
         withCredentials: true
       }).then((result) => {
-        // console.log(result.data.userId);
-        // console.log(result.data.isAdmin);
+
         setUserId(result.data.userId);
         setUserAdmin(result.data.isAdmin);
 
