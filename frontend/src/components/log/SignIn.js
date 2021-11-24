@@ -42,7 +42,8 @@ const SignIn = () => {
                     onChange={
                        (e) => setEmail(e.target.value)
                     } 
-                    value={email}/>
+                    value={email}
+            />
 
             <label htmlFor="password">Mot de passe :</label>
             <input  type="password" 
@@ -51,7 +52,8 @@ const SignIn = () => {
                     onChange={
                        (e) => setPassword(e.target.value)
                     } 
-                    value={password}/>
+                    value={password}
+            />
             <div className="error"></div>        
             <button type="submit">Vous connectez</button>
         </form>
