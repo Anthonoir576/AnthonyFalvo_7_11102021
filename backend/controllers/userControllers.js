@@ -65,11 +65,11 @@ exports.signup = (request, response, next) => {
                     bio: '...',
                     isAdmin: 0
                 }).then((newUser) => { return response.status(201).json({ 'userId': newUser.id });
-                }).catch(()  => { return response.status(500).json({ 'message': 'Impossible de s\'enregistrer !' }) });
+                }).catch(()  => { response.status(500).json({ 'message' : 'Impossible de s\'enregistrer !' }) });
             });
 
         } else {
-            return response.status(400).json({ 'message': 'Utilisateur déjà existant !' });
+            response.status(200).json({ message : 'Utilisateur déjà existant !' });
         };
     })
     .catch(() => { response.status(500).json({ 'message': 'erreur serveur !' })});
