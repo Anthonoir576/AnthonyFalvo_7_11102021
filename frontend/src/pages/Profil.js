@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { UserIdContext } from '../components/AppContext';
 import Log from '../components/Log';
+import UpdateProfil from '../components/Profil/UpdateProfil';
 
 const Profil = () => {
 
@@ -10,7 +11,7 @@ const Profil = () => {
     return (
         <div>
             {userId ? (
-                <h1>.</h1>
+                <UpdateProfil />
             ) : (   
             <div>
                 <div className="profil-page">
