@@ -22,6 +22,11 @@ const NavBar = () => {
                 {userId ? (
                     <ul>
                         <li></li>
+                        <li className="welcome">
+                            <NavLink exact to='/profil'>
+                                <h5>user</h5>
+                            </NavLink>
+                        </li>
                         <Logout />
                     </ul>
                 ) : (
@@ -29,7 +34,7 @@ const NavBar = () => {
                         <li></li>
                         <li className="welcome">
                             <NavLink exact to='/authentification'>
-                                <i class="fas fa-globe"></i>
+                                <img src="./image/image/connect.svg" alt=" Connection au réseaux sociaux " />
                             </NavLink>
                         </li>
                     </ul>

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import cookie from 'js-cookie';
-import { NavLink } from 'react-router-dom';
+
 
 const Logout = () => {
 
@@ -29,9 +29,7 @@ const Logout = () => {
 
     return (
         <li onClick={logout} className="welcome">
-            <NavLink exact to='/authentification'>
-               <i class="fas fa-power-off"></i>                 
-            </NavLink>
+            <img src="./image/image/disconnect.svg" className='pointer' alt=" Déconnection au réseaux sociaux " />                        
         </li>
     );
 };
