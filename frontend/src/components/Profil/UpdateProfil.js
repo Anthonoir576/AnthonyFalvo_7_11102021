@@ -8,7 +8,7 @@ const UpdateProfil = () => {
     const userData = useSelector((state) => state.userReducer)
 
     return (
-        <div className="profil-container">
+        <div className="profil-page">
             <NavBarSecondary />
             <h1>{userData.username}</h1>
             <div className="update-container">
@@ -16,7 +16,7 @@ const UpdateProfil = () => {
                     <h3>Photo de profil</h3>
                     <img src={userData.attachment} alt="profil utilisateur" />
                 <UpdateImage />
-                <i className='error errorUpload'>Erreur</i>    
+                <i className='error errorUpload'></i>    
                 </div>
             </div>
         </div>
