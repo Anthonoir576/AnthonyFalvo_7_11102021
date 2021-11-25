@@ -34,7 +34,7 @@ const NavBar = () => {
                         <li></li>
                         <li className="welcome">
                             <NavLink exact to='/authentification'>
-                                <img src="./image/image/connect.svg" alt=" Connection au réseaux sociaux " />
+                                <img src="./image/image/connect.svg" className='loginlogout' alt=" Connection au réseaux sociaux " />
                             </NavLink>
                         </li>
                     </ul>

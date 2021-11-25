@@ -29,7 +29,7 @@ const Logout = () => {
 
     return (
         <li onClick={logout} className="welcome">
-            <img src="./image/image/disconnect.svg" className='pointer' alt=" Déconnection au réseaux sociaux " />                        
+            <img src="./image/image/disconnect.svg" className='pointer loginlogout' alt=" Déconnection au réseaux sociaux " />                        
         </li>
     );
 };
