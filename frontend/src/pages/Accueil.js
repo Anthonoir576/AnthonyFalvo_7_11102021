@@ -10,7 +10,7 @@ const Accueil = () => {
     return (
         <div>
             {userId ? (
-                <h1>Accueil</h1>
+                <h1>.</h1>
             ) : (
                   
             <div>

@@ -22,6 +22,8 @@ const Logout = () => {
             removeCookie('jwt')
         }).catch((error) => console.log(error));
 
+        window.location = '/authentification';
+
     };
 
 

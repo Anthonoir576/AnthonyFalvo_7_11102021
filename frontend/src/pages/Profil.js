@@ -10,7 +10,7 @@ const Profil = () => {
     return (
         <div>
             {userId ? (
-                <h1>PROFIL</h1>
+                <h1>.</h1>
             ) : (
                   
             <div>
