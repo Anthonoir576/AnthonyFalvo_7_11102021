@@ -34,7 +34,7 @@ const App = () => {
     
     if (userId) {
       dispatch(getUser(userId))
-    }
+    };
 
   }, [userId, userAdmin]);
 
