@@ -179,7 +179,7 @@ exports.getAllUsers = (request, response, next) => {
 };
 exports.updateUserProfile = (request, response, next) => {
 
-    const bioModifier  = request.body.bio.trim();
+    const bioModifier  = request.body.bio;
     const token        = request.cookies.jwt;
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
@@ -195,19 +195,25 @@ exports.updateUserProfile = (request, response, next) => {
     
     };
     
-    const updateProfileUser = request.file ?
-    {
-        bio : bioModifier,
-        attachment: `${request.protocol}://${request.get('host')}/images/users/${request.file.filename}`
-
-    } : { ...request.body };
-
     if (paramsUserId == userId || adminId == true) {
         models.User.findOne({
             attributes: ['id', 'username', 'bio', 'attachment', 'createdAt', 'updatedAt'],
             where: { id: userId }
         }).then(user => {
             if (user) {
+
+                const updateProfileUser = request.file ?
+                {
+                    bio : (bioModifier ? bioModifier : user.bio),
+                    attachment: `${request.protocol}://${request.get('host')}/images/users/${request.file.filename}`
+            
+                } : { 
+                    
+                    bio : (bioModifier ? bioModifier : user.bio),
+                    attachment: user.attachment
+
+                };
+            
 
                 if (updateProfileUser.attachment == undefined) {
                     user.update({
