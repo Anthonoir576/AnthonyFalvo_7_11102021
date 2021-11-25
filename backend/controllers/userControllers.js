@@ -215,13 +215,21 @@ exports.updateUserProfile = (request, response, next) => {
                 };
             
 
-                if (updateProfileUser.attachment == undefined) {
+                if (!request.file) {
                     user.update({
                         ...updateProfileUser
                     }).then(user => response.status(201).json( user ))
                       .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
 
-                } else if (updateProfileUser.attachment !== undefined) {
+
+                } else if (!request.file && request.body.bio) {
+                    
+                    user.update({
+                        ...updateProfileUser
+                    }).then(user => response.status(201).json( user ))
+                    .catch(() => response.status(500).json({ 'message': 'Erreur serveur !' }));
+
+                } else if (request.file) {
 
                     const filename = user.attachment.split('/images/users/')[1];
                     //const fileTest = filename.split('.')[1];
