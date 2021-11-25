@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react/cjs/react.development';
 import { UserIdContext } from './AppContext';
@@ -6,7 +7,8 @@ import Logout from './log/Logout';
 
 const NavBar = () => {
 
-    const userId = useContext(UserIdContext)
+    const userId   = useContext(UserIdContext);
+    const userData = useSelector((state) => state.userReducer);
 
     return (
         <nav>
@@ -24,7 +26,7 @@ const NavBar = () => {
                         <li></li>
                         <li className="welcome">
                             <NavLink exact to='/profil'>
-                                <h5>user</h5>
+                                <img src={userData.attachment} alt="Profil utilisateur" className="userProfil" />
                             </NavLink>
                         </li>
                         <Logout />

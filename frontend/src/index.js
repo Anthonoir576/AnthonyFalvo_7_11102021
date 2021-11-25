@@ -6,14 +6,15 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
 import rootReducer from './reducers/index';
+//import logger from 'redux-logger';
+
 
 
 
 // Supprimer composeWithDevTools en fin de prod
 const store = createStore(
-  rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))
+  rootReducer, composeWithDevTools(applyMiddleware(thunk))
 )
 
 ReactDOM.render(
