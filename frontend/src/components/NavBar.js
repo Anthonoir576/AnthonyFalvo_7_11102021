@@ -24,7 +24,7 @@ const NavBar = () => {
                 {userId ? (
                     <ul>
                         <li></li>
-                        <li className="welcome">
+                        <li className="welcome userPicture">
                             <NavLink exact to='/profil'>
                                 <img src={userData.attachment} alt="Profil utilisateur" className="userProfil" />
                             </NavLink>

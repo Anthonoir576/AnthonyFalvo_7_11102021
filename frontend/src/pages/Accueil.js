@@ -2,7 +2,8 @@ import React from 'react';
 import { useContext } from 'react';
 import { UserIdContext } from '../components/AppContext';
 import Log from '../components/Log';
-import UpdateProfil from '../components/Profil/UpdateProfil';
+import NavBarSecondary from '../components/NavBarSecondary';
+
 
 const Accueil = () => {
 
@@ -11,7 +12,7 @@ const Accueil = () => {
     return (
         <div>
             {userId ? (
-                <UpdateProfil />
+                <NavBarSecondary />
             ) : (
                   
             <div>
