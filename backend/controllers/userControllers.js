@@ -139,7 +139,7 @@ exports.getUserProfile = (request, response, next) => {
 
     if (userId) {
         models.User.findOne({
-            attributes: ['id', 'email', 'username', 'bio', 'attachment', 'createdAt', 'updatedAt'], 
+            attributes: ['id', 'isAdmin', 'email', 'username', 'bio', 'attachment', 'createdAt', 'updatedAt'], 
             where: { id: request.params.id } 
         })
         .then(user => {
