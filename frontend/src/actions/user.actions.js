@@ -1,7 +1,8 @@
 import axios from "axios";
 
 
-export const GET_USER = 'GET_USER';
+export const GET_USER       = 'GET_USER';
+export const UPLOAD_PICTURE = 'UPLOAD_PICTURE';
 
 export const getUser = (userId) => {
     return (dispatch) => {
@@ -15,4 +16,25 @@ export const getUser = (userId) => {
      })
      .catch((error) => console.log(error));    
     };
+};
+
+export const uploadPicture = (data, id) => {
+   return (dispatch) => {
+      return axios({
+         method: 'PUT',
+         url: `${process.env.REACT_APP_API_URL}api/auth/user/${id}`,
+         data: data,
+         withCredentials: true
+         
+      }).then((result) => {
+         return axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_API_URL}api/auth/user/${id}`,
+            withCredentials: true 
+         }).then((result) => {
+            dispatch({ type: UPLOAD_PICTURE, payload: result.data.attachment})
+         }).catch((error) => console.log(error + 'Erreur dispatch'))
+      })
+        .catch((error) => console.log(error + 'Erreur upload image'))
+   }
 };
