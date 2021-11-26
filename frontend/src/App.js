@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import MyPages from "./components/Routes/Index";
 import { UserIdContext } from './components/AppContext';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { getUser } from './actions/user.actions';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Accueil from './pages/Accueil';
+import Profil from './pages/Profil';
+import Auth from './pages/Auth';
+import NavBar from './components/Navigation/NavBar';
+
 
 const App = () => {
 
@@ -40,7 +45,15 @@ const App = () => {
 
   return (
     <UserIdContext.Provider value={userId}>
-      <MyPages />
+        <BrowserRouter>
+          <NavBar />
+          <Switch>
+            <Route path="/" exact component={Accueil} />
+            <Route path="/Authentification" exact component={Auth} />
+            <Route path="/profil" exact component={Profil} />
+            <Redirect to="/" />
+          </Switch>
+        </BrowserRouter>
     </UserIdContext.Provider>
   );
 };

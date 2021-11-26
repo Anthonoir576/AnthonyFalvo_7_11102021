@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import NavBarSecondary from '../NavBarSecondary';
+import NavBarSecondary from '../Navigation/NavBarSecondary';
 import UpdateImage from './UpdateImage';
 import { updateBiographie } from '../../actions/user.actions';
+import { dateShort } from '../Utils/Utils';
 
 const UpdateProfil = () => {
 
@@ -53,7 +54,7 @@ const UpdateProfil = () => {
                            </>
                        )}
                     </div>
-                    <p className='infoMembre'>Vous êtes parmis nous depuis le : <strong>{userData.createdAt}</strong></p> 
+                    <p className='infoMembre'>Vous êtes parmis nous depuis le : <strong>{dateShort(userData.createdAt)}</strong></p> 
                 </div>
             </div>
         </div>

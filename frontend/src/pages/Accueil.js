@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { UserIdContext } from '../components/AppContext';
 import Log from '../components/Log';
-import NavBarSecondary from '../components/NavBarSecondary';
+import NavBarSecondary from '../components/Navigation/NavBarSecondary';
 
 
 const Accueil = () => {
