@@ -344,9 +344,13 @@ exports.deleteUser = (request, response, next) => {
                 if (user) {
                     const filename = user.attachment.split('/images/')[1];
 
-                    fs.unlink(`images/${filename}`, () => {
-                        console.log('Fichier profil supprimé !');
-                    });
+                    console.log(filename);
+
+                    if (filename != 'defaults/default.png') {
+                        fs.unlink(`images/${filename}`, () => {
+                            console.log('Fichier profil supprimé !');
+                        });
+                    };
                 }
             }).catch(() => response.status(404).json({ "message" : " L\'utilisateur n\'est pas disponible dans la base de données !" }));
         }, 35)
