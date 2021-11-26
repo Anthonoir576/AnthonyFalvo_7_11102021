@@ -52,7 +52,8 @@ const UpdateProfil = () => {
                                 <button onClick={updateDataBio}>Valider</button>
                            </>
                        )}
-                    </div> 
+                    </div>
+                    <p className='infoMembre'>Vous êtes parmis nous depuis le : <strong>{userData.createdAt}</strong></p> 
                 </div>
             </div>
         </div>
