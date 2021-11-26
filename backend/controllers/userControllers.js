@@ -336,6 +336,21 @@ exports.deleteUser = (request, response, next) => {
             .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 05' }));
         }, 20);
 
+        // supperssion de ca photo de profil
+        setTimeout(() => {
+            models.User.findOne({
+                where: {id : paramsUserId}
+            }).then((user) => {
+                if (user) {
+                    const filename = user.attachment.split('/images/')[1];
+
+                    fs.unlink(`images/${filename}`, () => {
+                        console.log('Fichier profil supprimé !');
+                    });
+                }
+            }).catch(() => response.status(404).json({ "message" : " L\'utilisateur n\'est pas disponible dans la base de données !" }));
+        }, 35)
+
         // suppression de lutilisateur (visé à être supprimé)
         setTimeout(() => {
             
