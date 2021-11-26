@@ -39,9 +39,9 @@ const App = () => {
   }, [userId, userAdmin]);
 
   return (
-      <UserIdContext.Provider value={userId}>
-        <Routes />
-      </UserIdContext.Provider>
+    <UserIdContext.Provider value={userId}>
+      <Routes />
+    </UserIdContext.Provider>
   );
 };
 
