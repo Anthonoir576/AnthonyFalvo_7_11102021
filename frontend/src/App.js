@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Routes from "./components/Routes";
+import MyPages from "./components/Routes/Index";
 import { UserIdContext } from './components/AppContext';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <UserIdContext.Provider value={userId}>
-      <Routes />
+      <MyPages />
     </UserIdContext.Provider>
   );
 };

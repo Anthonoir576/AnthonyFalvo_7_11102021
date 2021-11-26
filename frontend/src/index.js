@@ -12,7 +12,6 @@ import rootReducer from './reducers/index';
 
 
 
-// Supprimer composeWithDevTools en fin de prod
 const store = createStore(
   rootReducer, composeWithDevTools(applyMiddleware(thunk))
 )
