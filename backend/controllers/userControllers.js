@@ -340,11 +340,18 @@ exports.deleteUser = (request, response, next) => {
         setTimeout(() => {
             
             models.User.destroy({ where: {id : paramsUserId} })
-            .then(()=> {return response.status(200).json({ 'message': `L\'utilisateur à été supprimé de la base de donnée, ainsi que tout le contenu associé !` })})
+            .then(()=> {console.log(`L\'utilisateur à été supprimé de la base de donnée, ainsi que tout le contenu associé !`)})
             .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
 
         }, 50);
             
+        // suppression du cookie 
+        setTimeout(() => {
+            response.cookie('jwt', '', { maxAge: 1 });
+            response.status(200).json({'message' : 'Utilisateur supprimé !'})
+        }, 60)
+
+
     } else {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas autorisé à supprimer cette utilisateur !' })
     };
