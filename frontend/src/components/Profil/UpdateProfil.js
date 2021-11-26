@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import NavBarSecondary from '../Navigation/NavBarSecondary';
+import DeleteUser from './DeleteUser';
 import UpdateImage from './UpdateImage';
 import { updateBiographie } from '../../actions/user.actions';
 import { dateShort } from '../Utils/Utils';
+import { UserIdContext } from '../AppContext';
 
 const UpdateProfil = () => {
 
@@ -13,6 +15,7 @@ const UpdateProfil = () => {
     const [updateBio, setUpdateBio] = useState(false);
     const userData                  = useSelector((state) => state.userReducer);
     const dispatch                  = useDispatch();
+    const userId                    = useContext(UserIdContext);
 
     const updateDataBio = () => {
 
@@ -56,6 +59,16 @@ const UpdateProfil = () => {
                     </div>
                     <p className='infoMembre'>Vous êtes parmis nous depuis le : <strong>{dateShort(userData.createdAt)}</strong></p> 
                 </div>
+                <div>
+                    {userId === userData.id || userData.isAdmin === true ? (
+                        <DeleteUser />
+                    ) : (   
+                        <div className="container-logo">
+                            <img src="./image/favicon/logoGroup.png" className="logoAlternatif" alt="logo de la société groupomania" />
+                        </div>                
+                    )}
+                </div>
+                
             </div>
         </div>
     );
