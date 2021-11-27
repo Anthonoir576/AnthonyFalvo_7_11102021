@@ -70,6 +70,7 @@ const SignUp = () => {
                     id="name"
                     name="name"
                     value={username}
+                    autoComplete="username"
                     onChange={(e) => {
                         setUsername(e.target.value)
                     }}
@@ -80,6 +81,7 @@ const SignUp = () => {
                     id="email"
                     name="email"
                     value={email}
+                    autoComplete="email"
                     onChange={(e) => {
                         setEmail(e.target.value)
                     }}
@@ -89,6 +91,7 @@ const SignUp = () => {
                 <input type="password" 
                     id="password"
                     name="password"
+                    autoComplete="current-password"
                     value={password}
                     onChange={(e) => {
                         setPassword(e.target.value)

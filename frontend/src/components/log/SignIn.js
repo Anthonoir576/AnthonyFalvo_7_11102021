@@ -38,7 +38,8 @@ const SignIn = () => {
             <label htmlFor="email">E-mail :</label>
             <input  type="email"
                     name="email"
-                    id="email" 
+                    id="email"
+                    autoComplete="email"
                     onChange={
                        (e) => setEmail(e.target.value)
                     } 
@@ -49,6 +50,7 @@ const SignIn = () => {
             <input  type="password" 
                     name="password" 
                     id="password" 
+                    autoComplete="current-password"
                     onChange={
                        (e) => setPassword(e.target.value)
                     } 

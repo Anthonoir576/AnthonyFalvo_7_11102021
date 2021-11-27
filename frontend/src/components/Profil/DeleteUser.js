@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cookie from 'js-cookie';
 import axios from 'axios';
 
-
+ // METTRE EN ARGUMENT LE USER DU PROFIL !!!
 
 const DeleteUser = () => {
 
@@ -15,7 +15,6 @@ const DeleteUser = () => {
         };
     };
 
-    // METTRE EN ARGUMENT LE USER DU PROFIL !!!
     const deleteUser = async (targetUser) => {
 
         removeCookie('jwt');
@@ -44,7 +43,8 @@ const DeleteUser = () => {
                     <p>Voulez-vous supprimer le profil ?</p>
                     <div>
                         <span className="deleteNow"
-                              onClick={() => {deleteUser(4)}}>
+                              // USER A DELETE ICI
+                              onClick={() => {deleteUser(11)}}>
                             Supprimer
                         </span>
                         <span className="noDeleteNow"
