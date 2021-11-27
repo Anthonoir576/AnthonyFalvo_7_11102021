@@ -5,8 +5,6 @@ import { NavLink } from 'react-router-dom';
 
 const NavBarSecondary = () => {
 
-
-
     return (
         <div className="left-nav-container">
             <div className="icons">

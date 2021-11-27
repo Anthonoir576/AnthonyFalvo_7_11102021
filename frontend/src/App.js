@@ -10,6 +10,7 @@ import Auth from './pages/Auth';
 import NavBar from './components/Navigation/NavBar';
 
 
+
 const App = () => {
 
   const [userId, setUserId]       = useState(null);
@@ -41,7 +42,7 @@ const App = () => {
       dispatch(getUser(userId))
     };
 
-  }, [userId, userAdmin]);
+  }, [userId, userAdmin, dispatch]);
 
   return (
     <UserIdContext.Provider value={userId}>
