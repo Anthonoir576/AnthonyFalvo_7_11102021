@@ -28,78 +28,90 @@ exports.createPost = (request, response, next) => {
 
     if (userId) {
 
-        // Contrôle du front
-        if (title == null || content == null) {
+
+        // Contrôle du front 
+        // au minimum un titre et ou un contenu et ou une image
+        if ((title == undefined && content == undefined) && request.file == undefined) {
 
             if (request.file !== undefined) {
                 const filename = request.file.filename;
                 fs.unlink(`images/posts/${filename}`,() => {
                     console.log('Fichier supprimé !');              
                 });
-                return response.status(400).json({ 'message': 'Paramètre manquant, le fichier à été supprimé !' }); 
+                return response.status(400).json({ 'message': 'Aucun champ rempli, le fichier à été supprimé !' }); 
             } else {
-                return response.status(400).json({ 'message': 'Paramètre manquant !' });
+                return response.status(400).json({ 'message': 'Aucun champ rempli !' });
             };
 
-        } else if (title.length <= 5 || content.length <= 5){
+        } else if (((title == undefined) && (content == undefined)) && request.file == undefined){
             
             if (request.file !== undefined) {
                 const filename = request.file.filename;
                 fs.unlink(`images/posts/${filename}`,() => {
                       console.log('Fichier supprimé !');         
                 });
-                return response.status(400).json({  'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu, le fichier à été supprimé !' });    
+                return response.status(400).json({  'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu ou une image, le fichier à été supprimé !' });    
             } else {
-                return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu !'});
+                return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu, ou une image !'});
             };
 
-        } else if (title.length >= 200 || content.length >= 500) {
+        } else if (title != undefined || content != undefined || request.file != undefined) {
 
-            if (request.file !== undefined) {
-                const filename = request.file.filename;
-                fs.unlink(`images/posts/${filename}`,() => {
-                    console.log('Fichier supprimé !');             
-                });
-                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu, le fichier à été supprimé !' });   
-            } else {
-                return response.status(400).json({ 'message': 'Le titre peut avoir maximum 200 caractères, et 500 pour le contenu !' });
-            };            
-        };
+
+            if (title != undefined) {
+
+                if (title.length > 50) {
+                    return response.status(400).json({ 'message': ' le titre contiens plus de 50 caractères !'});
+                };
+
+            };
+
+            if (content != undefined) {
+
+                if (content.length > 500) {
+                    return response.status(400).json({ 'message': ' le contenu contiens plus de 50 caractères !'});
+                };
+
+            };
+
+
+            models.User.findOne({
+                where: { id: userId }
+            }).then(user => {
+                if (user) {
     
-        models.User.findOne({
-            where: { id: userId }
-        }).then(user => {
-            if (user) {
-
-                const createPost = request.file ?
-                {
-                    title: title,
-                    content: content,
-                    UserId: user.id,
-                    username: user.username,
-                    likes: 0,
-                    dislikes: 0,
-                    attachment: `${request.protocol}://${request.get('host')}/images/posts/${request.file.filename}`
-            
-                } : { 
-                    title: title,
-                    content: content,
-                    UserId: user.id,
-                    username: user.username,
-                    likes: 0,
-                    dislikes: 0,
-                    attachment: ''
-                 };
-                models.Post.create({
-                    ...createPost,
-                }).then( (newPost) => {
-                    response.status(201).json(newPost);
-                }).catch(() => response.status(400).json({ 'message': 'La publication n\'as pas été crée ! ' }));
-            } else {
-                return response.status(404).json({ 'message': 'Utilisateur introuvable !' });
-            };
-        })
-        .catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
+                    const createPost = request.file ?
+                    {
+                        title: (title ? title : '').trim(),
+                        content: (content ? content : '').trim(),
+                        UserId: user.id,
+                        username: user.username,
+                        likes: 0,
+                        dislikes: 0,
+                        attachment: `${request.protocol}://${request.get('host')}/images/posts/${request.file.filename}`
+                
+                    } : { 
+                        title: (title ? title : '').trim(),
+                        content: (content ? content : '').trim(),
+                        UserId: user.id,
+                        username: user.username,
+                        likes: 0,
+                        dislikes: 0,
+                        attachment: ''
+                     };
+                    models.Post.create({
+                        ...createPost,
+                    }).then( (newPost) => {
+                        response.status(201).json(newPost);
+                    }).catch(() => response.status(400).json({ 'message': 'La publication n\'as pas été crée ! ' }));
+                } else {
+                    return response.status(404).json({ 'message': 'Utilisateur introuvable !' });
+                };
+            })
+            .catch(() => response.status(500).json({ 'message' : 'Erreur serveur !' }));
+    
+        };
+     
     } else {
         return response.status(401).json({ 'message': 'Vous n\'êtes pas authentifié !' });
     };
@@ -126,12 +138,12 @@ exports.updatePost = (request, response, next) => {
             const filename = post.attachment.split('/images/')[1];
             const updatePost = request.file ?
             {   
-                title: (title ? title : post.title),
-                content: (content ? content : post.content),
+                title: (title ? title : post.title).trim(),
+                content: (content ? content : post.content).trim(),
                 attachment: `${request.protocol}://${request.get('host')}/images/posts/${request.file.filename}`       
             } : { 
-                title: (title ? title : post.title),
-                content: (content ? content : post.content)
+                title: (title ? title : post.title).trim(),
+                content: (content ? content : post.content).trim()
              };
 
 
