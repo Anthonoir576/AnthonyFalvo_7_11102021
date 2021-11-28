@@ -69,7 +69,7 @@ exports.createPost = (request, response, next) => {
             if (content != undefined) {
 
                 if (content.length > 500) {
-                    return response.status(400).json({ 'message': ' le contenu contiens plus de 50 caractères !'});
+                    return response.status(400).json({ 'message': ' le contenu contiens plus de 500 caractères !'});
                 };
 
             };
@@ -98,7 +98,8 @@ exports.createPost = (request, response, next) => {
                         likes: 0,
                         dislikes: 0,
                         attachment: ''
-                     };
+                    };
+                    
                     models.Post.create({
                         ...createPost,
                     }).then( (newPost) => {
