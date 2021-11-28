@@ -26,10 +26,12 @@ const Card = ({ post }) => {
     return (
         <li className="card-container" key={post.id}>
           {isLoading ? (
-              
-              <i className='fas fa-spinner fa-spin'></i>
+            <>  
+            </>
           ): (
-          <p>test</p>    
+            <>
+                <p>test</p>    
+            </>
           )}  
         </li>
     );
