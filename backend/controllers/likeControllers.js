@@ -50,7 +50,7 @@ exports.likePost = (request, response, next) => {
                         }).then(() => {
                             post.update({
                                 likes: post.likes + 1
-                            }).then(() => response.status(200).json({ 'message': 'Le like est ajouté à la publication [code:01]' }))
+                            }).then(() => response.status(200).json({ 'message': 'Le like est ajouté à la publication [code:01]', postUpdate: post }))
                               .catch(() => response.status(400).json({ 'message': 'Le like n\'est pas ajouté à la publication [code:01]'}));
                         })
                         .catch(() => response.status(400).json({ 'message': 'Le like ne fonctionne pas [code:01]'})); 
@@ -60,7 +60,7 @@ exports.likePost = (request, response, next) => {
                         tableauLike.destroy().then(() => {
                             post.update({
                                 likes: post.likes - 1
-                            }).then(() => response.status(200).json({ 'message': 'Le like est retiré de la publication [code:02]' }))
+                            }).then(() => response.status(200).json({ 'message': 'Le like est retiré de la publication [code:02]', postUpdate: post }))
                               .catch(() => response.status(400).json({ 'message': 'Le like n\'est pas retiré de la publication [code:02]'}));
                         })
                         .catch(() => response.status(400).json({ 'message': 'Le retrait du like ne fonctionne pas [code:02]'})); 
@@ -72,7 +72,7 @@ exports.likePost = (request, response, next) => {
                         }).then(() => {
                             post.update({
                                 likes: post.likes + 1
-                            }).then(() => response.status(200).json({ 'message': 'Le like est ajouté à la publication [code:03]' }))
+                            }).then(() => response.status(200).json({ 'message': 'Le like est ajouté à la publication [code:03]', postUpdate: post }))
                               .catch(() => response.status(400).json({ 'message': 'Le like n\'est pas ajouté la publication [code:03]'}));
                         })
                         .catch(() => response.status(400).json({ 'message': 'Le like ne fonctionne pas [code:03]'}));  
@@ -92,7 +92,7 @@ exports.likePost = (request, response, next) => {
                     }).then(() => {
                         post.update({
                             likes: post.likes + 1
-                        }).then(() => response.status(200).json({ 'message': 'Le like est ajouté à la publication [code:05]' }))
+                        }).then(() => response.status(200).json({ 'message': 'Le like est ajouté à la publication [code:05]', postUpdate: post }))
                           .catch(() => response.status(400).json({ 'message': 'Le like n\'est pas ajouté à la publication [code:05]'}));
                     })
                       .catch(() => response.status(400).json({ 'message': 'Le like ne fonctionne pas [code:05]'}));
@@ -137,7 +137,7 @@ exports.dislikePost = (request, response, next) => {
                         }).then(() => {
                             post.update({
                                 dislikes: post.dislikes + 1
-                            }).then(() => response.status(200).json({ 'message': 'Le dislike est ajouté à la publication [code:01]' }))
+                            }).then(() => response.status(200).json({ 'message': 'Le dislike est ajouté à la publication [code:01]', postUpdate: post }))
                               .catch(() => response.status(400).json({ 'message': 'Le dislike n\'est pas ajouté à la publication [code:01]'}));
                         })
                         .catch(() => response.status(400).json({ 'message': 'Le dislike ne fonctionne pas [code:01]'})); 
@@ -147,7 +147,7 @@ exports.dislikePost = (request, response, next) => {
                         tableauLike.destroy().then(() => {
                             post.update({
                                 dislikes: post.dislikes - 1
-                            }).then(() => response.status(200).json({ 'message': 'Le dislike est retiré de la publication [code:02]' }))
+                            }).then(() => response.status(200).json({ 'message': 'Le dislike est retiré de la publication [code:02]', postUpdate: post }))
                               .catch(() => response.status(400).json({ 'message': 'Le dislike n\'est pas retiré de la publication [code:02]'}));
                         })
                         .catch(() => response.status(400).json({ 'message': 'Le retrait du dislike ne fonctionne pas [code:02]'})); 
@@ -159,7 +159,7 @@ exports.dislikePost = (request, response, next) => {
                         }).then(() => {
                             post.update({
                                 dislikes: post.dislikes + 1
-                            }).then(() => response.status(200).json({ 'message': 'Le dislike est ajouté à la publication [code:03]' }))
+                            }).then(() => response.status(200).json({ 'message': 'Le dislike est ajouté à la publication [code:03]', postUpdate: post }))
                               .catch(() => response.status(400).json({ 'message': 'Le dislike n\'est pas ajouté la publication [code:03]'}));
                         })
                         .catch(() => response.status(400).json({ 'message': 'Le dislike ne fonctionne pas [code:03]'}));  
@@ -179,7 +179,7 @@ exports.dislikePost = (request, response, next) => {
                     }).then(() => {
                         post.update({
                             dislikes: post.dislikes + 1
-                        }).then(() => response.status(200).json({ 'message': 'Le dislike est ajouté à la publication [code:05]' }))
+                        }).then(() => response.status(200).json({ 'message': 'Le dislike est ajouté à la publication [code:05]', postUpdate: post }))
                           .catch(() => response.status(400).json({ 'message': 'Le dislike n\'est pas ajouté à la publication [code:05]'}));
                     })
                       .catch(() => response.status(400).json({ 'message': 'Le dislike ne fonctionne pas [code:05]'}));
