@@ -37,6 +37,8 @@ const Card = ({ post }) => {
                     usersData.map((user) => {
                         if (user.id === post.UserId) {
                             return user.attachment;
+                        } else {
+                            return null;
                         }
                         
                     }).join('')
@@ -50,6 +52,8 @@ const Card = ({ post }) => {
                                 usersData.map((user) => {
                                     if (user.id === post.UserId) {
                                         return user.username
+                                    }  else {
+                                        return null;
                                     }
                                 })
                                 }

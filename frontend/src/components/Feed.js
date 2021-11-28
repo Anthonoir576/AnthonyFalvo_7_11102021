@@ -9,20 +9,32 @@ import { isItBlank } from './Utils/Utils';
 
 const Feed = () => {
 
-    const dispatch                = useDispatch();
-    const [loadPost, setLoadPost] = useState(true);
-    const posts                   = useSelector((state) => state.postReducer);
+    const dispatch                  = useDispatch();
+    const [loadPost, setLoadPost]   = useState(true);
+    const posts                     = useSelector((state) => state.postReducer);
+    const [countPost, setCountPost] = useState(6);
+
+    const infinityLoad = () => {
+
+        if (window.innerHeight + document.documentElement.scrollTop + 1 >
+            document.scrollingElement.scrollHeight) {
+                setLoadPost(true);
+        }
+
+    }; 
 
     useEffect(() => {
 
         if (loadPost) {
-            dispatch(getPosts());
+            dispatch(getPosts(countPost));
             setLoadPost(false);
+            setCountPost(countPost + 5);
         };
 
-        
+        window.addEventListener('scroll', infinityLoad);
+        return () => { window.removeEventListener('scroll', infinityLoad) };
 
-    }, [loadPost, dispatch]);
+    }, [loadPost, countPost, dispatch]);
 
 
 

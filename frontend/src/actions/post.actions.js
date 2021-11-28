@@ -7,7 +7,7 @@ export const LIKE_POST    = "LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
 
 
-export const getPosts = () => {
+export const getPosts = (value) => {
 
     return (dispatch) => {
         return axios({
@@ -15,7 +15,10 @@ export const getPosts = () => {
             url: `${process.env.REACT_APP_API_URL}api/posts/`,
             withCredentials: true
         }).then((result) => {
-            dispatch({ type: GET_POSTS, payload: result.data })
+
+            const newArray = result.data.slice(0, value);
+
+            dispatch({ type: GET_POSTS, payload: newArray })
         })
           .catch((error) => console.log(error));
     };
@@ -36,7 +39,6 @@ export const likePost = (postId) => {
 
     };
 }; 
-
 
 export const dislikePost = (postId) => {
     return (dispatch) => {
