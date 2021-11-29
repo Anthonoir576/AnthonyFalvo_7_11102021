@@ -46,6 +46,7 @@ const likeRoutes    = require('./routes/likeRoute');
 const commentRoutes = require('./routes/commentRoute');
 const auth          = require('./middleware/auth');
 const cookieParser  = require('cookie-parser');
+const cors          = require('cors');
 
 require('dotenv')
     .config({ path: './config/.env' });
@@ -54,15 +55,18 @@ require('dotenv')
 
 
 /* ##############    CORS   ####################### */
-app.use((request, response, next) => {
 
-    response.setHeader('Access-Control-Allow-Origin', `${process.env.CLIENT}`);
-    response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE', 'PATCH', 'OPTIONS');
-    response.setHeader("Access-Control-Allow-Credentials", "true");
+const corsControls = {
+    origin: `${process.env.CLIENT}`,
+    credentials: true,
+    'allowedHeaders': ['sessionId', 'Content-Type', 'Origin', 'X-Requested-With', 'X-Auth-Token', 'Content', 'Accept', 'Authorization' ],
+    'exposedHeaders': ['sessionId'],
+    'methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'preflightContinue': false
+}
 
-    next();
-});
+app.use(cors(corsControls));
+
 /* ################################################ */
 
 
