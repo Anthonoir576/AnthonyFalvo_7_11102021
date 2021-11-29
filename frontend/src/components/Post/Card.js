@@ -9,12 +9,19 @@ import Like from './Like';
 
 const Card = ({ post }) => {
 
-    const [isLoading, setIsLoading] = useState(true);
-    const usersData                 = useSelector((state) => state.usersReducer);
-    // const userData                  = useSelector((state) => state.userReducer);
+    const [isLoading, setIsLoading]         = useState(true);
+    const usersData                         = useSelector((state) => state.usersReducer);
+    const [isUpdated, setIsUpdated]         = useState(false);
+    const [titleUpdate, setTitleUpdate]     = useState(null);
+    const [contentUpdate, setContentUpdate] = useState(null);
+    const [pictureUpdate, setPictureUpdate] = useState(null);
+    const userData                          = useSelector((state) => state.userReducer);
     // const dispatch                  = useDispatch();
     
     
+    const updatePost = async () => {
+
+    };
 
     useEffect(() => {
 
@@ -57,20 +64,81 @@ const Card = ({ post }) => {
                                     }
                                 })
                                 }
-                            </h3>
+                            </h3>    
+                            <div className="administrator-container">
+                            {
+                                usersData.map((user) => {
+                                    if (user.id === post.UserId && user.isAdmin === true) {
+
+                                        return <i class="fas fa-shield-alt administrator"></i>
+                                            
+                                    }  else { return null }
+                                })
+                            }
+                            </div>
                         </div>
-                        <span>{dateLong(post.createdAt)}</span>
+                        
+                        <div className="updatePost">
+                            <span>{dateLong(post.createdAt)}</span>
+                            {(userData.id === post.UserId || userData.isAdmin === true) && (
+                                <>
+                                    <div>
+                                        <img src="./image/image/edit.png" alt="edit post" />
+                                    </div>
+                                    <div>
+                                        <img src="./image/image/delete.png" alt="delete post" />
+                                    </div>
+                                </>
+                                
+                                
+                            )}
+                        </div>
                     </div>
                     <div className="card-body">
-                        {post.title && (
+                        
+                        {(post.title && isUpdated === false) && (
                             <p>{post.title}</p>
                         )}
-                        {post.content && (
+                        {(post.content && isUpdated === false) && (
                             <p>{post.content}</p>
                         )}
-                        {post.attachment && (
+                        {(post.attachment && isUpdated === false) && (
                             <img src={post.attachment} className="card-pic" alt="contenu publié" />
                         )}
+
+                        {(post.title && isUpdated === true) && (
+                            <div className="update-post">
+                                <textarea defaultValue={post.title}
+                                          onChange={(e) => {
+                                            setTitleUpdate(e.target.value)
+                                          }}
+                                />
+                            </div>
+                        )}
+                        {(post.content && isUpdated === true) && (
+                            <div className="update-post">
+                                <textarea defaultValue={post.content}
+                                          onChange={(e) => {
+                                            setContentUpdate(e.target.value)
+                                          }}
+                                />
+                                <div className="button-container">
+                                    <button className="btn"
+                                            onClick={updatePost}>
+                                        Valider
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        {/* {(post.attachment && isUpdated === true) && (
+                            <div className="update-post">
+                                        <textarea defaultValue={post.attachment}
+                                          onChange={(e) => {
+                                            setPictureUpdate(e.target.value)
+                                          }}
+                            />
+                            </div>
+                        )} */}
                     </div>
                     <div className="card-footer">
                         <div className="comment-icon">
