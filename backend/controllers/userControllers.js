@@ -163,7 +163,7 @@ exports.getAllUsers = (request, response, next) => {
 
     if (userId) {
         models.User.findAll({
-            attributes: ['username', 'id', 'attachment', 'createdAt', 'updatedAt']
+            attributes: ['username', 'id', 'isAdmin', 'attachment', 'createdAt', 'updatedAt']
         })
         .then((users) => {
             if (users) {
