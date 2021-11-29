@@ -12,7 +12,7 @@ const Feed = () => {
     const dispatch                  = useDispatch();
     const [loadPost, setLoadPost]   = useState(true);
     const posts                     = useSelector((state) => state.postReducer);
-    const [countPost, setCountPost] = useState(6);
+    const [countPost, setCountPost] = useState(5);
 
     const infinityLoad = () => {
 
