@@ -1,5 +1,5 @@
 
-import { DISLIKE_POST, GET_POSTS, LIKE_POST, UPDATE_POST } from "../actions/post.actions";
+import { DELETE_POST, DISLIKE_POST, GET_POSTS, LIKE_POST, UPDATE_POST } from "../actions/post.actions";
 
 
 const initialState = {};
@@ -44,7 +44,11 @@ export default function postReducer(state = initialState, action) {
                 } else {
                     return post;
                 };
-            });    
+            });
+        
+        case DELETE_POST:
+            return  state.filter((post) =>  post.id !== action.payload.postId );   
+            
 
         default:
             return state;

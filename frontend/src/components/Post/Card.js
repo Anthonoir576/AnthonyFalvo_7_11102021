@@ -5,6 +5,7 @@ import Dislike from './Dislike';
 import Like from './Like';
 import { useDispatch } from 'react-redux';
 import { updatePost } from '../../actions/post.actions';
+import DeleteCard from './DeleteCard';
 
 
 
@@ -101,12 +102,7 @@ const Card = ({ post }) => {
                                              }} 
                                         />
                                     </div>
-                                    <div>
-                                        <img src="./image/image/delete.png" 
-                                             alt="delete post"
-                                            
-                                        />
-                                    </div>
+                                    <DeleteCard id={post.id}/>
                                 </>
                                 
                                 

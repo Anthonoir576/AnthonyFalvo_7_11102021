@@ -6,6 +6,7 @@ export const GET_POSTS    = "GET_POSTS";
 export const LIKE_POST    = "LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
 export const UPDATE_POST  = "UPDATE_POST";
+export const DELETE_POST  = "DELETE_POST";
 
 
 export const getPosts = (value) => {
@@ -90,5 +91,23 @@ export const updatePost = (postId, title, content) => {
         })
         .catch((error) => console.log(error));
     };
+
+};
+
+export const deletePost = (postId) => {
+
+    return (dispatch) => {
+
+        return axios({
+            method: 'DELETE',
+            url: `${process.env.REACT_APP_API_URL}api/posts/post/${postId}`,
+            withCredentials: true
+        })
+        .then((result) => {
+            dispatch({ type: DELETE_POST, payload: { postId: postId } })
+        })
+        .catch((error) => { console.log(error) });
+
+    }
 
 };
