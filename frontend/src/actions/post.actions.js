@@ -17,11 +17,28 @@ export const getPosts = (value) => {
             withCredentials: true
         }).then((result) => {
 
-            const newArray = result.data.slice(0, value);
+            let stockArray = result.data
+            let triArray = stockArray.sort((b, a) => {
 
-            dispatch({ type: GET_POSTS, payload: newArray })
+                let keyA = new Date(a.createdAt),
+                    keyB = new Date(b.createdAt);
+
+                if(keyA < keyB) {
+                    return -1;
+                };
+
+                if(keyA > keyB) {
+                    return 1;
+                };
+
+                return 0;
+            });
+
+            const newArray = triArray.slice(0, value);
+
+            dispatch({ type: GET_POSTS, payload: newArray });
         })
-          .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
     };
 
 };

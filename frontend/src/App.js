@@ -15,7 +15,7 @@ const App = () => {
 
   const [userId, setUserId]       = useState(null);
   const [userAdmin, setUserAdmin] = useState(null);
-  const dispatch = useDispatch();
+  const dispatch                  = useDispatch();
 
   useEffect(() => {
 
