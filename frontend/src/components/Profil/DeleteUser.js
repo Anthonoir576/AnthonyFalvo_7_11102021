@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import cookie from 'js-cookie';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
  // METTRE EN ARGUMENT LE USER DU PROFIL !!!
 
 const DeleteUser = () => {
 
     const [pop, setPop] = useState(false);
+    const userConnect   = useSelector((state) => state.userReducer);
+
 
     // Suppression cookie en front en + du back
     const removeCookie = (key) => {
@@ -44,7 +47,7 @@ const DeleteUser = () => {
                     <div>
                         <span className="deleteNow"
                               // USER A DELETE ICI
-                              onClick={() => {deleteUser(11)}}>
+                              onClick={() => {deleteUser(userConnect.id)}}>
                             Supprimer
                         </span>
                         <span className="noDeleteNow"
