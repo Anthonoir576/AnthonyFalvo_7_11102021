@@ -20,14 +20,14 @@ export const getPosts = (value) => {
             let stockArray = result.data
             let triArray = stockArray.sort((b, a) => {
 
-                let keyA = new Date(a.createdAt),
-                    keyB = new Date(b.createdAt);
+                let valeurA = new Date(a.createdAt),
+                    valeurB = new Date(b.createdAt);
 
-                if(keyA < keyB) {
+                if(valeurA < valeurB) {
                     return -1;
                 };
 
-                if(keyA > keyB) {
+                if(valeurA > valeurB) {
                     return 1;
                 };
 
