@@ -40,7 +40,6 @@ export const uploadPicture = (data, id) => {
    }
 };
 
-
 export const updateBiographie = (userId, bio) => {
 
    return (dispatch) => {

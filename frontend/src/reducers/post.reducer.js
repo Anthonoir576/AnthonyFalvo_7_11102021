@@ -1,4 +1,5 @@
-import { DISLIKE_POST, GET_POSTS, LIKE_POST } from "../actions/post.actions";
+
+import { DISLIKE_POST, GET_POSTS, LIKE_POST, UPDATE_POST } from "../actions/post.actions";
 
 
 const initialState = {};
@@ -16,7 +17,7 @@ export default function postReducer(state = initialState, action) {
                     return {
                         ...post,
                         likes: action.payload.likes
-                    }
+                    };
                 };
                 return post;
             });
@@ -27,10 +28,23 @@ export default function postReducer(state = initialState, action) {
                     return {
                         ...post,
                         dislikes: action.payload.dislikes
-                    }
+                    };
                 };
                 return post;
-            });      
+            });
+            
+        case UPDATE_POST:
+            return state.map((post) => {
+                if (post.id === action.payload.postId) {
+                    return {
+                       ...post,
+                       title: action.payload.title,
+                       content: action.payload.content 
+                    };
+                } else {
+                    return post;
+                };
+            });    
 
         default:
             return state;

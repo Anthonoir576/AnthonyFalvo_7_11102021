@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { dateLong, isItBlank } from '../Utils/Utils';
 import Dislike from './Dislike';
 import Like from './Like';
-//import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { updatePost } from '../../actions/post.actions';
 
 
 
@@ -12,14 +13,24 @@ const Card = ({ post }) => {
     const [isLoading, setIsLoading]         = useState(true);
     const usersData                         = useSelector((state) => state.usersReducer);
     const [isUpdated, setIsUpdated]         = useState(false);
-    const [titleUpdate, setTitleUpdate]     = useState(null);
-    const [contentUpdate, setContentUpdate] = useState(null);
-    const [pictureUpdate, setPictureUpdate] = useState(null);
+    const [titleUpdate, setTitleUpdate]     = useState('');
+    const [contentUpdate, setContentUpdate] = useState('');
+    // const [pictureUpdate, setPictureUpdate] = useState(null);
     const userData                          = useSelector((state) => state.userReducer);
-    // const dispatch                  = useDispatch();
+    const dispatch                          = useDispatch();
     
     
-    const updatePost = async () => {
+    const myUpdatePost = () => {
+
+        if (titleUpdate && contentUpdate) {
+            dispatch(updatePost(post.id, titleUpdate, contentUpdate))
+        } else if (titleUpdate) {
+            dispatch(updatePost(post.id, titleUpdate, post.content))
+        } else if (contentUpdate) {
+            dispatch(updatePost(post.id, post.title, contentUpdate))
+        }; 
+
+        setIsUpdated(false);
 
     };
 
@@ -37,7 +48,7 @@ const Card = ({ post }) => {
           {isLoading ? (
             <>  
             </>
-          ): (
+          ) : (
             <>
                 <div className="card-left">
                     <img src={!isItBlank(usersData[0]) && 
@@ -70,7 +81,7 @@ const Card = ({ post }) => {
                                 usersData.map((user) => {
                                     if (user.id === post.UserId && user.isAdmin === true) {
 
-                                        return <i class="fas fa-shield-alt administrator"></i>
+                                        return <i className="fas fa-shield-alt administrator" key={post.id}></i>
                                             
                                     }  else { return null }
                                 })
@@ -83,10 +94,18 @@ const Card = ({ post }) => {
                             {(userData.id === post.UserId || userData.isAdmin === true) && (
                                 <>
                                     <div>
-                                        <img src="./image/image/edit.png" alt="edit post" />
+                                        <img src="./image/image/edit.png" 
+                                             alt="edit post"
+                                             onClick={() => {
+                                                 setIsUpdated(!isUpdated)
+                                             }} 
+                                        />
                                     </div>
                                     <div>
-                                        <img src="./image/image/delete.png" alt="delete post" />
+                                        <img src="./image/image/delete.png" 
+                                             alt="delete post"
+                                            
+                                        />
                                     </div>
                                 </>
                                 
@@ -124,7 +143,7 @@ const Card = ({ post }) => {
                                 />
                                 <div className="button-container">
                                     <button className="btn"
-                                            onClick={updatePost}>
+                                            onClick={myUpdatePost}>
                                         Valider
                                     </button>
                                 </div>
