@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { uploadPicture } from '../../actions/user.actions';
 
+
 const UpdateImage = () => {
 
     const dispatch        = useDispatch();
@@ -19,8 +20,12 @@ const UpdateImage = () => {
         data.append('image', file);
 
         dispatch(uploadPicture(data, userData.id));
+        
+        setTimeout(() => {
+            window.location.href='/profil'; 
+        }, 50);
 
-    }
+    };
 
     return (
         <form action='' onSubmit={updatePicture} className="upload-pic">

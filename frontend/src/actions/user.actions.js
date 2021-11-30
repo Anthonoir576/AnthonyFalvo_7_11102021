@@ -33,7 +33,7 @@ export const uploadPicture = (data, id) => {
             url: `${process.env.REACT_APP_API_URL}api/auth/user/${id}`,
             withCredentials: true 
          }).then((result) => {
-            dispatch({ type: UPLOAD_PICTURE, payload: result.data.attachment})
+            dispatch({ type: UPLOAD_PICTURE, payload: result.data.attachment});
          }).catch((error) => console.log(error + 'Erreur dispatch'))
       })
         .catch((error) => console.log(error + 'Erreur upload image !'))

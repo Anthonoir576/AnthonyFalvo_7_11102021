@@ -36,6 +36,27 @@ export const dateLong = (value) => {
 
 };
 
+// date commentaire
+export const dateComment = (value) => {
+
+    let options = {
+        hour: 'numeric',
+        minute: 'numeric',
+        //second: '2-digit',
+        //weekday: 'long',
+        year: '2-digit',
+        month: '2-digit',
+        day: 'numeric'
+    };
+
+    let newDate = Date.parse(value);
+    let date    = new Date(newDate).toLocaleDateString('fr-FR', options)
+
+
+    return date.toString();
+
+};
+
 // Interrogation true / false
 export const isItBlank = (value) => {
 

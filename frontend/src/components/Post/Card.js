@@ -13,17 +13,15 @@ import CommentCard from './CommentCard';
 const Card = ({ post }) => {
 
     const [isLoading, setIsLoading]         = useState(true);
-    const usersData                         = useSelector((state) => state.usersReducer);
     const [isUpdated, setIsUpdated]         = useState(false);
     const [titleUpdate, setTitleUpdate]     = useState('');
-    const [contentUpdate, setContentUpdate] = useState('');
     const [showComments, setShowComments]   = useState(false);
-
+    const [contentUpdate, setContentUpdate] = useState('');
     // const [pictureUpdate, setPictureUpdate] = useState(null);
-    const userData                          = useSelector((state) => state.userReducer);
     const dispatch                          = useDispatch();
-    
-    
+    const userData                          = useSelector((state) => state.userReducer);
+    const usersData                         = useSelector((state) => state.usersReducer);
+
     const myUpdatePost = () => {
 
         if (titleUpdate && contentUpdate) {
@@ -61,7 +59,7 @@ const Card = ({ post }) => {
                                 return user.attachment;
                             } else {
                                 return null;
-                            }
+                            };
                             
                         }).join('')
                         } alt="profil utilisateur" />
