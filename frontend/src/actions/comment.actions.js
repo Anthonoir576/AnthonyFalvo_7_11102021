@@ -4,7 +4,7 @@ import axios from "axios";
 export const CREATE_COMMENT = "CREATE_COMMENT";
 
 
-export const createComment = (content, postId) => {
+export const createComment = (postId, content) => {
 
     return (dispatch) => {
 

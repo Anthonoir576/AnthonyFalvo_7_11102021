@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createComment } from '../../actions/comment.actions';
+import { getPosts } from '../../actions/post.actions';
 import { dateComment, isItBlank } from '../Utils/Utils';
 
 const CommentCard = ({ post }) => {
@@ -15,14 +16,36 @@ const CommentCard = ({ post }) => {
         e.preventDefault();
 
         if (content) {
-            dispatch(createComment(content, post.id));
+            dispatch(createComment(post.id, content))
+                .then(() => { 
+                    dispatch(getPosts()); 
+                    setContent('');
+                })
+                .catch((error) => { console.log(error) });
         };
 
     };
 
+    const postComments = post.Comments;
+    const triArray     = postComments.sort((a, b) => {
+    
+        let valeurA = new Date(a.updatedAt),
+            valeurB = new Date(b.updatedAt);
+
+        if(valeurA < valeurB) {
+            return -1;
+        };
+
+        if(valeurA > valeurB) {
+            return 1;
+        };
+
+        return 0;
+    }); 
+
     return (
         <div className="comments-container">
-            {post.Comments.map((comment) => {
+            {triArray.map((comment) => {
                 return (
                     <div className='comment-container' key={comment.id}>
                         <div className="left-part">
