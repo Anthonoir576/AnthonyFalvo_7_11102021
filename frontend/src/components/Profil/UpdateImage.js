@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { uploadPicture } from '../../actions/user.actions';
-
+import { getUsers } from '../../actions/users.action';
 
 const UpdateImage = () => {
 
@@ -19,12 +19,12 @@ const UpdateImage = () => {
         data.append('userId', userData.id);
         data.append('image', file);
 
-        dispatch(uploadPicture(data, userData.id));
+        dispatch(uploadPicture(data, userData.id))
+        .then(() => {
+            dispatch(getUsers());
+        })
+        .catch((error) => console.log(error));
         
-        setTimeout(() => {
-            window.location.href='/profil'; 
-        }, 50);
-
     };
 
     return (
