@@ -1,5 +1,5 @@
 
-import { CREATE_COMMENT, UPDATE_COMMENT } from "../actions/comment.actions";
+import { CREATE_COMMENT, DELETE_COMMENT, UPDATE_COMMENT } from "../actions/comment.actions";
 
 
 const initialState = {};
@@ -12,8 +12,11 @@ export default function commentReducer(state = initialState, action) {
             return console.log('Commentaire créer');
 
         case UPDATE_COMMENT:
-            return console.log('commentaire mise à jour');    
+            return console.log('Commentaire update');
        
+        case DELETE_COMMENT:
+            return console.log('Commentaire supprimé');
+
         default:
             return state;
 

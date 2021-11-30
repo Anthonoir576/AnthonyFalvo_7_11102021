@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateComment } from '../../actions/comment.actions';
+import { deleteComment, updateComment } from '../../actions/comment.actions';
 import { getPosts } from '../../actions/post.actions';
 
 
@@ -11,13 +11,15 @@ const EditComment = ({ comment, postId }) => {
     const [content, setContent] = useState('');
     const dispatch              = useDispatch();
 
+
     const editComment = (e) => {
         e.preventDefault();
 
         if (content) {
-            dispatch(updateComment(comment.id, content, postId))
+            dispatch(updateComment( comment.id, content, postId ))
                 .then(() => {
                     setEdit(false);
+                    setContent('');
                     dispatch(getPosts());
                 })
                 .catch((error) => { console.log(error) });
@@ -26,7 +28,16 @@ const EditComment = ({ comment, postId }) => {
 
     };
 
-    const removeComment = () => {}; 
+    const removeComment = () => {
+
+        dispatch(deleteComment(comment.id, postId))
+            .then(() => {
+                setRemove(false);
+                dispatch(getPosts());
+            })
+            .catch((error) => { console.log(error) });
+
+    }; 
 
     return (
         <>
@@ -46,7 +57,6 @@ const EditComment = ({ comment, postId }) => {
                             alt="delete post"
                             onClick={() => {
                                 setRemove(!remove);
-                                removeComment();
                             }}
                         />
                     </div>
@@ -80,6 +90,16 @@ const EditComment = ({ comment, postId }) => {
                     </div>       
                     
                     </form>
+                )}
+                {remove && (
+                    <div className="deleteCommentOrNot">
+                        <span onClick={() => {
+                                removeComment();
+                              }}
+                        >
+                            Voulez-vous supprimé le commentaire ?
+                        </span>
+                    </div>
                 )}
             </div>
         </>

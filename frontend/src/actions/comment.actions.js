@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const CREATE_COMMENT = "CREATE_COMMENT";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
-
+export const DELETE_COMMENT = "DELETE_COMMENT";
 
 export const createComment = (postId, content) => {
 
@@ -34,8 +34,24 @@ export const updateComment = (commentId, content, postId) => {
             withCredentials: true
 
         }).then((result) => {
-            dispatch({ type: UPDATE_COMMENT, payload: {content: content, postId: postId, commentId: commentId} });
+            dispatch({ type: UPDATE_COMMENT, payload: { content: content, postId: postId, commentId: commentId } });
         })
         .catch((error) => { console.log(error) });
     };
+};
+
+export const deleteComment = (commentId, postId) => {
+
+    return (dispatch) => {
+        return axios({
+            method: 'DELETE',
+            url: `${process.env.REACT_APP_API_URL}api/post/comments/comment/${commentId}`,
+            withCredentials: true
+
+        }).then((result) => {
+            dispatch({ type: DELETE_COMMENT, payload: { postId: postId, commentId: commentId } });
+        })
+        .catch((error) => { console.log(error) });
+    };
+
 };
