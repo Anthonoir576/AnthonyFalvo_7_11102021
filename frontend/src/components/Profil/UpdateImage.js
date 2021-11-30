@@ -20,10 +20,10 @@ const UpdateImage = () => {
         data.append('image', file);
 
         dispatch(uploadPicture(data, userData.id))
-        .then(() => {
-            dispatch(getUsers());
-        })
-        .catch((error) => console.log(error));
+            .then(() => {
+                dispatch(getUsers());
+            })
+            .catch((error) => console.log(error));
         
     };
 
