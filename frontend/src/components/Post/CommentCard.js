@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createComment } from '../../actions/comment.actions';
 import { getPosts } from '../../actions/post.actions';
-import { dateComment, isItBlank } from '../Utils/Utils';
+import { isItBlank } from '../Utils/Utils';
+import EditComment from './EditComment';
+import { dateComment } from '../Utils/Utils';
 
 const CommentCard = ({ post }) => {
 
-    const [isUpdated, setIsUpdated]  = useState(false);
     const [content, setContent]      = useState('');
     const dispatch                   = useDispatch();
     const userData                   = useSelector((state) => state.userReducer);
@@ -76,35 +77,15 @@ const CommentCard = ({ post }) => {
                                     </div>
                                 </div>
                                 <div className="updatePost">
-                                <span>{dateComment(comment.updatedAt)}</span>
-                                {/* BTN EDITION */}
-                                {(userData.id === comment.userId || userData.isAdmin === true) && (
-                                    <>
-                                        <div className='commentEdit'>
-                                            <div>
-                                                <img src="./image/image/edit.png" 
-                                                        alt="edit post"
-                                                        onClick={() => {
-                                                            setIsUpdated(!isUpdated)
-                                                        }} 
-                                                />
-                                            </div>
-                                            <div>
-                                                <img src="./image/image/delete.png" 
-                                                    alt="delete post"
-                                                    onClick={() => {
-                                                        console.log('supprimer');
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </>
-                                    
-                                    
-                                )}
+                                    <span>{dateComment(comment.updatedAt)}</span>
                                 </div>
                             </div>
                             <p>{comment.content}</p>
+                            {(userData.id === comment.userId || userData.isAdmin === true) && (
+                                        
+                                        <EditComment comment={comment} postId={post.id} />
+                                        
+                            )}
                         </div>
                     </div>
                 )
