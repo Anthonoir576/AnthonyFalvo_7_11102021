@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { dateComment } from '../Utils/Utils';
+import { updateComment } from '../../actions/comment.actions';
+import { getPosts } from '../../actions/post.actions';
+
 
 const EditComment = ({ comment, postId }) => {
 
@@ -13,8 +15,14 @@ const EditComment = ({ comment, postId }) => {
         e.preventDefault();
 
         if (content) {
-            dispatch()
-        }
+            dispatch(updateComment(comment.id, content, postId))
+                .then(() => {
+                    setEdit(false);
+                    dispatch(getPosts());
+                })
+                .catch((error) => { console.log(error) });
+        };
+
 
     };
 
