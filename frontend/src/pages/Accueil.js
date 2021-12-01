@@ -4,6 +4,7 @@ import { UserIdContext } from '../components/AppContext';
 import Feed from '../components/Feed';
 import Log from '../components/Log';
 import NavBarSecondary from '../components/Navigation/NavBarSecondary';
+import NewPost from '../components/Post/NewPost';
 
 
 const Accueil = () => {
@@ -17,6 +18,9 @@ const Accueil = () => {
                 <NavBarSecondary />
                 <div className="home">
                     <div className="main">
+                        <div className="home-header">
+                            <NewPost />
+                        </div>
                         <Feed />
                     </div>
                 </div>
