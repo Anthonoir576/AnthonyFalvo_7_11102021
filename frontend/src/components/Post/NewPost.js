@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { createPost } from '../../actions/post.actions';
+import { createPost, getPosts } from '../../actions/post.actions';
 import { isItBlank } from '../Utils/Utils';
 
 const NewPost = () => {
@@ -19,7 +19,11 @@ const NewPost = () => {
 
         dispatch(createPost(title, content, image))
             .then(() => {
+                dispatch(getPosts());
                 setPost(false);
+                setTitle('');
+                setContent('');
+                setAttachment('');
             })
         
     };

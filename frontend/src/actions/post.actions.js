@@ -122,7 +122,8 @@ export const createPost = (title, content, image) => {
             url: `${process.env.REACT_APP_API_URL}api/posts/post/new`,
             data: {
                'title': `${title}`,
-               'content': `${content}`
+               'content': `${content}`,
+               'attachment': `${image}`
             },
             withCredentials: true
 
