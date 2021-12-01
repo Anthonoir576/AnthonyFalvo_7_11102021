@@ -31,7 +31,7 @@ exports.createPost = (request, response, next) => {
 
         // Contrôle du front 
         // au minimum un titre et ou un contenu et ou une image
-        if ((title == undefined && content == undefined) && request.file == undefined) {
+        if ((title == '' && content == '') && request.file == undefined) {
 
             if (request.file !== undefined) {
                 const filename = request.file.filename;
@@ -43,18 +43,6 @@ exports.createPost = (request, response, next) => {
                 return response.status(400).json({ 'message': 'Aucun champ rempli !' });
             };
 
-        } else if (((title == undefined) && (content == undefined)) && request.file == undefined){
-            
-            if (request.file !== undefined) {
-                const filename = request.file.filename;
-                fs.unlink(`images/posts/${filename}`,() => {
-                      console.log('Fichier supprimé !');         
-                });
-                return response.status(400).json({  'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu ou une image, le fichier à été supprimé !' });    
-            } else {
-                return response.status(400).json({ 'message': ' Le titre doit contenir 5 caractères minimums ainsi que le contenu, ou une image !'});
-            };
-
         } else if (title != undefined || content != undefined || request.file != undefined) {
 
 
@@ -62,16 +50,14 @@ exports.createPost = (request, response, next) => {
 
                 if (title.length > 50) {
                     return response.status(400).json({ 'message': ' le titre contiens plus de 50 caractères !'});
-                };
-
+                }
             };
 
             if (content != undefined) {
 
                 if (content.length > 500) {
                     return response.status(400).json({ 'message': ' le contenu contiens plus de 500 caractères !'});
-                };
-
+                }
             };
 
 
