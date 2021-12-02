@@ -26,8 +26,7 @@ const NewPost = () => {
             data.append('title', title);
             data.append('content', content);
             data.append('image', file);
-
-            
+      
             await dispatch(createPost(data))
                     .then(() => {
                         dispatch(getPosts());
@@ -37,6 +36,7 @@ const NewPost = () => {
                         setPostPic(null);
                         setFile();
                     })
+                    .catch((error) => { console.log(error) });
         };
         
     };

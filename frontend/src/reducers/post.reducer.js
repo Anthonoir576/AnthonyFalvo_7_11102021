@@ -39,7 +39,8 @@ export default function postReducer(state = initialState, action) {
                     return {
                        ...post,
                        title: action.payload.title,
-                       content: action.payload.content 
+                       content: action.payload.content,
+                       attachment: action.payload.attachment 
                     };
                 } else {
                     return post;

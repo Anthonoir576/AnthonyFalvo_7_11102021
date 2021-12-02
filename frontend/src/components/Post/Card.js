@@ -4,7 +4,7 @@ import { dateLong, isItBlank } from '../Utils/Utils';
 import Dislike from './Dislike';
 import Like from './Like';
 import { useDispatch } from 'react-redux';
-import { updatePost } from '../../actions/post.actions';
+import { getPosts, updatePost } from '../../actions/post.actions';
 import DeleteCard from './DeleteCard';
 import CommentCard from './CommentCard';
 
@@ -12,29 +12,55 @@ import CommentCard from './CommentCard';
 
 const Card = ({ post }) => {
 
+    const [deletePic, setDeletePic]         = useState(false);
     const [isLoading, setIsLoading]         = useState(true);
     const [isUpdated, setIsUpdated]         = useState(false);
     const [titleUpdate, setTitleUpdate]     = useState('');
     const [showComments, setShowComments]   = useState(false);
     const [contentUpdate, setContentUpdate] = useState('');
-    // const [pictureUpdate, setPictureUpdate] = useState(null);
+    const [postPic, setPostPic]             = useState(null);
+    const [file, setFile]                   = useState();
     const dispatch                          = useDispatch();
     const userData                          = useSelector((state) => state.userReducer);
     const usersData                         = useSelector((state) => state.usersReducer);
 
     const myUpdatePost = () => {
+        
+        const data = new FormData();
+        data.append('title', titleUpdate);
+        data.append('content', contentUpdate);
+        
+        if (file) {
+            data.append('image', file);
+        };
 
-        if (titleUpdate && contentUpdate) {
-            dispatch(updatePost(post.id, titleUpdate, contentUpdate))
-        } else if (titleUpdate) {
-            dispatch(updatePost(post.id, titleUpdate, post.content))
-        } else if (contentUpdate) {
-            dispatch(updatePost(post.id, post.title, contentUpdate))
-        }; 
+        if (deletePic === true) {
+            setFile('')
+            data.append("attachment", file)
+        }
+
+        if (titleUpdate || contentUpdate || postPic || deletePic === true) {
+            dispatch(updatePost(post.id, data))
+                .then(() => {
+                    dispatch(getPosts());
+                    setPostPic(null);
+                    setFile('');
+                    setIsUpdated(false);
+                    setDeletePic(false);
+                })
+                .catch((error) => {console.log(error)});
+        };
 
         setIsUpdated(false);
+    };
+
+    const majPicture = (e) => {
+
+        setPostPic(URL.createObjectURL(e.target.files[0]));
+        setFile(e.target.files[0]);
 
     };
+
 
     useEffect(() => {
 
@@ -139,9 +165,22 @@ const Card = ({ post }) => {
                                                 }}
                                     />
                                 </div>
-                            )}
-                            {((post.content && isUpdated === true) || (post.title && isUpdated === true)) && (
+                            )} 
+
+                            {(isUpdated ===true) && (
+                                <div className="icon">
+                                    <input type="file" 
+                                        id="file-upload"
+                                        name="image"
+                                        accept=".jpg, .jpeg, .png, .gif"
+                                        onChange={(e) => { majPicture(e) }}       
+                                    />
+                                    
+                                </div> 
+                            )}                        
+                            {((post.content && isUpdated === true) || (post.title && isUpdated === true) || (post.attachment && isUpdated === true)) && (
                                 <div className="button-container">
+                                    <div onClick={() => { setDeletePic(true) }}>DELETE PIC</div>
                                     <button className="btn"
                                             onClick={myUpdatePost}>
                                         Valider

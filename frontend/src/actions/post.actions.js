@@ -96,20 +96,17 @@ export const dislikePost = (postId) => {
     };
 }; 
 
-export const updatePost = (postId, title, content) => {
+export const updatePost = (postId, data) => {
 
     return (dispatch) => {
         return axios({
             method: 'PUT',
             url: `${process.env.REACT_APP_API_URL}api/posts/post/${postId}`,
-            data: {
-                'title': title,
-               'content': content
-            },
+            data: data,
             withCredentials: true
 
         }).then((result) => {
-            dispatch({ type: UPDATE_POST, payload: {title : title, content: content, postId: postId } })
+            dispatch({ type: UPDATE_POST, payload: {title : result.data.title, content: result.data.content, attachment: result.data.attachment, postId: postId } })
         })
         .catch((error) => console.log(error));
     };
