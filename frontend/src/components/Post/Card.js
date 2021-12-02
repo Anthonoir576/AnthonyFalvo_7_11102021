@@ -180,7 +180,10 @@ const Card = ({ post }) => {
                             )}                        
                             {((post.content && isUpdated === true) || (post.title && isUpdated === true) || (post.attachment && isUpdated === true)) && (
                                 <div className="button-container">
-                                    <div onClick={() => { setDeletePic(true) }}>DELETE PIC</div>
+                                    <div className="deletePostPicture" 
+                                         onClick={() => { setDeletePic(true) }}>
+                                             <p>Supprimer image</p>
+                                    </div>
                                     <button className="btn"
                                             onClick={myUpdatePost}>
                                         Valider
