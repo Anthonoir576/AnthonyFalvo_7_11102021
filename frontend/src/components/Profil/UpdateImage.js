@@ -19,6 +19,7 @@ const UpdateImage = () => {
         data.append('userId', userData.id);
         data.append('image', file);
 
+
         dispatch(uploadPicture(data, userData.id))
             .then(() => {
                 dispatch(getUsers());

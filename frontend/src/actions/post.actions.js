@@ -3,11 +3,12 @@ import axios from "axios";
 
 
 export const GET_POSTS    = "GET_POSTS";
+export const CREATE_POST  = "CREATE_POST";
 export const LIKE_POST    = "LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
 export const UPDATE_POST  = "UPDATE_POST";
 export const DELETE_POST  = "DELETE_POST";
-export const CREATE_POST  = "CREATE_POST";
+
 
 
 export const getPosts = (value) => {
@@ -41,6 +42,26 @@ export const getPosts = (value) => {
             dispatch({ type: GET_POSTS, payload: newArray });
         })
         .catch((error) => console.log(error));
+    };
+
+};
+
+export const createPost = (data) => {
+
+    return (dispatch) => {
+
+        return axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_API_URL}api/posts/post/new`,
+            data: data,
+            
+            withCredentials: true
+
+        }).then((result) => {
+            dispatch({ type: CREATE_POST, payload: {} })
+        })
+        .catch((error) => console.log(error));
+
     };
 
 };
@@ -110,28 +131,5 @@ export const deletePost = (postId) => {
         .catch((error) => { console.log(error) });
 
     }
-
-};
-
-export const createPost = (title, content, image) => {
-
-    return (dispatch) => {
-
-        return axios({
-            method: 'POST',
-            url: `${process.env.REACT_APP_API_URL}api/posts/post/new`,
-            data: {
-               'title': `${title}`,
-               'content': `${content}`,
-               'attachment': `${image}`
-            },
-            withCredentials: true
-
-        }).then((result) => {
-            dispatch({ type: CREATE_POST, payload: {title : title, content: content, attachment: image } })
-        })
-        .catch((error) => console.log(error));
-
-    };
 
 };

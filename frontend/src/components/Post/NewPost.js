@@ -9,26 +9,46 @@ const NewPost = () => {
     const [isLoading, setIsLoading]   = useState(true);
     const [title, setTitle]           = useState('');
     const [content, setContent]       = useState('');
-    const [attachment, setAttachment] = useState(null);
-    const [image, setImage]           = useState('');
+    const [postPic, setPostPic]       = useState(null);
+    const [file, setFile]             = useState();
     const userData                    = useSelector((state) => state.userReducer);
     const [post, setPost]             = useState(false);
     const dispatch                    = useDispatch();
   
-    const addPost = () => {
 
-        dispatch(createPost(title, content, image))
-            .then(() => {
-                dispatch(getPosts());
-                setPost(false);
-                setTitle('');
-                setContent('');
-                setAttachment('');
-            })
+
+    const addPost = async () => {
+
+        if (title || content || postPic) {
+
+            const data = new FormData();
+
+            data.append('title', title);
+            data.append('content', content);
+            data.append('image', file);
+
+            
+            await dispatch(createPost(data))
+                    .then(() => {
+                        dispatch(getPosts());
+                        setPost(false);
+                        setTitle('');
+                        setContent('');
+                        setPostPic(null);
+                        setFile();
+                    })
+        };
         
     };
  
-    const uploadPicture = () => {};
+
+    const uploadPicture = (e) => {
+
+        setPostPic(URL.createObjectURL(e.target.files[0]));
+        setFile(e.target.files[0]);
+
+    };
+
 
     useEffect(() => {
 
@@ -36,7 +56,8 @@ const NewPost = () => {
             setIsLoading(false);
         };
 
-    }, [userData])
+    }, [userData]);
+
 
     return (
       <div className="post-container">
