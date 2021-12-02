@@ -138,23 +138,16 @@ const Card = ({ post }) => {
                                                 setContentUpdate(e.target.value)
                                                 }}
                                     />
-                                    <div className="button-container">
-                                        <button className="btn"
-                                                onClick={myUpdatePost}>
-                                            Valider
-                                        </button>
-                                    </div>
                                 </div>
                             )}
-                            {/* {(post.attachment && isUpdated === true) && (
-                                <div className="update-post">
-                                            <textarea defaultValue={post.attachment}
-                                                onChange={(e) => {
-                                                setPictureUpdate(e.target.value)
-                                                }}
-                                />
+                            {((post.content && isUpdated === true) || (post.title && isUpdated === true)) && (
+                                <div className="button-container">
+                                    <button className="btn"
+                                            onClick={myUpdatePost}>
+                                        Valider
+                                    </button>
                                 </div>
-                            )} */}
+                            )}
                         </div>
                         <div className="card-footer">
                             <div className="comment-icon">
