@@ -134,7 +134,8 @@ exports.updatePost = (request, response, next) => {
                 attachment: `${request.protocol}://${request.get('host')}/images/posts/${request.file.filename}`       
             } : { 
                 title: (title ? title : post.title).trim(),
-                content: (content ? content : post.content).trim()
+                content: (content ? content : post.content).trim(),
+                attachment: ''
              };
 
 
