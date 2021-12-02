@@ -43,21 +43,25 @@ exports.createPost = (request, response, next) => {
                 return response.status(400).json({ 'message': 'Aucun champ rempli !' });
             };
 
-        } else if (title != undefined || content != undefined || request.file != undefined) {
+        } else if (title != '' || content != '' || request.file != undefined) {
 
 
-            if (title != undefined) {
+            if (title != '') {
 
-                if (title.length > 50) {
+                if (title.trim().length > 50) {
                     return response.status(400).json({ 'message': ' le titre contiens plus de 50 caractères !'});
-                }
+                } else if (title.trim().length < 5) {
+                    return response.status(400).json({ 'message': ' le titre contiens moins de 5 caractères !'});
+                };
             };
 
-            if (content != undefined) {
+            if (content != '') {
 
-                if (content.length > 500) {
+                if (content.trim().length > 500) {
                     return response.status(400).json({ 'message': ' le contenu contiens plus de 500 caractères !'});
-                }
+                } else if (content.trim().length < 5) {
+                    return response.status(400).json({ 'message': ' le contenu contiens moins de 5 caractères !'});
+                };
             };
 
 
