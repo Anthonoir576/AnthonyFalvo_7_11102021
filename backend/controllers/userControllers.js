@@ -261,115 +261,111 @@ exports.deleteUser = (request, response, next) => {
   
     if (userId == paramsUserId || adminId == true) {
          
-        // suppression like et commentaire des autres utilisateurs associé au profile de l'utilisateur supprimé
-        setTimeout(() => {
+
+        for (let i = 0; i != 8; i++) {
+
+            if (i == 1) {
+
+                // suppression like et commentaire des autres utilisateurs associé au profile de l'utilisateur supprimé
+                models.Like.destroy({
+                    where: { associateId: paramsUserId }
+                }).then(() => console.log('les likes des autre utilisateur associé aux publications ont été supprimé !'))
+                .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 01' }));
             
-            models.Like.destroy({
-                where: { associateId: paramsUserId }
-            }).then(() => console.log('les likes des autre utilisateur associé aux publications ont été supprimé !'))
-            .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 01' }));
-        
-            models.Comment.destroy({
-                where: { associateId: paramsUserId }
-            }).then(() => console.log('les commentaires des autre utilisateur associé aux publications ont été supprimé !'))
-            .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 02' }));
+                models.Comment.destroy({
+                    where: { associateId: paramsUserId }
+                }).then(() => console.log('les commentaires des autre utilisateur associé aux publications ont été supprimé !'))
+                .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 02' }));
 
-        }, 1);
-        
-        // suppression like et commentaire de l'utilisateur supprimé
-        setTimeout(() => {
+            } else if (i == 2) {
+
+                // suppression like et commentaire de l'utilisateur supprimé
+                models.Like.destroy({
+                    where: { userId: paramsUserId }
+                }).then(() => console.log('les likes de l\'utilisateur ont été supprimé !'))
+                .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 03' }));
             
-            models.Like.destroy({
-                where: { userId: paramsUserId }
-            }).then(() => console.log('les likes de l\'utilisateur ont été supprimé !'))
-            .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 03' }));
-        
-            models.Comment.destroy({
-                where: { userId: paramsUserId }
-            }).then(() => console.log('les commentaires de l\'utilisateur ont été supprimé !'))
-            .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 04' }));
+                models.Comment.destroy({
+                    where: { userId: paramsUserId }
+                }).then(() => console.log('les commentaires de l\'utilisateur ont été supprimé !'))
+                .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 04' }));
 
-        }, 5);
+            } else if (i == 3) { 
 
-        // suppression des images des publications de lutilisateur supprimé
-        setTimeout(() => {
+                // suppression des images des publications de lutilisateur supprimé
+                models.Post.findAll({
+                    attributes: ['id'],
+                    where: {userId: paramsUserId}
+                })
+                .then( postFound => {
 
-            models.Post.findAll({
-                attributes: ['id'],
-                where: {userId: paramsUserId}
-            })
-            .then( postFound => {
+                    if (postFound) {
 
-                if (postFound) {
+                        let postsUser = JSON.parse(JSON.stringify(postFound));
 
-                    let postsUser = JSON.parse(JSON.stringify(postFound));
+                        for (let i = 0; i < Object.values(postsUser).length; i++) {
 
-                    for (let i = 0; i < Object.values(postsUser).length; i++) {
+                            let myPost = parseInt(Object.values(postsUser[i]).join(''));
 
-                        let myPost = parseInt(Object.values(postsUser[i]).join(''));
+                            if (i <= Object.values(postsUser).length) {
+                                models.Post.findOne({
+                                    where: { id: myPost }
+                                }).then(post => {
 
-                        if (i <= Object.values(postsUser).length) {
-                            models.Post.findOne({
-                                where: { id: myPost }
-                            }).then(post => {
+                                    if (post) {
+                                        const filename = post.attachment.split('/images/')[1];
 
-                                if (post) {
-                                    const filename = post.attachment.split('/images/')[1];
-
-                                    fs.unlink(`images/${filename}`, () => {
-                                    console.log('Fichier supprimé !');
-                                    });
-                                }; 
-                            }).catch(() => response.status(404).json({ "message" : " La publication n\'est pas disponible dans la base de données !" }));
+                                        fs.unlink(`images/${filename}`, () => {
+                                        console.log('Fichier supprimé !');
+                                        });
+                                    }; 
+                                }).catch(() => response.status(404).json({ "message" : " La publication n\'est pas disponible dans la base de données !" }));
+                            };
                         };
                     };
-                };
-            }).catch(() => { response.status(500).json({ 'message': 'Aucune publication trouvé dans la base de données !' }) });
-            
-        }, 10);
+                }).catch(() => { response.status(500).json({ 'message': 'Aucune publication trouvé dans la base de données !' }) });
 
-        // suppression des publications de lutilisateur supprimé
-        setTimeout(() => {
-            models.Post.destroy({
-                where: { userId: paramsUserId }
-            }).then(() => console.log('les publications de l\'utilisateur ont été supprimé !'))
-            .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 05' }));
-        }, 20);
+            } else if (i == 4) {
 
-        // supperssion de ca photo de profil
-        setTimeout(() => {
-            models.User.findOne({
-                where: {id : paramsUserId}
-            }).then((user) => {
-                if (user) {
-                    const filename = user.attachment.split('/images/')[1];
+                // suppression des publications de lutilisateur supprimé
+                models.Post.destroy({
+                    where: { userId: paramsUserId }
+                }).then(() => console.log('les publications de l\'utilisateur ont été supprimé !'))
+                .catch(() => response.status(400).json({ 'message': 'CODE ERREUR 05' }));
 
-                    console.log(filename);
+            } else if (i == 5) {
 
-                    if (filename != 'defaults/default.png') {
-                        fs.unlink(`images/${filename}`, () => {
-                            console.log('Fichier profil supprimé !');
-                        });
-                    };
-                }
-            }).catch(() => response.status(404).json({ "message" : " L\'utilisateur n\'est pas disponible dans la base de données !" }));
-        }, 35)
+                // supperssion de ca photo de profil
+                models.User.findOne({
+                    where: {id : paramsUserId}
+                }).then((user) => {
+                    if (user) {
+                        const filename = user.attachment.split('/images/')[1];
+    
+                        console.log(filename);
+    
+                        if (filename != 'defaults/default.png') {
+                            fs.unlink(`images/${filename}`, () => {
+                                console.log('Fichier profil supprimé !');
+                            });
+                        };
+                    }
+                }).catch(() => response.status(404).json({ "message" : " L\'utilisateur n\'est pas disponible dans la base de données !" }));
 
-        // suppression de lutilisateur (visé à être supprimé)
-        setTimeout(() => {
-            
-            models.User.destroy({ where: {id : paramsUserId} })
-            .then(()=> {console.log(`L\'utilisateur à été supprimé de la base de donnée, ainsi que tout le contenu associé !`)})
-            .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
+            } else if (i == 6) {
 
-        }, 50);
-            
-        // suppression du cookie 
-        setTimeout(() => {
-            response.cookie('jwt', '', { maxAge: 1 });
-            response.status(200).json({'message' : 'Utilisateur supprimé !'})
-        }, 60)
+                // suppression de lutilisateur (visé à être supprimé)
+                models.User.destroy({ where: {id : paramsUserId} })
+                .then(()=> {console.log(`L\'utilisateur à été supprimé de la base de donnée, ainsi que tout le contenu associé !`)})
+                .catch(() => response.status(400).json({ 'message': 'l\'utilisateur n\'est pas supprimé !' }));
 
+            } else if (i == 7) {
+
+                // suppression du cookie 
+                response.cookie('jwt', '', { maxAge: 1 });
+                response.status(200).json({'message' : 'Utilisateur supprimé !'});
+            };
+        };
 
     } else {
         return response.status(403).json({ 'message': 'Vous n\'êtes pas autorisé à supprimer cette utilisateur !' })
