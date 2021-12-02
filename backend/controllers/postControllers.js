@@ -125,6 +125,9 @@ exports.updatePost = (request, response, next) => {
 
         if (post && (userId == post.UserId|| adminId == true)) {
 
+            console.log(post.attachment);
+            console.log(request.body);
+            console.log(request.file);
 
             const filename = post.attachment.split('/images/')[1];
             const updatePost = request.file ?
@@ -135,25 +138,24 @@ exports.updatePost = (request, response, next) => {
             } : { 
                 title: (title ? title : post.title).trim(),
                 content: (content ? content : post.content).trim(),
-                attachment: ''
+                attachment: ((post.attachment && request.body.attachment != '') ? post.attachment : '')
              };
 
-
-             if (updatePost.attachment == undefined) {
-
-                post.update({
-                    ...updatePost
-                }).then( postUpdate => response.status(200).json(postUpdate)
-                ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
-
-             } else {
-
+             if (updatePost.attachment == undefined || request.file || updatePost.attachment == '') {
+                
                 fs.unlink(`images/${filename}`, () => {
                     post.update({
                         ...updatePost
                     }).then( postUpdate => response.status(200).json(postUpdate)
                     ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
                 });
+
+             } else {
+
+                post.update({
+                    ...updatePost
+                }).then( postUpdate => response.status(200).json(postUpdate)
+                ).catch(() => response.status(400).json({ 'message' : 'La publication n\'as pas été mise à jour !' }));
 
              };
 
