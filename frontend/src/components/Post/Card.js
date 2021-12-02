@@ -12,7 +12,6 @@ import axios from 'axios';
 
 const Card = ({ post }) => {
 
-    const [deletePic, setDeletePic]         = useState(false);
     const [isLoading, setIsLoading]         = useState(true);
     const [isUpdated, setIsUpdated]         = useState(false);
     const [titleUpdate, setTitleUpdate]     = useState('');
@@ -32,23 +31,15 @@ const Card = ({ post }) => {
         
         if (file) {
             data.append('image', file);
-        } else if (!file && deletePic === false) {
-            data.append('attachment', post.attachment)
         }
 
-        if (deletePic === true) {
-            setFile()
-            data.append("attachment", '')
-        }
-
-        if (titleUpdate || contentUpdate || postPic || deletePic === true) {
+        if (titleUpdate || contentUpdate || postPic) {
             dispatch(updatePost(post.id, data))
                 .then(() => {
                     dispatch(getPosts());
                     setPostPic(null);
                     setFile();
                     setIsUpdated(false);
-                    setDeletePic(false);
                 })
                 .catch((error) => {console.log(error)});
         };
@@ -56,23 +47,23 @@ const Card = ({ post }) => {
         setIsUpdated(false);
     };
 
-    const removePicture = () => {
+    const removePicture = (postId) => {
 
         return axios({
             method: 'PUT',
-            url: `${process.env.REACT_APP_API_URL}api/posts/post/${post.id}`,
-            data: { attachment: '',
-                    title: post.title,
-                    content: post.content
+            url: `${process.env.REACT_APP_API_URL}api/posts/post/${postId}`,
+            data: { 
+                title: post.title,
+                content: post.content,
+                attachment: ''
             },
             withCredentials: true
 
         }).then((result) => {
             dispatch(getPosts());
             setPostPic(null);
-            setFile();
+            setFile('');
             setIsUpdated(false);
-            setDeletePic(false);
         })
         .catch((error) => console.log(error));
 
@@ -205,7 +196,7 @@ const Card = ({ post }) => {
                             {((post.content && isUpdated === true) || (post.title && isUpdated === true) || (post.attachment && isUpdated === true)) && (
                                 <div className="button-container">
                                     <div className="deletePostPicture" 
-                                         onClick={() => { removePicture()}}>
+                                         onClick={() => { removePicture(post.id)}}>
                                              <p>Supprimer image</p>
                                     </div>
                                     <button className="btn"
