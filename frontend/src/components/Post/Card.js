@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { getPosts, updatePost } from '../../actions/post.actions';
 import DeleteCard from './DeleteCard';
 import CommentCard from './CommentCard';
-
+import axios from 'axios';
 
 
 const Card = ({ post }) => {
@@ -32,11 +32,13 @@ const Card = ({ post }) => {
         
         if (file) {
             data.append('image', file);
-        };
+        } else if (!file && deletePic === false) {
+            data.append('attachment', post.attachment)
+        }
 
         if (deletePic === true) {
-            setFile('')
-            data.append("attachment", file)
+            setFile()
+            data.append("attachment", '')
         }
 
         if (titleUpdate || contentUpdate || postPic || deletePic === true) {
@@ -44,7 +46,7 @@ const Card = ({ post }) => {
                 .then(() => {
                     dispatch(getPosts());
                     setPostPic(null);
-                    setFile('');
+                    setFile();
                     setIsUpdated(false);
                     setDeletePic(false);
                 })
@@ -52,6 +54,28 @@ const Card = ({ post }) => {
         };
 
         setIsUpdated(false);
+    };
+
+    const removePicture = () => {
+
+        return axios({
+            method: 'PUT',
+            url: `${process.env.REACT_APP_API_URL}api/posts/post/${post.id}`,
+            data: { attachment: '',
+                    title: post.title,
+                    content: post.content
+            },
+            withCredentials: true
+
+        }).then((result) => {
+            dispatch(getPosts());
+            setPostPic(null);
+            setFile();
+            setIsUpdated(false);
+            setDeletePic(false);
+        })
+        .catch((error) => console.log(error));
+
     };
 
     const majPicture = (e) => {
@@ -181,7 +205,7 @@ const Card = ({ post }) => {
                             {((post.content && isUpdated === true) || (post.title && isUpdated === true) || (post.attachment && isUpdated === true)) && (
                                 <div className="button-container">
                                     <div className="deletePostPicture" 
-                                         onClick={() => { setDeletePic(true) }}>
+                                         onClick={() => { removePicture()}}>
                                              <p>Supprimer image</p>
                                     </div>
                                     <button className="btn"
