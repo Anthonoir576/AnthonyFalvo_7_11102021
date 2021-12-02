@@ -26,12 +26,12 @@ exports.createPost = (request, response, next) => {
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
     const userId       = decodedToken.userId;
 
-    if (userId) {
 
+    if (userId) {
 
         // Contrôle du front 
         // au minimum un titre et ou un contenu et ou une image
-        if ((title == '' && content == '') && request.file == undefined) {
+        if (((title == '' && content == '') || (title == undefined && content == undefined)) && request.file == undefined) {
 
             if (request.file !== undefined) {
                 const filename = request.file.filename;
