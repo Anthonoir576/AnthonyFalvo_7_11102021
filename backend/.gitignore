@@ -9,8 +9,8 @@
 
 # -----  .ENV  ---------
 
-config/.env
-config/config.json
+#config/.env
+#config/config.json
 
 # ----------------------
 

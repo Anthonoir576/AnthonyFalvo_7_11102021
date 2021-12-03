@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "47571971",
+    "database": "database_development_p7",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "47571971",
+    "database": "database_test_p7",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "47571971",
+    "database": "database_production_p7",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
