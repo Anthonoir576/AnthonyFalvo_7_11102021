@@ -1,0 +1,242 @@
+.home {
+  display: grid;
+  max-width: 1200px;
+  overflow: hidden;
+  margin: 58px auto 50px;
+  position: relative;
+  padding: 0 50px;
+  border-right: 2px solid rgba(255, 255, 255, 0.438);
+  border-left: 2px solid rgba(255, 255, 255, 0.425);
+  color: black;
+
+  .main {
+    color: white;
+
+    .card-container {
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .home-header {
+      margin: 0 auto 12px;
+      text-align: center;
+
+      .connection-form {
+        background: $color-4;
+        border-radius: 20px;
+        padding: 20px;
+
+        ul {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 18px;
+
+          li {
+            cursor: pointer;
+            border-radius: 20px;
+            padding: 12px 14px;
+            transition: 0.2s;
+            margin: 0 8px;
+          }
+          .active-btn {
+            background: $color-1;
+
+            &:hover {
+              background: $color-2;
+            }
+          }
+          li:not(.active-btn) {
+            &:hover {
+              transform: translateX(3px);
+            }
+          }
+        }
+        form {
+          input {
+            padding: 10px 14px;
+            margin: 0;
+            font-size: 1.2rem;
+            font-family: $font-2;
+            border-radius: 20px;
+
+            &:focus {
+              box-shadow: 0 0 3px rgba(51, 51, 51, 0.2);
+            }
+          }
+          input[type="submit"] {
+            padding: 14px 14px;
+            border-radius: 20px;
+          }
+        }
+      }
+    }
+
+    .deletePublication {
+      position: fixed;
+      z-index: 999;
+      padding: 5px;
+      border: 1px solid white;
+      border-radius: 50px;
+      transform: translate(-95%, 0%);
+      background-color: rgba(255, 0, 0, 0.795);
+      margin: 0 auto;
+      width: 400px !important;
+      height: 95px;
+      text-align: center;
+      box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.308);
+
+      & p {
+        display: block;
+        border-radius: 50px;
+        border: 1px solid white;
+      }
+
+      & p,
+      & span {
+        background: black;
+      }
+
+      & div {
+        display: flex;
+
+        & :nth-child(2) {
+          width: 150px !important;
+          height: 35px !important;
+          transform: translate(0) !important;
+          position: absolute;
+          transform: translate(237px, -2px) !important;
+        }
+
+        & :nth-child(1) {
+          width: 150px !important;
+          height: 35px !important;
+          transform: translate(0) !important;
+          position: absolute;
+          transform: translate(1px, -2px) !important;
+        }
+
+        & span {
+          cursor: pointer;
+          display: block;
+          width: 200px;
+          height: 35px;
+          margin-top: 1rem;
+          border: 1px solid white;
+          padding: 5px;
+          border-radius: 5px;
+          transition: 0.25s all ease-out;
+          font-style: normal;
+
+          &:hover {
+            transition: 0.25s all ease-in;
+            background: white;
+            color: black;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 600px) {
+      .deletePublication {
+        position: fixed;
+        z-index: 999;
+        padding: 5px;
+        border: 1px solid white;
+
+        transform: translate(-95%, 0%);
+        background-color: rgba(255, 0, 0, 0.795);
+        margin: 0 auto;
+        width: 250px !important;
+        height: 95px;
+        text-align: center;
+        box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.308);
+
+        & p {
+          display: block;
+          font-size: 0.7rem;
+        }
+
+        & p,
+        & span {
+          background: black;
+          font-size: 0.7rem;
+        }
+
+        & div {
+          display: flex;
+
+          & :nth-child(2) {
+            width: 70px !important;
+            height: 35px !important;
+            transform: translate(0) !important;
+            position: absolute;
+            transform: translate(165px, -2px) !important;
+          }
+
+          & :nth-child(1) {
+            width: 70px !important;
+            height: 35px !important;
+            transform: translate(0) !important;
+            position: absolute;
+            transform: translate(1px, -2px) !important;
+          }
+
+          & span {
+            cursor: pointer;
+            display: block;
+            width: 200px;
+            height: 35px;
+            margin-top: 1rem;
+            border: 1px solid white;
+            padding: 5px;
+            border-radius: 5px;
+            transition: 0.25s all ease-out;
+            font-style: normal;
+
+            &:hover {
+              transition: 0.25s all ease-in;
+              background: white;
+              color: black;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .deleteCommentOrNot {
+    display: block;
+    text-align: center;
+    & span {
+      display: block;
+      margin: 0 auto;
+      width: 50%;
+      cursor: pointer;
+      background: red;
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.61);
+      transition: 0.1s all ease-out;
+
+      &:hover {
+        transition: 0.1s all ease-in;
+        box-shadow: 0 10px 25px -1px rgba(0, 0, 0, 0.541);
+        width: 48%;
+      }
+    }
+  }
+
+  .right-side {
+    position: relative;
+    width: 100%;
+    margin: 0px 0 0 14px;
+
+    @media screen and(max-width: 990px) {
+      display: none;
+    }
+
+    .right-side-container {
+      position: fixed;
+    }
+  }
+}

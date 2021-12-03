@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  outline: none;
+  border: none;
+  text-decoration: none;
+
+  &::selection {
+    background: $skyblue;
+  }
+}
+a,
+a:visited {
+  color: $color-3;
+}
+input,
+textarea {
+  resize: none;
+  border-radius: 20px;
+  width: 270px;
+  font-family: $font-1;
+  background: $white;
+}
+textarea {
+  &:focus {
+    box-shadow: 0 0 4px rgba(0, 22, 44, 0.1);
+  }
+}
+button,
+input[type="submit"] {
+  background: white;
+  color: black;
+  font-family: $font-3;
+  cursor: pointer;
+  transition: 0.2s;
+  margin: 0;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  border-radius: 5px;
+
+  &:hover {
+    background: whitesmoke;
+    color: black;
+  }
+}
+input[type="checkbox"] {
+  box-shadow: none;
+  width: 20px;
+  margin: 10px 0;
+}
+i {
+  transition: 0.15s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+body {
+  font-family: $font-2;
+  line-height: 1.4rem;
+  background: $dark;
+  color: $color-3;
+  overflow-x: hidden;
+}
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 0.7rem;
+}
+.success {
+  margin-top: 1.2rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem 0;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.452);
+  font-size: 1.2rem;
+  color: green;
+  font-weight: bold;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.userProfil {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+
+  border: 2px solid $skyblue;
+  border-radius: 3px;
+}

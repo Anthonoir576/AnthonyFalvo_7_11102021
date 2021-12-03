@@ -1,0 +1,85 @@
+nav {
+  display: block;
+  width: 100%;
+  height: 45px;
+  border-radius: 6px;
+  border-top: 1px solid $skyblue;
+  border-bottom: 1px solid $skyblue;
+  box-shadow: 0 5px 20px 1px rgba(255, 255, 255, 0.356);
+
+  margin: 5px auto 0 auto;
+
+  @media screen and(max-width: 1251px) {
+    padding: 0 20px;
+  }
+  .nav-container {
+    display: flex;
+    position: relative;
+    width: 100%;
+    max-width: 1190px;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    justify-content: space-between;
+    height: 45px;
+    align-items: center;
+
+    li.userPicture {
+      & img.userProfil {
+        position: absolute;
+        top: -15px;
+        right: -60px;
+        z-index: 100;
+
+        object-fit: cover;
+        height: 70px;
+        width: 70px;
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+
+      h3 {
+        transform: translate(15px, 0px);
+        font-size: 1.5rem;
+        font-family: $font-3;
+        color: $skyblue;
+      }
+      img {
+        object-fit: cover;
+        height: 25px;
+        width: auto;
+      }
+    }
+
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35%;
+      justify-content: space-between;
+      font-size: 1.2rem;
+
+      .welcome {
+        transform: translateY(2px);
+
+        h5 {
+          font-family: $font-3;
+        }
+      }
+
+      li {
+        img {
+          height: 24px;
+          width: 24px;
+          cursor: pointer;
+          display: grid;
+          align-items: center;
+          justify-items: center;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
