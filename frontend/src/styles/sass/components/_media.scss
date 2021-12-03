@@ -1,0 +1,168 @@
+@media only screen and (min-width: 0px) and (max-width: 500px) {
+  body {
+    #root {
+      & nav {
+        padding: 0 5px;
+
+        .nav-container {
+          .logo {
+            & img {
+              height: 15px;
+            }
+          }
+
+          ul {
+            .userPicture {
+              & img {
+                width: 40px;
+                height: 40px;
+                right: -15px;
+                top: -10px;
+              }
+            }
+          }
+        }
+      }
+
+      & .left-nav-container {
+        & .icons-bis {
+          & img {
+            width: 15px;
+          }
+        }
+      }
+
+      & .home {
+        padding: 0 5px;
+        .main {
+          .card-container {
+            font-size: 15px;
+            padding: 5px;
+            .card-left {
+              transform: translate(10px, 10px);
+              img {
+                margin: 0;
+              }
+            }
+            .card-right {
+              .card-header {
+                .pseudo h3 {
+                  font-size: 14px;
+                }
+                .pseudo {
+                  justify-content: end;
+                  transform: translateY(-15px);
+                }
+                .updatePost {
+                  justify-content: end;
+                  span {
+                    margin-right: 10px;
+                    font-size: 12px;
+                    transform: translate(0);
+                  }
+                }
+              }
+              .card-body {
+                & p {
+                  font-size: 15px;
+                  margin-top: 0;
+                }
+              }
+              .card-footer .comment-icon span {
+                transform: translate(29px, -1px);
+              }
+
+              .comments-container {
+                .comment-form {
+                  input {
+                    padding: 10px;
+                  }
+                  button[type="submit"] {
+                    width: 100%;
+                    padding: 7px 0;
+                  }
+                }
+                .comment-container {
+                  padding: 5px;
+                  .right-part {
+                    .comment-header {
+                      .pseudo h3 {
+                        font-size: 12px;
+                      }
+                      .pseudo {
+                        .administrator-container {
+                          .administrator {
+                            font-size: 10px;
+                          }
+                        }
+                      }
+                      .updatePost span {
+                        font-size: 10px;
+                      }
+                    }
+                    p {
+                      font-size: 14px;
+                    }
+
+                    .inputEdit {
+                      .edit-comment-form {
+                        input[type="text"] {
+                          height: 50px;
+                        }
+                        div label {
+                          padding: 0 5px;
+                          font-size: 12px;
+                        }
+                        div button {
+                          transform: translate(20px, 1px);
+                          padding: 3px 5px;
+                          font-size: 12px;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .profil-page {
+        width: 100%;
+        .update-container {
+          .left-part {
+            padding: 25px 0;
+          }
+          .right-part {
+            .infoMembre {
+              padding: 0;
+              font-size: 0.7rem;
+            }
+          }
+        }
+        .log-container {
+          width: 100%;
+          .connection-form {
+            .form-container {
+              grid-template-columns: 100%;
+              * {
+                font-size: 12px;
+              }
+              ul {
+                #register,
+                #login {
+                  padding: 0;
+                }
+              }
+              form {
+                button {
+                  width: 90%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
