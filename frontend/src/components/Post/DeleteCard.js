@@ -28,18 +28,7 @@ const DeleteCard = ( props ) => {
                 {pop && (
                 <>
                     <div className="deletePublication">
-                        <p>Voulez-vous supprimer la publication ?</p>
-                        <div>
-                            <span className="deleteYes"
-                                // USER A DELETE ICI
-                                onClick={() => {fonctionDeletePost()}}>
-                                Supprimer
-                            </span>
-                            <span className="deleteNo"
-                                onClick={() => setPop(false)}>
-                                Annuler
-                            </span>
-                        </div>
+                        <p onClick={() => {fonctionDeletePost()}}>Voulez-vous supprimer la publication ?</p>
                     </div>
                 </>
                 )}

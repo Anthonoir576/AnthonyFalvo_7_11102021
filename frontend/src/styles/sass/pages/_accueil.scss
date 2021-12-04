@@ -74,25 +74,29 @@
       position: fixed;
       z-index: 999;
       padding: 5px;
-      border: 1px solid white;
-      border-radius: 50px;
+      border-radius: 5px;
       transform: translate(-95%, 0%);
-      background-color: rgba(255, 0, 0, 0.795);
       margin: 0 auto;
-      width: 400px !important;
+      width: 330px !important;
       height: 95px;
       text-align: center;
-      box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.308);
 
       & p {
         display: block;
-        border-radius: 50px;
+        border-radius: 5px;
+        color: black;
+        background: red;
         border: 1px solid white;
-      }
-
-      & p,
-      & span {
-        background: black;
+        cursor: pointer;
+        padding: 5px 0;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: 0.25s all ease-in-out;
+        &:hover {
+          transition: 0.35s all ease-in-out;
+          background: white;
+          color: black;
+        }
       }
 
       & div {
@@ -135,20 +139,16 @@
       }
     }
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 630px) {
       .deletePublication {
         position: fixed;
         z-index: 999;
         padding: 5px;
-        border: 1px solid white;
-
         transform: translate(-95%, 0%);
-        background-color: rgba(255, 0, 0, 0.795);
         margin: 0 auto;
         width: 250px !important;
         height: 95px;
         text-align: center;
-        box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.308);
 
         & p {
           display: block;
@@ -157,7 +157,6 @@
 
         & p,
         & span {
-          background: black;
           font-size: 0.7rem;
         }
 
