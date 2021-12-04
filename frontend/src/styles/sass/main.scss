@@ -1,9 +1,11 @@
 @import
   'utils/variable';
 
+  
 @import
   'base/typography',
   'base/reset';
+
 
 @import
   'layout/card',
@@ -12,8 +14,10 @@
   'layout/publicationFormulaire',
   'layout/navigationPrincipale';
 
+
 @import
   'components/media';  
+
 
 @import
   'pages/accueil',
