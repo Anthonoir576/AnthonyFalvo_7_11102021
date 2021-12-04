@@ -60,4 +60,4 @@ sequelize db:migrate
 
 ## Problème possible lié a l'installation :
 - Aucun pour le moment
-- Testé sous Windows / Linux sur deux appareils différents
+- Testé sous Windows / Linux. Sous deux appareils différents
