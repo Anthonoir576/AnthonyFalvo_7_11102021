@@ -12,8 +12,8 @@ Mysql - Sequelize - NodeJS - Express - ReactJS - Sass/Css
 ## Dans un premier temps : 
 
 - clonez le répository 
-
-## Installation back-end : 
+## Dans un second temps :
+### Installation back-end : 
 
 Allez dans le fichier backend 
 ```
@@ -22,7 +22,7 @@ npm i
 ```
 npm start
 ```
-## Installation front-end : 
+### Installation front-end : 
 
 Allez dans le fichier frontend
 ```
