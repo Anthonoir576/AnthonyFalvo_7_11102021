@@ -6,7 +6,7 @@
 
 
 ```
-mysql - sequelize - react - sass
+Mysql - Sequelize - NodeJS - Express - ReactJS - Sass/Css
 ```
 ## Installation back-end : 
 
