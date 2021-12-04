@@ -1,6 +1,11 @@
-# - EN COURS -
+# - OpenClassrooms Projet 06 -
 
-## En cours de finition doc a venir 
+## Créez un réseau social d’entreprise
 ```
 ici
 ```
+
+## Installation back-end : 
+
+
+## Installation front-end : 
