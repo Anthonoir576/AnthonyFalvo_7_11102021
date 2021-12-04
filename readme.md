@@ -58,6 +58,6 @@ sequelize db:migrate
 
 - La seule façon de créer un administrateur, serra donc de l'intégrer de façon manuelle sur la base de données en plaçant celui-ci sur 'isAdmin=true', afin d'éviter les problème lié à la sécurité de l'application.
 
-## Problème possible :
-- Aucun 
+## Problème possible lié a l'installation :
+- Aucun pour le moment
 - Testé sous Windows / Linux sur deux appareils différents
