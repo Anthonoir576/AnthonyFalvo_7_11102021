@@ -28,7 +28,7 @@ const Logout = () => {
 
 
     return (
-        <li onClick={logout} className="welcome">
+        <li onClick={logout} className="welcome" aria-label="Deconnection du site groupomania">
             <img src="./image/image/disconnect.svg" className='pointer loginlogout' alt=" Déconnection au réseaux sociaux " />                        
         </li>
     );

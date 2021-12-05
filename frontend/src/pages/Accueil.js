@@ -27,13 +27,13 @@ const Accueil = () => {
                 </>
             ) : (
                   
-            <div className='home'>
-                <div className="profil-page">
-                    <div className="log-container">
-                        <Log signIn={true} signUp={false} />
+                <div className='home'>
+                    <div className="profil-page">
+                        <div className="log-container">
+                            <Log signIn={true} signUp={false} />
+                        </div>
                     </div>
                 </div>
-            </div>
                    
             )}
         </div>

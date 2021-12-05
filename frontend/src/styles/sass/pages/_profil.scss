@@ -130,7 +130,7 @@
       }
     }
   }
-  h1 {
+  h2 {
     margin-top: 2rem !important;
     text-align: center;
     margin: 10px 0 6px;
@@ -300,7 +300,8 @@
       display: block;
       margin: 0 auto;
       background: red;
-      color: white;
+      color: black;
+      font-weight: 600;
 
       &:active {
         filter: blur(5px);
@@ -453,20 +454,6 @@
           h4 {
             text-align: left;
             min-width: 210px;
-          }
-          .follow-handler {
-            text-align: left;
-
-            button {
-              background: $color-4;
-              border-radius: 20px;
-              margin-right: 6px;
-
-              &:hover {
-                color: $color-3;
-                transform: translateX(2px);
-              }
-            }
           }
         }
       }

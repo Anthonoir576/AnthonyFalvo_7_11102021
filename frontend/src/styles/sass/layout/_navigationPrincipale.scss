@@ -23,6 +23,10 @@ nav {
     height: 45px;
     align-items: center;
 
+    & h1 {
+      color: white;
+    }
+
     li.userPicture {
       & img.userProfil {
         position: absolute;
@@ -40,16 +44,11 @@ nav {
       display: flex;
       align-items: center;
 
-      h3 {
-        transform: translate(15px, 0px);
-        font-size: 1.5rem;
-        font-family: $font-3;
-        color: $skyblue;
-      }
       img {
         object-fit: cover;
         height: 25px;
         width: auto;
+        margin-right: 0.5rem;
       }
     }
 

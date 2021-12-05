@@ -108,7 +108,7 @@ const Card = ({ post }) => {
                     <div className="card-right">
                         <div className="card-header">
                             <div className="pseudo">
-                                <h3>
+                                <h2>
                                     {!isItBlank(usersData[0]) && 
                                     usersData.map((user) => {
                                         if (user.id === post.UserId) {
@@ -118,13 +118,13 @@ const Card = ({ post }) => {
                                         }
                                     })
                                     }
-                                </h3>    
+                                </h2>    
                                 <div className="administrator-container">
                                 {
                                     usersData.map((user) => {
                                         if (user.id === post.UserId && user.isAdmin === true) {
 
-                                            return <i className="fas fa-shield-alt administrator" key={post.id}></i>
+                                            return <i className="fas fa-shield-alt administrator" aria-label="Badge administrateur" key={post.id}></i>
                                                 
                                         }  else { return null }
                                     })
@@ -137,7 +137,8 @@ const Card = ({ post }) => {
                                 {(userData.id === post.UserId || userData.isAdmin === true) && (
                                     <>
                                         <div>
-                                            <img src="./image/image/edit.png" 
+                                            <img src="./image/image/edit.png"
+                                                    aria-label="Editez la publication" 
                                                     alt="edit post"
                                                     onClick={() => {
                                                         setIsUpdated(!isUpdated)
@@ -165,31 +166,47 @@ const Card = ({ post }) => {
 
                             {(post.title && isUpdated === true) && (
                                 <div className="update-post">
-                                    <textarea defaultValue={post.title}
+                                    <form action="">
+                                        <label htmlFor="titlePost">Modifiez titre :</label>
+                                        <textarea defaultValue={post.title}
+                                                id="titlePost"
+                                                name='titlePost'
                                                 onChange={(e) => {
-                                                setTitleUpdate(e.target.value)
+                                                    setTitleUpdate(e.target.value)
                                                 }}
-                                    />
+                                         />
+                                    </form>
+                                    
                                 </div>
                             )}
                             {(post.content && isUpdated === true) && (
                                 <div className="update-post">
-                                    <textarea defaultValue={post.content}
-                                                onChange={(e) => {
+                                    <form action="">
+                                        <label htmlFor="contentPost">Modifiez contenu :</label>
+                                        <textarea defaultValue={post.content}
+                                              id='contentPost'
+                                              name='contentPost'
+                                              onChange={(e) => {
                                                 setContentUpdate(e.target.value)
-                                                }}
-                                    />
+                                              }}
+                                        />
+                                    </form>
+                                    
                                 </div>
                             )} 
 
                             {(isUpdated ===true) && (
                                 <div className="icon">
-                                    <input type="file" 
-                                        id="file-upload"
-                                        name="image"
-                                        accept=".jpg, .jpeg, .png, .gif"
-                                        onChange={(e) => { majPicture(e) }}       
-                                    />
+                                    <form action="" className='modifPictureForm'>
+                                        <label htmlFor="file-upload">Changez d'image :</label>
+                                        <input type="file" 
+                                            id="file-upload"
+                                            name="image"
+                                            accept=".jpg, .jpeg, .png, .gif"
+                                            onChange={(e) => { majPicture(e) }}       
+                                        />
+                                    </form>
+                                   
                                     
                                 </div> 
                             )}                        
@@ -208,7 +225,8 @@ const Card = ({ post }) => {
                         </div>
                         <div className="card-footer">
                             <div className="comment-icon">
-                                <img src="./image/image/comment.png" 
+                                <img src="./image/image/comment.png"
+                                     aria-label="Commentez la publication"  
                                      alt="commentaire de la publication"
                                      onClick={() => {setShowComments(!showComments)}} />
                                 <span>{post.Comments.length}</span>

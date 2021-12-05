@@ -14,9 +14,10 @@ const NavBar = () => {
         <nav>
             <div className="nav-container">
                 <div className="logo">
-                    <NavLink exact to="/"> 
+                    <NavLink exact to="/" aria-label="retour à l'accueil"> 
                         <div className="logo">
-                            <img src='./image/favicon/logogroup.png' className="logoGroup" alt='Logo groupomania' />
+                            <img src='./image/favicon/icon2.png' className="logoGroup" alt='Logo groupomania' />
+                            <h1>Groupomania</h1>
                         </div>
                     </NavLink>
                 </div>
@@ -24,7 +25,7 @@ const NavBar = () => {
                     <ul>
                         <li></li>
                         <li className="welcome userPicture">
-                            <NavLink exact to='/profil'>
+                            <NavLink exact to='/profil' aria-label="retour sur votre profil">
                                 <img src={userData.attachment} alt="Profil utilisateur" className="userProfil" />
                             </NavLink>
                         </li>
@@ -34,7 +35,7 @@ const NavBar = () => {
                     <ul>
                         <li></li>
                         <li className="welcome">
-                            <NavLink exact to='/authentification'>
+                            <NavLink exact to='/authentification' aria-label="Connection au site groupomania">
                                 <img src="./image/image/connect.svg" className='loginlogout' alt=" Connection au réseaux sociaux " />
                             </NavLink>
                         </li>

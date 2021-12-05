@@ -17,7 +17,8 @@ const DeleteCard = ( props ) => {
     return (
         <div>
             <div>
-            <img src="./image/image/delete.png" 
+            <img src="./image/image/delete.png"
+                aria-label="Supprimez la publication" 
                 alt="delete post"
                 onClick={() => {
                     setPop(!pop);

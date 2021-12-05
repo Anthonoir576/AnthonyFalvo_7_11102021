@@ -28,7 +28,7 @@ const UpdateProfil = () => {
     return (
         <div className="profil-page">
             <NavBarSecondary />
-            <h1>{userData.username}</h1>
+            <h2>{userData.username}</h2>
             <div className="update-container">
                 <div className="left-part">
                     <h3>Photo de profil</h3>

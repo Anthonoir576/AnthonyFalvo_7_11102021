@@ -38,6 +38,9 @@
           .card-container {
             font-size: 15px;
             padding: 5px;
+            .administrator-container {
+              transform: translateY(-2px);
+            }
             .card-left {
               transform: translate(10px, 10px);
               img {
@@ -46,7 +49,7 @@
             }
             .card-right {
               .card-header {
-                .pseudo h3 {
+                .pseudo h2 {
                   font-size: 14px;
                 }
                 .pseudo {
@@ -109,7 +112,7 @@
                         input[type="text"] {
                           height: 50px;
                         }
-                        div label {
+                        div span {
                           padding: 0 5px;
                           font-size: 12px;
                         }

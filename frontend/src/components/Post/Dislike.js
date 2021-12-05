@@ -29,6 +29,7 @@ const Dislike = ({ post }) => {
     return (
         <>
             <img src="./image/image/dislikeplein.png" 
+                 aria-label="Ne pas aimer la publication" 
                  alt="Dislike la publication"
                  onClick = {dislike} />
         </>

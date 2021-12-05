@@ -95,8 +95,9 @@ const CommentCard = ({ post }) => {
                   className='comment-form'
                   onSubmit={myComment}      
             >
-
+                <label htmlFor="commentId">Commentaire :</label>
                 <input type="text"
+                       id='commentId'
                        name='commentaire'
                        onChange={(e) => setContent(e.target.value)} 
                        value={content}

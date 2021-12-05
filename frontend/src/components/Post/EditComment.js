@@ -47,6 +47,7 @@ const EditComment = ({ comment, postId }) => {
                     <div>
                         <img src="./image/image/edit.png" 
                                 alt="edit post"
+                                aria-label="Modifiez votre commentaire"
                                 onClick={() => {
                                     setEdit(!edit);
                                 }} 
@@ -55,6 +56,7 @@ const EditComment = ({ comment, postId }) => {
                     <div>
                         <img src="./image/image/delete.png" 
                             alt="delete post"
+                            aria-label="Supprimez votre commentaire"
                             onClick={() => {
                                 setRemove(!remove);
                             }}
@@ -68,9 +70,10 @@ const EditComment = ({ comment, postId }) => {
                         className="edit-comment-form"
                         onSubmit={editComment}
                     >
-
+                    <label htmlFor="textId">Commentaire :</label>
                     <input type="text" 
                         name='text'
+                        id="textId"
                         defaultValue={comment.content} 
                         onChange={(e) => {
                             setContent(e.target.value);  
@@ -78,13 +81,12 @@ const EditComment = ({ comment, postId }) => {
                     />
 
                     <div>
-                        <label htmlFor='text'
-                            onClick={() => {
+                        <span  onClick={() => {
                                 setEdit(!edit)
                             }}
                         >
                             Annuler
-                        </label>
+                        </span>
 
                         <button type='submit'>MODIFIER</button>
                     </div>       

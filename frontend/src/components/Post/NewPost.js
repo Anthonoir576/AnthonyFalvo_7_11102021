@@ -70,6 +70,7 @@ const NewPost = () => {
                     <div className="user-info">
                         <img src={userData.attachment} alt="profil utilisateur" />
                         <img src="./image/image/post.png" 
+                             aria-label="Publiez une publication" 
                              className="postNow" 
                              alt="ecrire une publication"
                              onClick={() => {setPost(!post)}}      
@@ -78,12 +79,15 @@ const NewPost = () => {
                     {post && (
                         <>
                         <div className="post-form">
+                            <label className='new-post-ctrl' htmlFor="postTitle">Titre :</label>
                             <input type='text'
                                 name="title"
+                                id='postTitle'
                                 value={title}
                                 placeholder='Votre titre'
                                 onChange={(e) => { setTitle(e.target.value) }}
                             />
+                            <label className='new-post-ctrl' htmlFor="content">Contenu :</label>
                             <textarea name="content"
                                     id="content"
                                     placeholder="Votre publication"
@@ -96,6 +100,7 @@ const NewPost = () => {
                         <div className="footer-form">
                             <div className="icon">
                                 <img src="./image/image/upload.png" alt="Mettre en ligne un document" />
+                                <label htmlFor="file-upload">image :</label>
                                 <input type="file" 
                                     id="file-upload"
                                     name="image"

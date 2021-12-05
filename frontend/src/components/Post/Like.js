@@ -28,6 +28,7 @@ const Like = ({ post }) => {
     return (
         <>
             <img src="./image/image/likeplein.png" 
+                 aria-label="Aimez la publication" 
                  alt="Like la publication"
                  onClick = {like} />
         </>
